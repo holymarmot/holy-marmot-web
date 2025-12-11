@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Holy Marmot | Home</title>
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
-    <script>tailwind.config={theme:{extend:{colors:{primary:'#ffffff',secondary:'#9ca3af'},borderRadius:{'none':'0px','sm':'4px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+    <script>tailwind.config = { theme: { extend: { colors: { primary: '#ffffff', secondary: '#9ca3af' }, borderRadius: { 'none': '0px', 'sm': '4px', DEFAULT: '8px', 'md': '12px', 'lg': '16px', 'xl': '20px', '2xl': '24px', '3xl': '32px', 'full': '9999px', 'button': '8px' } } } }</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="icon" type="image/x-icon" href="./source/icon.png">
@@ -13,38 +14,55 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
     <style>
-        :where([class^="ri-"])::before { content: "\f3c2"; }
+        :where([class^="ri-"])::before {
+            content: "\f3c2";
+        }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: #0f0f0f;
             color: #e5e7eb;
         }
+
         .scroll-indicator {
             animation: bounce 2s infinite;
         }
+
         @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
                 transform: translateY(0);
             }
+
             40% {
                 transform: translateY(-10px);
             }
+
             60% {
                 transform: translateY(-5px);
             }
         }
+
         .game-card:hover .game-overlay {
             opacity: 1;
         }
+
         .game-card:hover img {
             transform: scale(1.05);
         }
+
         .team-card:hover {
             transform: translateY(-5px);
         }
+
         .nav-link {
             position: relative;
         }
+
         .nav-link::after {
             content: '';
             position: absolute;
@@ -55,397 +73,458 @@
             background-color: #ffffff;
             transition: width 0.3s ease;
         }
+
         .nav-link:hover::after {
             width: 100%;
         }
     </style>
 </head>
-<body>
-<!-- Header -->
-<header class="fixed top-0 left-0 right-0 z-50 bg-black bg-opacity-80 backdrop-blur-md">
-    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-        <div class="flex items-center">
-            <img src="https://cloud.holymarmot.com/apps/files_sharing/publicpreview/222L6Q2bMbC5PDf?file=/&fileId=2525&x=3840&y=2160&a=true&etag=fa9bbcb1782213f521020ab738bb8971" alt="Holy Marmot Logo" class="h-12 w-auto">
-        </div>
-        <nav class="hidden md:block">
-            <ul class="flex space-x-8">
-                <li><a href="#games" class="nav-link text-white hover:text-gray-300 transition-colors duration-300">Games</a></li>
-                <li><a href="#team" class="nav-link text-white hover:text-gray-300 transition-colors duration-300">Team</a></li>
-                <li><a href="#contact" class="nav-link text-white hover:text-gray-300 transition-colors duration-300">Contact</a></li>
-            </ul>
-        </nav>
-        <div class="md:hidden w-8 h-8 flex items-center justify-center">
-            <button id="mobile-menu-button" class="text-white">
-                <i class="ri-menu-line ri-2x"></i>
-            </button>
-        </div>
-    </div>
-    <!-- Mobile Menu -->
-    <div id="mobile-menu" class="hidden bg-black bg-opacity-95 py-4 px-6 md:hidden">
-        <ul class="flex flex-col space-y-4">
-            <li><a href="#games" class="block text-white hover:text-gray-300 transition-colors duration-300">Games</a></li>
-            <li><a href="#team" class="block text-white hover:text-gray-300 transition-colors duration-300">Team</a></li>
-            <li><a href="#contact" class="block text-white hover:text-gray-300 transition-colors duration-300">Contact</a></li>
-        </ul>
-    </div>
-</header>
-<!-- Hero Section -->
-<section class="relative min-h-screen flex items-center justify-center overflow-hidden" style="background-image: url('https://readdy.ai/api/search-image?query=dark%20atmospheric%20video%20game%20scene%20with%20subtle%20lighting%20effects%2C%20cyberpunk%20aesthetic%2C%20high%20quality%203D%20rendering%2C%20dramatic%20shadows%2C%20futuristic%20environment%2C%20digital%20art%20masterpiece%2C%20professional%20game%20screenshot&width=1920&height=1080&seq=hero1&orientation=landscape'); background-size: cover; background-position: center;">
-    <div class="absolute inset-0 bg-black bg-opacity-60"></div>
-    <div class="container mx-auto px-6 relative z-10">
-        <div class="max-w-3xl">
-            <h1 class="text-5xl md:text-7xl font-bold mb-6 text-white leading-tight">Creating Innovative Gaming Experiences</h1>
-            <p class="text-xl md:text-2xl text-gray-300 mb-10">Explore digital worlds filled with unique stories and unforgettable characters.</p>
-            <div class="flex flex-wrap gap-4">
-                <a href="#games" class="bg-primary text-black font-semibold px-8 py-3 !rounded-button whitespace-nowrap hover:bg-opacity-90 transition-all duration-300">Discover Our Games</a>
-                <a href="https://store.steampowered.com/curator/45294675" target="_blank" class="bg-transparent border-2 border-white text-white font-semibold px-8 py-3 !rounded-button whitespace-nowrap hover:bg-white hover:bg-opacity-10 transition-all duration-300 flex items-center">
-                    <span>View on Steam</span>
-                    <img src="https://static.readdy.ai/image/e202cf6b20e553777f4ddbbdbd6daac8/bcf21d76c155491ef874da59554dbd66.png" alt="Steam Logo" class="w-6 h-6 ml-2">
-                </a>
-            </div>
-        </div>
-    </div>
-    <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 scroll-indicator">
-        <div class="w-8 h-12 flex items-center justify-center">
-            <i class="ri-arrow-down-line ri-2x text-white"></i>
-        </div>
-    </div>
-</section>
-<!-- Games Section -->
-<section id="games" class="py-20 bg-gradient-to-b from-black to-gray-900">
-    <div class="container mx-auto px-6">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl font-bold mb-4">Our Games</h2>
-            <p class="text-gray-400 max-w-2xl mx-auto">We deliver unforgettable gaming experiences filled with unique stories and innovative mechanics.</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <!-- Game 1 -->
-            <div class="game-card bg-gray-800 rounded overflow-hidden transition-all duration-300 shadow-lg hover:shadow-2xl">
-                <div class="relative overflow-hidden">
-                    <img src="./source/bearstone_campsite.png" alt="Bearstone Campsite" class="w-full h-64 object-cover transition-transform duration-500">
-                    <div class="game-overlay absolute inset-0 bg-black bg-opacity-60 opacity-0 transition-opacity duration-300 flex items-center justify-center">
-                        <a href="https://store.steampowered.com/app/3323740/Bearstone_Campsite/" target="_blank" class="bg-primary text-black font-semibold px-6 py-2 !rounded-button whitespace-nowrap flex items-center">
-                            <span>View on Steam</span>
-                            <img src="https://static.readdy.ai/image/e202cf6b20e553777f4ddbbdbd6daac8/af029efe88fa13807f4e16a45a8d8d68.png" alt="Steam Logo" class="w-5 h-5 ml-2">
-                        </a>
-                    </div>
-                </div>
-                <div class="p-6">
-                    <h3 class="text-2xl font-bold mb-2">Bearstone Campsite</h3>
-                    <p class="text-gray-400 mb-4">Bearstone Campsite, a tourism project launched by the state, closed its doors shortly after a mysterious incident occurred. Now, this abandoned facility is transforming into a world filled with unknown dangers and forgotten secrets, far beyond its former glory.</p>
-                    <div class="flex items-center text-sm text-gray-500">
-                        <span class="flex items-center mr-4"><i class="ri-gamepad-line mr-1"></i> Action-Horror</span>
-                        <span class="flex items-center"><i class="ri-calendar-line mr-1"></i> 2025</span>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Game 2 -->
-            <div class="game-card bg-gray-800 rounded overflow-hidden transition-all duration-300 shadow-lg hover:shadow-2xl">
-                <div class="relative overflow-hidden">
-                    <img src="./source/upcoming.png" alt="Anathex" class="w-full h-64 object-cover transition-transform duration-500">
-                </div>
-                <div class="p-6">
-                    <h3 class="text-2xl font-bold mb-2">Anathex</h3>
-                    <p class="text-gray-400 mb-4">This project is a four-player co-op tower defense game that is inspired by Anatolian mythology. Players represent different types of gods and use their unique abilities to protect their people.</p>
-                    <div class="flex items-center text-sm text-gray-500">
-                        <span class="flex items-center mr-4"><i class="ri-gamepad-line mr-1"></i> Rogue-like</span>
-                        <span class="flex items-center"><i class="ri-calendar-line mr-1"></i> 2025</span>
-                    </div>
+<body>
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-black bg-opacity-80 backdrop-blur-md">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="https://cloud.holymarmot.com/apps/files_sharing/publicpreview/222L6Q2bMbC5PDf?file=/&fileId=2525&x=3840&y=2160&a=true&etag=fa9bbcb1782213f521020ab738bb8971"
+                    alt="Holy Marmot Logo" class="h-12 w-auto">
+            </div>
+            <nav class="hidden md:block">
+                <ul class="flex space-x-8">
+                    <li><a href="#games"
+                            class="nav-link text-white hover:text-gray-300 transition-colors duration-300">Games</a>
+                    </li>
+                    <li><a href="#team"
+                            class="nav-link text-white hover:text-gray-300 transition-colors duration-300">Team</a></li>
+                    <li><a href="#contact"
+                            class="nav-link text-white hover:text-gray-300 transition-colors duration-300">Contact</a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="md:hidden w-8 h-8 flex items-center justify-center">
+                <button id="mobile-menu-button" class="text-white">
+                    <i class="ri-menu-line ri-2x"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden bg-black bg-opacity-95 py-4 px-6 md:hidden">
+            <ul class="flex flex-col space-y-4">
+                <li><a href="#games"
+                        class="block text-white hover:text-gray-300 transition-colors duration-300">Games</a></li>
+                <li><a href="#team" class="block text-white hover:text-gray-300 transition-colors duration-300">Team</a>
+                </li>
+                <li><a href="#contact"
+                        class="block text-white hover:text-gray-300 transition-colors duration-300">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden"
+        style="background-image: url('https://readdy.ai/api/search-image?query=dark%20atmospheric%20video%20game%20scene%20with%20subtle%20lighting%20effects%2C%20cyberpunk%20aesthetic%2C%20high%20quality%203D%20rendering%2C%20dramatic%20shadows%2C%20futuristic%20environment%2C%20digital%20art%20masterpiece%2C%20professional%20game%20screenshot&width=1920&height=1080&seq=hero1&orientation=landscape'); background-size: cover; background-position: center;">
+        <div class="absolute inset-0 bg-black bg-opacity-60"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-3xl">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 text-white leading-tight">Creating Innovative Gaming
+                    Experiences</h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-10">Explore digital worlds filled with unique stories and
+                    unforgettable characters.</p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#games"
+                        class="bg-primary text-black font-semibold px-8 py-3 !rounded-button whitespace-nowrap hover:bg-opacity-90 transition-all duration-300">Discover
+                        Our Games</a>
+                    <a href="https://store.steampowered.com/curator/45294675" target="_blank"
+                        class="bg-transparent border-2 border-white text-white font-semibold px-8 py-3 !rounded-button whitespace-nowrap hover:bg-white hover:bg-opacity-10 transition-all duration-300 flex items-center">
+                        <span>View on Steam</span>
+                        <img src="https://static.readdy.ai/image/e202cf6b20e553777f4ddbbdbd6daac8/bcf21d76c155491ef874da59554dbd66.png"
+                            alt="Steam Logo" class="w-6 h-6 ml-2">
+                    </a>
                 </div>
             </div>
         </div>
-        <div class="text-center mt-12">
-            <a href="https://store.steampowered.com/curator/45294675" target="_blank" class="inline-flex items-center text-primary hover:text-white transition-colors duration-300">
-                <span class="mr-2">Discover all our games on Steam</span>
-                <i class="ri-arrow-right-line"></i>
-            </a>
-        </div>
-    </div>
-</section>
-<!-- Team Section -->
-<section id="team" class="py-20 bg-black">
-    <div class="container mx-auto px-6">
-        <div class="text-center mb-16">
-            <h2 class="text-4xl font-bold mb-4">Our Team</h2>
-            <p class="text-gray-400 max-w-2xl mx-auto">With our passionate and creative team, we design game experiences that push boundaries.</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <!-- Team Member 1 -->
-            <div class="team-card bg-gray-900 rounded p-6 transition-all duration-300">
-                <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-800 flex items-center justify-center">
-                    <img src="./source/emirhan.png" class="ri-user-fill ri-2x text-gray-400" />
-                </div>
-                <h3 class="text-xl font-bold text-center mb-1">Emirhan KURŞUN</h3>
-                <p class="text-primary text-center text-sm mb-4">Co-Founder & Team Lead</p>
-            </div>
-            <!-- Team Member 2 -->
-            <div class="team-card bg-gray-900 rounded p-6 transition-all duration-300">
-                <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-800 flex items-center justify-center">
-                    <img src="./source/fatih.png" class="ri-user-fill ri-2x text-gray-400" />
-                </div>
-                <h3 class="text-xl font-bold text-center mb-1">Murat Fatih DEMİREL</h3>
-                <p class="text-primary text-center text-sm mb-4">Co-Founder & Project Manager</p>
-            </div>
-            <!-- Team Member 3 -->
-            <div class="team-card bg-gray-900 rounded p-6 transition-all duration-300">
-                <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-800 flex items-center justify-center">
-                    <img src="./source/enes.png" class="ri-user-fill ri-2x text-gray-400" />
-                </div>
-                <h3 class="text-xl font-bold text-center mb-1">Enes TOLU</h3>
-                <p class="text-primary text-center text-sm mb-4">Co-Founder & Concept Artist</p>
-            </div>
-            <!-- Team Member 4 -->
-            <div class="team-card bg-gray-900 rounded p-6 transition-all duration-300">
-                <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-800 flex items-center justify-center">
-                    <img src="./source/mert.png" class="ri-user-fill ri-2x text-gray-400" />
-                </div>
-                <h3 class="text-xl font-bold text-center mb-1">Mert SEVİNÇ</h3>
-                <p class="text-primary text-center text-sm mb-4">Co-Founder & Character Artist</p>
-            </div>
-            <!-- Team Member 5 -->
-            <div class="team-card bg-gray-900 rounded p-6 transition-all duration-300">
-                <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-800 flex items-center justify-center">
-                    <img src="./source/hakan.png" class="ri-user-fill ri-2x text-gray-400" />
-                </div>
-                <h3 class="text-xl font-bold text-center mb-1">Hakan Süleyman BENLİ</h3>
-                <p class="text-primary text-center text-sm mb-4">Voice Actor</p>
-            </div>
-            <!-- Team Member 6 -->
-            <div class="team-card bg-gray-900 rounded p-6 transition-all duration-300">
-                <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-800 flex items-center justify-center">
-                    <img src="./source/funda.png" class="ri-user-fill ri-2x text-gray-400" />
-                </div>
-                <h3 class="text-xl font-bold text-center mb-1">Funda BAYHAN</h3>
-                <p class="text-primary text-center text-sm mb-4">Level Designer</p>
-            </div>
-            <!-- Team Member 7 -->
-            <div class="team-card bg-gray-900 rounded p-6 transition-all duration-300">
-                <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-800 flex items-center justify-center">
-                    <img src="./source/elyesa.png" class="ri-user-fill ri-2x text-gray-400" />
-                </div>
-                <h3 class="text-xl font-bold text-center mb-1">Emir Elyesa ERSÖZ</h3>
-                <p class="text-primary text-center text-sm mb-4">Music Composer</p>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 scroll-indicator">
+            <div class="w-8 h-12 flex items-center justify-center">
+                <i class="ri-arrow-down-line ri-2x text-white"></i>
             </div>
         </div>
-        <div class="mt-16 text-center">
-            <p class="text-gray-400 mb-6">Want to join our creative team?</p>
-            <a href="#contact" class="bg-transparent border-2 border-primary text-primary font-semibold px-8 py-3 !rounded-button whitespace-nowrap hover:bg-primary hover:text-black transition-all duration-300">Contact Us</a>
-        </div>
-    </div>
-</section>
-<!-- Contact Section -->
-<section id="contact" class="py-20 bg-gradient-to-b from-gray-900 to-black">
-    <div class="container mx-auto px-6">
-        <div class="max-w-4xl mx-auto">
+    </section>
+    <!-- Games Section -->
+    <section id="games" class="py-20 bg-gradient-to-b from-black to-gray-900">
+        <div class="container mx-auto px-6">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4">Contact Us</h2>
-                <p class="text-gray-400">Get in touch with us for questions, collaboration offers, or just to say hello.</p>
+                <h2 class="text-4xl font-bold mb-4">Our Games</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">We deliver unforgettable gaming experiences filled with
+                    unique stories and innovative mechanics.</p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div>
-                    <form method="POST" class="space-y-6">
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-gray-400 mb-1">Name</label>
-                            <input type="text" id="name" name="name" class="w-full bg-gray-800 border-none rounded focus:ring-2 focus:ring-primary p-3 text-white" placeholder="Enter your name" required>
-                        </div>
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-400 mb-1">Email</label>
-                            <input type="email" id="email" name="email" class="w-full bg-gray-800 border-none rounded focus:ring-2 focus:ring-primary p-3 text-white" placeholder="Enter your email" required>
-                        </div>
-                        <div>
-                            <label for="subject" class="block text-sm font-medium text-gray-400 mb-1">Subject</label>
-                            <input type="text" id="subject" name="subject" class="w-full bg-gray-800 border-none rounded focus:ring-2 focus:ring-primary p-3 text-white" placeholder="Enter subject" required>
-                        </div>
-                        <div>
-                            <label for="message" class="block text-sm font-medium text-gray-400 mb-1">Message</label>
-                            <textarea id="message" name="message" rows="4" maxlength="500" class="w-full bg-gray-800 border-none rounded focus:ring-2 focus:ring-primary p-3 text-white" placeholder="Write your message (max 500 characters)" required></textarea>
-                            <div class="text-sm text-gray-400 mt-1">
-                                <span id="charCount">0</span>/500 characters
-                            </div>
-                        </div>
-                        <div id="formMessage" class="hidden text-center p-3 mb-4 rounded"></div>
-                        <button type="submit" class="bg-secondary text-black font-semibold px-8 py-3 !rounded-button whitespace-nowrap hover:bg-opacity-90 transition-all duration-300 w-full" disabled>Currently Disabled</button>
-                    </form>
-                </div>
-                <div class="flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xl font-bold mb-4">Contact Information</h3>
-                        <div class="space-y-4 mb-8">
-                            <div class="flex items-start">
-                                <div class="w-8 h-8 flex items-center justify-center mr-3 text-primary">
-                                    <i class="ri-map-pin-line ri-lg"></i>
-                                </div>
-                                <p class="text-gray-400">Istanbul</p>
-                            </div>
-                            <div class="flex items-start">
-                                <div class="w-8 h-8 flex items-center justify-center mr-3 text-primary">
-                                    <i class="ri-mail-line ri-lg"></i>
-                                </div>
-                                <p class="text-gray-400">contact@holymarmot.com</p>
-                            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Game 1 -->
+                <div
+                    class="game-card bg-gray-800 rounded overflow-hidden transition-all duration-300 shadow-lg hover:shadow-2xl">
+                    <div class="relative overflow-hidden">
+                        <img src="./source/bearstone_campsite.png" alt="Bearstone Campsite"
+                            class="w-full h-64 object-cover transition-transform duration-500">
+                        <div
+                            class="game-overlay absolute inset-0 bg-black bg-opacity-60 opacity-0 transition-opacity duration-300 flex items-center justify-center">
+                            <a href="https://store.steampowered.com/app/3323740/Bearstone_Campsite/" target="_blank"
+                                class="bg-primary text-black font-semibold px-6 py-2 !rounded-button whitespace-nowrap flex items-center">
+                                <span>View on Steam</span>
+                                <img src="https://static.readdy.ai/image/e202cf6b20e553777f4ddbbdbd6daac8/af029efe88fa13807f4e16a45a8d8d68.png"
+                                    alt="Steam Logo" class="w-5 h-5 ml-2">
+                            </a>
                         </div>
                     </div>
-                    <div>
-                        <h3 class="text-xl font-bold mb-4">Follow Us</h3>
-                        <div class="flex space-x-4">
-                            <a href="https://store.steampowered.com/curator/45294675" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary hover:text-black transition-all duration-300">
-                                <i class="ri-steam-line"></i>
-                            </a>
-                            <a href="https://github.com/holymarmot" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary hover:text-black transition-all duration-300">
-                                <i class="ri-github-line"></i>
-                            </a>
-                            <a href="https://www.reddit.com/r/BearstoneCampsite/" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary hover:text-black transition-all duration-300">
-                                <i class="ri-reddit-line"></i>
-                            </a>
-                            <a href="https://www.instagram.com/holymarmot/" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary hover:text-black transition-all duration-300">
-                                <i class="ri-instagram-line"></i>
-                            </a>
-                            <a href="https://discord.gg/Xpucjyvmq7" target="_blank" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary hover:text-black transition-all duration-300">
-                                <i class="ri-discord-line"></i>
-                            </a>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2">Bearstone Campsite</h3>
+                        <p class="text-gray-400 mb-4">Bearstone Campsite, a tourism project launched by the state,
+                            closed its doors shortly after a mysterious incident occurred. Now, this abandoned facility
+                            is transforming into a world filled with unknown dangers and forgotten secrets, far beyond
+                            its former glory.</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <span class="flex items-center mr-4"><i class="ri-gamepad-line mr-1"></i>
+                                Action-Horror</span>
+                            <span class="flex items-center"><i class="ri-calendar-line mr-1"></i> 2025</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game 2 -->
+                <div
+                    class="game-card bg-gray-800 rounded overflow-hidden transition-all duration-300 shadow-lg hover:shadow-2xl">
+                    <div class="relative overflow-hidden">
+                        <img src="./source/upcoming.png" alt="Anathex"
+                            class="w-full h-64 object-cover transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2">Anathex</h3>
+                        <p class="text-gray-400 mb-4">This project is a four-player co-op tower defense game that is
+                            inspired by Anatolian mythology. Players represent different types of gods and use their
+                            unique abilities to protect their people.</p>
+                        <div class="flex items-center text-sm text-gray-500">
+                            <span class="flex items-center mr-4"><i class="ri-gamepad-line mr-1"></i> Rogue-like</span>
+                            <span class="flex items-center"><i class="ri-calendar-line mr-1"></i> 2025</span>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-</section>
-<!-- Footer -->
-<footer class="bg-black py-12">
-    <div class="container mx-auto px-6">
-        <div class="flex flex-col md:flex-row justify-between items-center">
-            <div class="mb-6 md:mb-0">
-                <img src="https://cloud.holymarmot.com/apps/files_sharing/publicpreview/222L6Q2bMbC5PDf?file=/&fileId=2525&x=3840&y=2160&a=true&etag=fa9bbcb1782213f521020ab738bb8971" alt="Holy Marmot Logo" class="h-10 w-auto">
-            </div>
-            <div class="flex flex-wrap justify-center gap-8 mb-6 md:mb-0">
-                <a href="#games" class="text-gray-400 hover:text-white transition-colors duration-300">Games</a>
-                <a href="#team" class="text-gray-400 hover:text-white transition-colors duration-300">Team</a>
-                <a href="#contact" class="text-gray-400 hover:text-white transition-colors duration-300">Contact</a>
-            </div>
-            <div class="flex space-x-4">
-                <a href="https://store.steampowered.com/curator/45294675" target="_blank" class="text-gray-400 hover:text-white transition-colors duration-300">
-                    <i class="ri-steam-line ri-lg"></i>
-                </a>
-                <a href="https://www.instagram.com/holymarmot/" target="_blank" class="text-gray-400 hover:text-white transition-colors duration-300">
-                    <i class="ri-instagram-line ri-lg"></i>
-                </a>
-                <a href="https://discord.gg/Xpucjyvmq7" target="_blank" class="text-gray-400 hover:text-white transition-colors duration-300">
-                    <i class="ri-discord-line ri-lg"></i>
-                </a>
-                <a href="https://www.reddit.com/r/BearstoneCampsite/" target="_blank" class="text-gray-400 hover:text-white transition-colors duration-300">
-                    <i class="ri-reddit-line ri-lg"></i>
-                </a>
-                <a href="https://github.com/holymarmot" target="_blank" class="text-gray-400 hover:text-white transition-colors duration-300">
-                    <i class="ri-github-line ri-lg"></i>
+            <div class="text-center mt-12">
+                <a href="https://store.steampowered.com/curator/45294675" target="_blank"
+                    class="inline-flex items-center text-primary hover:text-white transition-colors duration-300">
+                    <span class="mr-2">Discover all our games on Steam</span>
+                    <i class="ri-arrow-right-line"></i>
                 </a>
             </div>
         </div>
-        <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
-            <p>© 2025 Holy Marmot. All rights reserved.</p>
+    </section>
+    <!-- Team Section -->
+    <section id="team" class="py-20 bg-black">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">Our Team</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">With our passionate and creative team, we design game
+                    experiences that push boundaries.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Team Member 1 -->
+                <div class="team-card bg-gray-900 rounded p-6 transition-all duration-300">
+                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-800 flex items-center justify-center">
+                        <img src="./source/emirhan.png" class="ri-user-fill ri-2x text-gray-400" />
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-1">Emirhan KURŞUN</h3>
+                    <p class="text-primary text-center text-sm mb-4">Co-Founder & Team Lead</p>
+                </div>
+                <!-- Team Member 2 -->
+                <div class="team-card bg-gray-900 rounded p-6 transition-all duration-300">
+                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-800 flex items-center justify-center">
+                        <img src="./source/fatih.png" class="ri-user-fill ri-2x text-gray-400" />
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-1">Murat Fatih DEMİREL</h3>
+                    <p class="text-primary text-center text-sm mb-4">Co-Founder & Project Manager</p>
+                </div>
+                <!-- Team Member 3 -->
+                <div class="team-card bg-gray-900 rounded p-6 transition-all duration-300">
+                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-800 flex items-center justify-center">
+                        <img src="./source/enes.png" class="ri-user-fill ri-2x text-gray-400" />
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-1">Enes TOLU</h3>
+                    <p class="text-primary text-center text-sm mb-4">Co-Founder & Concept Artist</p>
+                </div>
+                <!-- Team Member 4 -->
+                <div class="team-card bg-gray-900 rounded p-6 transition-all duration-300">
+                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-800 flex items-center justify-center">
+                        <img src="./source/mert.png" class="ri-user-fill ri-2x text-gray-400" />
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-1">Mert SEVİNÇ</h3>
+                    <p class="text-primary text-center text-sm mb-4">Co-Founder & Character Artist</p>
+                </div>
+                <!-- Team Member 5 -->
+                <div class="team-card bg-gray-900 rounded p-6 transition-all duration-300">
+                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-800 flex items-center justify-center">
+                        <img src="./source/hakan.png" class="ri-user-fill ri-2x text-gray-400" />
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-1">Hakan Süleyman BENLİ</h3>
+                    <p class="text-primary text-center text-sm mb-4">Voice Actor</p>
+                </div>
+                <!-- Team Member 6 -->
+                <div class="team-card bg-gray-900 rounded p-6 transition-all duration-300">
+                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-800 flex items-center justify-center">
+                        <img src="./source/funda.png" class="ri-user-fill ri-2x text-gray-400" />
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-1">Funda BAYHAN</h3>
+                    <p class="text-primary text-center text-sm mb-4">Level Designer</p>
+                </div>
+                <!-- Team Member 7 -->
+                <div class="team-card bg-gray-900 rounded p-6 transition-all duration-300">
+                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-800 flex items-center justify-center">
+                        <img src="./source/elyesa.png" class="ri-user-fill ri-2x text-gray-400" />
+                    </div>
+                    <h3 class="text-xl font-bold text-center mb-1">Emir Elyesa ERSÖZ</h3>
+                    <p class="text-primary text-center text-sm mb-4">Music Composer</p>
+                </div>
+            </div>
+            <div class="mt-16 text-center">
+                <p class="text-gray-400 mb-6">Want to join our creative team?</p>
+                <a href="#contact"
+                    class="bg-transparent border-2 border-primary text-primary font-semibold px-8 py-3 !rounded-button whitespace-nowrap hover:bg-primary hover:text-black transition-all duration-300">Contact
+                    Us</a>
+            </div>
         </div>
-    </div>
-</footer>
-<script id="mobile-menu-script">
-    document.addEventListener('DOMContentLoaded', function() {
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuButton.addEventListener('click', function() {
-            mobileMenu.classList.toggle('hidden');
-// Change icon based on menu state
-            const icon = mobileMenuButton.querySelector('i');
-            if (mobileMenu.classList.contains('hidden')) {
-                icon.classList.remove('ri-close-line');
-                icon.classList.add('ri-menu-line');
-            } else {
-                icon.classList.remove('ri-menu-line');
-                icon.classList.add('ri-close-line');
-            }
-        });
-// Close mobile menu when clicking on a link
-        const mobileLinks = mobileMenu.querySelectorAll('a');
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                mobileMenu.classList.add('hidden');
+    </section>
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gradient-to-b from-gray-900 to-black">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-4">Contact Us</h2>
+                    <p class="text-gray-400">Get in touch with us for questions, collaboration offers, or just to say
+                        hello.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div>
+                        <form action="https://tools.holymarmot.com/n8n/webhook/5e053363-9f3d-4941-82b0-4cde05467c14"
+                            method="POST" class="space-y-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-400 mb-1">Name</label>
+                                <input type="text" id="name" name="name"
+                                    class="w-full bg-gray-800 border-none rounded focus:ring-2 focus:ring-primary p-3 text-white"
+                                    placeholder="Enter your name" required>
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-400 mb-1">Email</label>
+                                <input type="email" id="email" name="email"
+                                    class="w-full bg-gray-800 border-none rounded focus:ring-2 focus:ring-primary p-3 text-white"
+                                    placeholder="Enter your email" required>
+                            </div>
+                            <div>
+                                <label for="subject"
+                                    class="block text-sm font-medium text-gray-400 mb-1">Subject</label>
+                                <input type="text" id="subject" name="subject"
+                                    class="w-full bg-gray-800 border-none rounded focus:ring-2 focus:ring-primary p-3 text-white"
+                                    placeholder="Enter subject" required>
+                            </div>
+                            <div>
+                                <label for="message"
+                                    class="block text-sm font-medium text-gray-400 mb-1">Message</label>
+                                <textarea id="message" name="message" rows="4" maxlength="500"
+                                    class="w-full bg-gray-800 border-none rounded focus:ring-2 focus:ring-primary p-3 text-white"
+                                    placeholder="Write your message (max 500 characters)" required></textarea>
+                                <div class="text-sm text-gray-400 mt-1">
+                                    <span id="charCount">0</span>/500 characters
+                                </div>
+                            </div>
+                            <div id="formMessage" class="hidden text-center p-3 mb-4 rounded"></div>
+                            <button type="submit"
+                                class="bg-primary text-black font-semibold px-8 py-3 !rounded-button whitespace-nowrap hover:bg-opacity-90 transition-all duration-300 w-full">Send</button>
+                        </form>
+                    </div>
+                    <div class="flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold mb-4">Contact Information</h3>
+                            <div class="space-y-4 mb-8">
+                                <div class="flex items-start">
+                                    <div class="w-8 h-8 flex items-center justify-center mr-3 text-primary">
+                                        <i class="ri-map-pin-line ri-lg"></i>
+                                    </div>
+                                    <p class="text-gray-400">Istanbul</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <div class="w-8 h-8 flex items-center justify-center mr-3 text-primary">
+                                        <i class="ri-mail-line ri-lg"></i>
+                                    </div>
+                                    <p class="text-gray-400">contact@holymarmot.com</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold mb-4">Follow Us</h3>
+                            <div class="flex space-x-4">
+                                <a href="https://store.steampowered.com/curator/45294675" target="_blank"
+                                    class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary hover:text-black transition-all duration-300">
+                                    <i class="ri-steam-line"></i>
+                                </a>
+                                <a href="https://github.com/holymarmot" target="_blank"
+                                    class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary hover:text-black transition-all duration-300">
+                                    <i class="ri-github-line"></i>
+                                </a>
+                                <a href="https://www.reddit.com/r/BearstoneCampsite/" target="_blank"
+                                    class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary hover:text-black transition-all duration-300">
+                                    <i class="ri-reddit-line"></i>
+                                </a>
+                                <a href="https://www.instagram.com/holymarmot/" target="_blank"
+                                    class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary hover:text-black transition-all duration-300">
+                                    <i class="ri-instagram-line"></i>
+                                </a>
+                                <a href="https://discord.gg/Xpucjyvmq7" target="_blank"
+                                    class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary hover:text-black transition-all duration-300">
+                                    <i class="ri-discord-line"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-black py-12">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <img src="https://cloud.holymarmot.com/apps/files_sharing/publicpreview/222L6Q2bMbC5PDf?file=/&fileId=2525&x=3840&y=2160&a=true&etag=fa9bbcb1782213f521020ab738bb8971"
+                        alt="Holy Marmot Logo" class="h-10 w-auto">
+                </div>
+                <div class="flex flex-wrap justify-center gap-8 mb-6 md:mb-0">
+                    <a href="#games" class="text-gray-400 hover:text-white transition-colors duration-300">Games</a>
+                    <a href="#team" class="text-gray-400 hover:text-white transition-colors duration-300">Team</a>
+                    <a href="#contact" class="text-gray-400 hover:text-white transition-colors duration-300">Contact</a>
+                </div>
+                <div class="flex space-x-4">
+                    <a href="https://store.steampowered.com/curator/45294675" target="_blank"
+                        class="text-gray-400 hover:text-white transition-colors duration-300">
+                        <i class="ri-steam-line ri-lg"></i>
+                    </a>
+                    <a href="https://www.instagram.com/holymarmot/" target="_blank"
+                        class="text-gray-400 hover:text-white transition-colors duration-300">
+                        <i class="ri-instagram-line ri-lg"></i>
+                    </a>
+                    <a href="https://discord.gg/Xpucjyvmq7" target="_blank"
+                        class="text-gray-400 hover:text-white transition-colors duration-300">
+                        <i class="ri-discord-line ri-lg"></i>
+                    </a>
+                    <a href="https://www.reddit.com/r/BearstoneCampsite/" target="_blank"
+                        class="text-gray-400 hover:text-white transition-colors duration-300">
+                        <i class="ri-reddit-line ri-lg"></i>
+                    </a>
+                    <a href="https://github.com/holymarmot" target="_blank"
+                        class="text-gray-400 hover:text-white transition-colors duration-300">
+                        <i class="ri-github-line ri-lg"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+                <p>© 2025 Holy Marmot. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script id="mobile-menu-script">
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', function () {
+                mobileMenu.classList.toggle('hidden');
+                // Change icon based on menu state
                 const icon = mobileMenuButton.querySelector('i');
-                icon.classList.remove('ri-close-line');
-                icon.classList.add('ri-menu-line');
-            });
-        });
-    });
-</script>
-<script id="form-validation-script">
-    document.addEventListener('DOMContentLoaded', function() {
-        const contactForm = document.querySelector('form');
-        const messageInput = document.getElementById('message');
-        const charCount = document.getElementById('charCount');
-        const formMessage = document.getElementById('formMessage');
-        function showMessage(message, isError = false) {
-            formMessage.textContent = message;
-            formMessage.classList.remove('hidden', 'bg-green-500', 'bg-red-500', 'text-white');
-            formMessage.classList.add(isError ? 'bg-red-500' : 'bg-green-500', 'text-white');
-            setTimeout(() => {
-                formMessage.classList.add('hidden');
-            }, 5000);
-        }
-        messageInput.addEventListener('input', function() {
-            const currentLength = this.value.length;
-            charCount.textContent = currentLength;
-            if (currentLength > 500) {
-                this.value = this.value.substring(0, 500);
-                charCount.textContent = 500;
-            }
-        });
-        contactForm.addEventListener('submit', async function(e) {
-            e.preventDefault();
-            if (messageInput.value.length > 500) {
-                showMessage('Message cannot exceed 500 characters', true);
-                return;
-            }
-            const formData = new FormData(this);
-            const data = {};
-            formData.forEach((value, key) => {
-                data[key] = value;
-            });
-            try {
-                const response = await fetch(this.action, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: new URLSearchParams(data).toString()
-                });
-                if (response.ok) {
-                    showMessage('Message sent successfully!');
-                    this.reset();
-                    charCount.textContent = '0';
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.classList.remove('ri-close-line');
+                    icon.classList.add('ri-menu-line');
                 } else {
-                    showMessage('Failed to send message. Please try again.', true);
+                    icon.classList.remove('ri-menu-line');
+                    icon.classList.add('ri-close-line');
                 }
-            } catch (error) {
-                showMessage('An error occurred. Please try again later.', true);
-            }
+            });
+            // Close mobile menu when clicking on a link
+            const mobileLinks = mobileMenu.querySelectorAll('a');
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', function () {
+                    mobileMenu.classList.add('hidden');
+                    const icon = mobileMenuButton.querySelector('i');
+                    icon.classList.remove('ri-close-line');
+                    icon.classList.add('ri-menu-line');
+                });
+            });
         });
-    });
-</script>
-<script id="smooth-scroll-script">
-    document.addEventListener('DOMContentLoaded', function() {
-// Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
+    </script>
+    <script id="form-validation-script">
+        document.addEventListener('DOMContentLoaded', function () {
+            const contactForm = document.querySelector('form');
+            const messageInput = document.getElementById('message');
+            const charCount = document.getElementById('charCount');
+            const formMessage = document.getElementById('formMessage');
+            function showMessage(message, isError = false) {
+                formMessage.textContent = message;
+                formMessage.classList.remove('hidden', 'bg-green-500', 'bg-red-500', 'text-white');
+                formMessage.classList.add(isError ? 'bg-red-500' : 'bg-green-500', 'text-white');
+                setTimeout(() => {
+                    formMessage.classList.add('hidden');
+                }, 5000);
+            }
+            messageInput.addEventListener('input', function () {
+                const currentLength = this.value.length;
+                charCount.textContent = currentLength;
+                if (currentLength > 500) {
+                    this.value = this.value.substring(0, 500);
+                    charCount.textContent = 500;
+                }
+            });
+            contactForm.addEventListener('submit', async function (e) {
                 e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80, // Adjust for header height
-                        behavior: 'smooth'
+                if (messageInput.value.length > 500) {
+                    showMessage('Message cannot exceed 500 characters', true);
+                    return;
+                }
+                const formData = new FormData(this);
+                const data = {};
+                formData.forEach((value, key) => {
+                    data[key] = value;
+                });
+                try {
+                    const response = await fetch(this.action, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: new URLSearchParams(data).toString()
                     });
+                    if (response.ok) {
+                        showMessage('Message sent successfully!');
+                        this.reset();
+                        charCount.textContent = '0';
+                    } else {
+                        showMessage('Failed to send message. Please try again.', true);
+                    }
+                } catch (error) {
+                    showMessage('An error occurred. Please try again later.', true);
                 }
             });
         });
-    });
-</script>
+    </script>
+    <script id="smooth-scroll-script">
+        document.addEventListener('DOMContentLoaded', function () {
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80, // Adjust for header height
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </body>
+
 </html>

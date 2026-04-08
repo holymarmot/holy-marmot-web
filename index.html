@@ -11,55 +11,111 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="icon" type="image/x-icon" href="./source/icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
     <style>
-        :where([class^="ri-"])::before {
-            content: "\f3c2";
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        *, *::before, *::after { box-sizing: border-box; }
+
+        :root {
+            --bg: #080808;
+            --surface: rgba(255,255,255,0.04);
+            --border: rgba(255,255,255,0.08);
+            --border-hover: rgba(255,255,255,0.2);
+            --gold: #c9a96e;
+            --gold-dim: rgba(201,169,110,0.18);
+            --text: #f0f0ee;
+            --muted: rgba(255,255,255,0.42);
         }
+
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #0f0f0f;
-            color: #e5e7eb;
+            background-color: var(--bg);
+            color: var(--text);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            overflow-x: hidden;
+            cursor: none;
         }
 
-        .scroll-indicator {
-            animation: bounce 2s infinite;
+        body.loaded { opacity: 1; }
+
+        /* ─── Custom Cursor ─── */
+        #cursor-dot {
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 99999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease, width 0.25s ease, height 0.25s ease, background 0.25s ease;
+            will-change: left, top;
         }
 
-        @keyframes bounce {
-
-            0%,
-            20%,
-            50%,
-            80%,
-            100% {
-                transform: translateY(0);
-            }
-
-            40% {
-                transform: translateY(-10px);
-            }
-
-            60% {
-                transform: translateY(-5px);
-            }
+        #cursor-ring {
+            width: 36px;
+            height: 36px;
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 99998;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
+            will-change: left, top;
         }
 
-        .game-card:hover .game-overlay {
-            opacity: 1;
+        body.cursor-hover #cursor-dot { width: 12px; height: 12px; background: var(--gold); }
+        body.cursor-hover #cursor-ring { width: 48px; height: 48px; border-color: var(--gold); }
+
+        /* grain */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9997;
+            opacity: 0.028;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 160px 160px;
         }
 
-        .game-card:hover img {
-            transform: scale(1.05);
+        /* ─── Navigation ─── */
+        #navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 500;
+            padding: 1.4rem 0;
+            transition: padding 0.35s ease, background 0.35s ease, border-color 0.35s ease;
+            background: transparent;
+            border-bottom: 1px solid transparent;
         }
 
-        .team-card:hover {
-            transform: translateY(-5px);
+        #navbar.scrolled {
+            padding: 0.85rem 0;
+            background: rgba(6, 6, 6, 0.82);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom-color: var(--border);
         }
 
         .nav-link {
+            font-size: 0.825rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--muted);
+            transition: color 0.25s ease;
             position: relative;
         }
 
@@ -67,328 +123,1432 @@
             content: '';
             position: absolute;
             width: 0;
-            height: 2px;
+            height: 1px;
             bottom: -4px;
             left: 0;
-            background-color: #ffffff;
+            background: var(--gold);
             transition: width 0.3s ease;
         }
 
-        .nav-link:hover::after {
+        .nav-link:hover,
+        .nav-link.active { color: #ffffff; }
+
+        .nav-link:hover::after,
+        .nav-link.active::after { width: 100%; }
+
+        /* ─── Mobile overlay ─── */
+        #mobile-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 450;
+            background: rgba(5,5,5,0.97);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.76,0,0.24,1);
+            pointer-events: none;
+        }
+
+        #mobile-overlay.open {
+            transform: translateX(0);
+            pointer-events: all;
+        }
+
+        .mobile-nav-link {
+            font-size: 3rem;
+            font-weight: 800;
+            color: rgba(255,255,255,0.8);
+            letter-spacing: -0.03em;
+            transition: color 0.2s ease;
+        }
+
+        .mobile-nav-link:hover { color: var(--gold); }
+
+        /* ─── Hero ─── */
+        #hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            background: #050505;
+        }
+
+        /* Slideshow background images — static, pure opacity crossfade */
+        .hero-slide {
+            position: absolute;
+            inset: 0;
             width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            opacity: 0;
+            /* Smooth cubic ease — slow start, slow end, imperceptible crossfade */
+            transition: opacity 3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 0;
+            will-change: opacity;
+        }
+
+        .hero-slide.active { opacity: 1; }
+
+        /* ── Cinematic overlays ── */
+
+        /* 1. Radial vignette: darkens edges, keeps centre alive */
+        .hero-overlay-dark {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background:
+                radial-gradient(ellipse 120% 85% at 55% 45%,
+                    transparent 20%,
+                    rgba(0,0,0,0.45) 65%,
+                    rgba(0,0,0,0.72) 100%),
+                /* top bar darkening for navbar legibility */
+                linear-gradient(to bottom,
+                    rgba(0,0,0,0.45) 0%,
+                    transparent 18%);
+            pointer-events: none;
+        }
+
+        /* 2. Left text-protection + atmospheric deep-blue tint */
+        .hero-overlay-grad {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            background:
+                /* left shield */
+                linear-gradient(to right,
+                    rgba(4,4,8,0.92)  0%,
+                    rgba(4,4,8,0.6)   36%,
+                    rgba(4,4,8,0.18)  58%,
+                    transparent       78%),
+                /* subtle cool-tone grade matching the game screenshots */
+                linear-gradient(155deg,
+                    rgba(6,12,28,0.38)  0%,
+                    transparent         45%,
+                    rgba(4,8,22,0.22)  100%);
+            pointer-events: none;
+        }
+
+        /* 3. Bottom dissolve — tall smooth S-curve into the next section */
+        .hero-overlay-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 52%;
+            z-index: 3;
+            background: linear-gradient(to bottom,
+                transparent             0%,
+                rgba(5,5,5,0.06)       20%,
+                rgba(5,5,5,0.28)       42%,
+                rgba(5,5,5,0.62)       62%,
+                rgba(5,5,5,0.88)       80%,
+                #050505               100%);
+            pointer-events: none;
+        }
+
+        #hero-canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+            opacity: 0.55;
+        }
+
+        #hero-text-panel {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            padding: 9rem 2rem 5rem clamp(2.5rem, 7vw, 9rem);
+        }
+
+        .hero-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-eyebrow-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--gold);
+            border-radius: 50%;
+            animation: pulse-dot 2s ease infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.7); }
+        }
+
+        .hero-headline {
+            font-size: clamp(3rem, 5.5vw, 5.75rem);
+            font-weight: 900;
+            line-height: 1.0;
+            letter-spacing: -0.04em;
+            color: #fff;
+            margin-bottom: 1.75rem;
+        }
+
+        .hero-headline em {
+            font-style: normal;
+            color: transparent;
+            -webkit-text-stroke: 1.5px rgba(255,255,255,0.55);
+        }
+
+        .hero-word {
+            display: inline-block;
+            will-change: transform, opacity;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 10;
+        }
+
+        .scroll-line {
+            width: 1px;
+            height: 40px;
+            background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.4));
+            animation: scroll-anim 2s ease infinite;
+        }
+
+        @keyframes scroll-anim {
+            0%   { transform: scaleY(0); transform-origin: top; }
+            50%  { transform: scaleY(1); transform-origin: top; }
+            51%  { transform: scaleY(1); transform-origin: bottom; }
+            100% { transform: scaleY(0); transform-origin: bottom; }
+        }
+
+        /* ─── Marquee ─── */
+        .marquee-strip {
+            overflow: hidden;
+            background: var(--gold-dim);
+            border-top: 1px solid rgba(201,169,110,0.2);
+            border-bottom: 1px solid rgba(201,169,110,0.2);
+            padding: 0.9rem 0;
+            white-space: nowrap;
+        }
+
+        .marquee-inner {
+            display: flex;
+            width: max-content;
+            gap: 0;
+            animation: marquee 32s linear infinite;
+        }
+
+        .marquee-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 1.2rem;
+            padding: 0 1.5rem;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        .marquee-sep {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--gold);
+            opacity: 0.5;
+            display: inline-block;
+        }
+
+        @keyframes marquee {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-33.333%); }
+        }
+
+        /* ─── Section shared ─── */
+        .section-label {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            position: relative;
+            padding-left: 1.25rem;
+        }
+
+        .section-label::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 14px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+            will-change: transform, opacity;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ─── Games ─── */
+        #games {
+            background: var(--bg);
+            padding: 8rem 0;
+        }
+
+        /* ── Game Card wrapper — scroll pop-in ── */
+        .tilt-wrap {
+            perspective: 1000px;
+        }
+
+        /* 3D pop-in when scrolled into view */
+        #games .tilt-wrap.reveal {
+            opacity: 0;
+            transform: perspective(1000px) rotateX(10deg) translateY(40px) scale(0.97);
+            transition: opacity 0.8s ease, transform 0.85s cubic-bezier(0.22, 1.15, 0.36, 1);
+        }
+
+        #games .tilt-wrap.reveal.visible {
+            opacity: 1;
+            transform: perspective(1000px) rotateX(0deg) translateY(0) scale(1);
+        }
+
+        #games .tilt-wrap.reveal:nth-child(2).visible {
+            transition-delay: 0.13s;
+        }
+
+        .game-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+        }
+
+        .game-card:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 30px 70px rgba(0,0,0,0.6), 0 0 0 1px rgba(201,169,110,0.1);
+        }
+
+        /* Image container — this is the isolation layer */
+        .game-img-wrap {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            border-radius: 0;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .game-img-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+            transform: scale(1);
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform-origin: center center;
+        }
+
+        .game-card:hover .game-img-wrap img {
+            transform: scale(1.06);
+        }
+
+        /* gradient over image */
+        .game-img-wrap::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom,
+                transparent 40%,
+                rgba(8,8,8,0.7) 100%
+            );
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* steam hover overlay */
+        .game-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .game-card:hover .game-overlay { opacity: 1; }
+
+        /* ── Bearstone trailer video ── */
+
+        /* Suppress the CSS-hover overlay for bc-card — JS controls it instead */
+        #bc-card:hover .game-overlay { opacity: 0; }
+        #bc-card .game-overlay {
+            background: rgba(0,0,0,0);
+            transition: opacity 0.5s ease, background 0.6s ease;
+            pointer-events: none;
+        }
+        #bc-card .game-overlay.show {
+            opacity: 1;
+            background: rgba(0,0,0,0.52);
+            pointer-events: all;
+        }
+
+        /* Video element inside the card */
+        .card-trailer {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 2;          /* above gradient::after (z:1), below overlay (z:3) */
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+        }
+        .card-trailer.active { opacity: 1; }
+
+        /* Progress bar */
+        .card-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            z-index: 4;
+            background: rgba(255,255,255,0.1);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .card-progress.visible { opacity: 1; }
+        .card-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: var(--gold);
+            transition: width 0.12s linear;
+        }
+
+        /* Cursor hint when hovering bc-card during trailer */
+        #bc-card { cursor: none; }
+
+        .coming-soon-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 3;
+            padding: 0.3rem 0.85rem;
+            border-radius: 9999px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            background: rgba(201,169,110,0.15);
+            border: 1px solid rgba(201,169,110,0.4);
+            color: var(--gold);
+            backdrop-filter: blur(8px);
+        }
+
+        .game-card-body { padding: 1.5rem 1.75rem 1.75rem; }
+
+        .game-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.65rem;
+        }
+
+        .game-desc {
+            font-size: 0.83rem;
+            color: var(--muted);
+            line-height: 1.75;
+            margin-bottom: 1.1rem;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.25rem 0.7rem;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--muted);
+        }
+
+        .steam-btn {
+            background: rgba(8, 8, 8, 0.75);
+            color: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            font-weight: 600;
+            font-size: 0.78rem;
+            padding: 0.6rem 1.35rem;
+            border-radius: 8px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            letter-spacing: 0.03em;
+            transition: background 0.25s ease, border-color 0.25s ease,
+                        color 0.25s ease, transform 0.2s ease;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            white-space: nowrap;
+        }
+        .steam-btn i { font-size: 1rem; flex-shrink: 0; }
+        .steam-btn:hover {
+            background: rgba(201, 169, 110, 0.15);
+            border-color: var(--gold);
+            color: var(--gold);
+            transform: scale(1.04);
+        }
+
+        /* ─── Team ─── */
+        #team {
+            background: #060606;
+            padding: 8rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #team::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(201,169,110,0.04) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .team-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.75rem 1.25rem;
+            text-align: center;
+            transition: border-color 0.35s ease, box-shadow 0.35s ease;
+            will-change: transform;
+            transform-style: preserve-3d;
+            opacity: 0;
+            transform: translateY(24px);
+        }
+
+        .team-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .team-card:hover {
+            border-color: rgba(201,169,110,0.25);
+            box-shadow: 0 0 0 1px rgba(201,169,110,0.08), 0 16px 40px rgba(0,0,0,0.5);
+        }
+
+        .team-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 1px solid rgba(201,169,110,0.2);
+            object-fit: cover;
+            display: block;
+            margin: 0 auto 1.1rem;
+        }
+
+        .team-name {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.3rem;
+            letter-spacing: -0.01em;
+        }
+
+        .team-role {
+            font-size: 0.7rem;
+            color: var(--gold);
+            font-weight: 500;
+            letter-spacing: 0.02em;
+        }
+
+        /* ─── Contact ─── */
+        #contact {
+            background: var(--bg);
+            padding: 8rem 0;
+            position: relative;
+        }
+
+        #contact::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle at bottom right, rgba(201,169,110,0.04) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.3);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding: 0.6rem 0;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+            border-radius: 0;
+            -webkit-appearance: none;
+        }
+
+        .form-input:focus { border-bottom-color: var(--gold); }
+        .form-input::placeholder { color: rgba(255,255,255,0.15); }
+
+        textarea.form-input {
+            resize: vertical;
+            min-height: 100px;
+            padding-top: 0.4rem;
+        }
+
+        .form-field { margin-bottom: 1.75rem; }
+
+        .btn-submit {
+            background: #fff;
+            color: #000;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.02em;
+            padding: 0.9rem 1.5rem;
+            border-radius: 10px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            transition: background 0.25s ease, transform 0.2s ease;
+        }
+
+        .btn-submit:hover { background: #e8e8e8; transform: translateY(-1px); }
+        .btn-submit:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+        .social-icon-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--muted);
+            font-size: 0.95rem;
+            transition: background 0.22s ease, color 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
+        }
+
+        .social-icon-btn:hover {
+            background: #fff;
+            color: #000;
+            border-color: transparent;
+            transform: translateY(-3px);
+        }
+
+        /* ─── Footer ─── */
+        footer {
+            background: #050505;
+            border-top: 1px solid var(--border);
+            padding: 2.5rem 0;
+        }
+
+        /* ─── Buttons ─── */
+        .btn-primary {
+            background: #fff;
+            color: #000;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.02em;
+            padding: 0.9rem 2rem;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            white-space: nowrap;
+            cursor: none;
+        }
+
+        .btn-primary:hover {
+            background: #e8e8e8;
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.5);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.02em;
+            padding: 0.9rem 2rem;
+            border-radius: 10px;
+            border: 1.5px solid rgba(255,255,255,0.25);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            transition: border-color 0.25s ease, background 0.25s ease, transform 0.2s ease;
+            white-space: nowrap;
+            cursor: none;
+        }
+
+        .btn-outline:hover {
+            border-color: rgba(255,255,255,0.7);
+            background: rgba(255,255,255,0.05);
+            transform: translateY(-2px);
+        }
+
+        /* ─── Services ─── */
+        #services {
+            background: #060606;
+            position: relative;
+        }
+
+        /* Subtle grid overlay */
+        #services::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.022;
+            background-image:
+                linear-gradient(rgba(255,255,255,1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px);
+            background-size: 72px 72px;
+        }
+
+        /* Full-width border wrappers */
+        .services-header-outer {
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            z-index: 1;
+        }
+
+        .services-split-outer {
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            z-index: 1;
+        }
+
+        .services-header {
+            padding: 8rem 0 4rem;
+        }
+
+        .services-headline {
+            font-size: clamp(3.5rem, 7vw, 7rem);
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            line-height: 0.9;
+            color: #fff;
+        }
+
+        .services-headline em {
+            font-style: normal;
+            color: transparent;
+            -webkit-text-stroke: 1.5px rgba(255,255,255,0.3);
+        }
+
+        .services-side-text {
+            max-width: 280px;
+            font-size: 0.85rem;
+            color: var(--muted);
+            line-height: 1.8;
+            padding-bottom: 0.5rem;
+        }
+
+        .services-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-panel {
+            padding: 4rem 2rem 5rem;
+            position: relative;
+            transition: background 0.5s ease;
+            overflow: visible;
+            cursor: default;
+            min-height: 380px;
+        }
+
+        /* Ghost text clip — isolates overflow of the large decorative text */
+        .service-ghost-clip {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Full-viewport hover highlight via ::before */
+        .service-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.013);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .b2b-panel::before { left: -100vw; right: 0; }
+        .b2c-panel::before { left: 0;      right: -100vw; }
+
+        .service-panel:hover::before { opacity: 1; }
+        .service-panel:hover { background: transparent; }
+
+        .service-panel:first-child { border-right: 1px solid var(--border); }
+        /* bottom border moved to .services-split-outer for full-width */
+        .service-panel::after {
+            content: none;
+            bottom: 0; left: 0; right: 0;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* Giant ghost label — decorative background text */
+        .service-ghost {
+            position: absolute;
+            top: 1.5rem;
+            right: -1rem;
+            font-size: clamp(7rem, 16vw, 16rem);
+            font-weight: 900;
+            letter-spacing: -0.06em;
+            line-height: 0.85;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255,255,255,0.05);
+            pointer-events: none;
+            user-select: none;
+            transition: -webkit-text-stroke-color 0.5s ease;
+        }
+
+        .b2c-panel .service-ghost {
+            right: auto;
+            left: -1rem;
+        }
+
+        .service-panel:hover .service-ghost {
+            -webkit-text-stroke-color: rgba(255,255,255,0.09);
+        }
+
+        .service-number {
+            font-size: 0.62rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 2.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .service-number::before {
+            content: '';
+            width: 20px;
+            height: 1px;
+            background: var(--gold);
+            display: block;
+        }
+
+        .service-title {
+            font-size: clamp(1.6rem, 3vw, 2.6rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 1.08;
+            color: #fff;
+            margin-bottom: 1.4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-desc {
+            font-size: 0.875rem;
+            color: var(--muted);
+            line-height: 1.85;
+            max-width: 360px;
+            margin-bottom: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-pill {
+            padding: 0.28rem 0.85rem;
+            border-radius: 9999px;
+            font-size: 0.62rem;
+            font-weight: 600;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.35);
+            transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
+        }
+
+        .service-panel:hover .service-pill {
+            border-color: rgba(201,169,110,0.35);
+            color: var(--gold);
+            background: rgba(201,169,110,0.06);
+        }
+
+        /* Bottom CTA row */
+        .services-cta-row {
+            padding: 2rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .services-cta-text {
+            font-size: 0.8rem;
+            color: var(--muted);
+            letter-spacing: 0.02em;
+        }
+
+        .services-cta-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--gold);
+            transition: gap 0.25s ease, opacity 0.25s ease;
+        }
+
+        .services-cta-link:hover { gap: 0.85rem; opacity: 0.75; }
+
+        @media (max-width: 768px) {
+            .services-split { grid-template-columns: 1fr; }
+            .service-panel:first-child {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+            .service-ghost { font-size: clamp(5rem, 22vw, 7rem); opacity: 0.6; }
+        }
+
+        /* ─── Reduced Motion ─── */
+        @media (prefers-reduced-motion: reduce) {
+            .reveal, .team-card, .hero-word,
+            .game-card, .social-icon-btn,
+            .btn-primary, .btn-outline,
+            .marquee-inner, .scroll-line,
+            .hero-eyebrow-dot {
+                animation: none !important;
+                transition: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+        }
+
+        /* Number counter display */
+        .stat-number {
+            font-size: clamp(3.5rem, 7vw, 7rem);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.04em;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(255,255,255,0.15);
         }
     </style>
 </head>
 
 <body>
-    <!-- Header -->
-    <header class="fixed top-0 left-0 right-0 z-50 bg-black bg-opacity-80 backdrop-blur-md">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center">
-                <img src="https://cloud.holymarmot.com/seafhttp/f/12e54d15fe9a48468fb1/?op=view"
-                    alt="Holy Marmot Logo" class="h-12 w-auto">
-            </div>
+    <!-- Custom cursor -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <!-- Mobile overlay -->
+    <div id="mobile-overlay" aria-hidden="true">
+        <a href="#games" class="mobile-nav-link">Games</a>
+        <a href="#services" class="mobile-nav-link">What We Do</a>
+        <a href="#team" class="mobile-nav-link">Team</a>
+        <a href="#contact" class="mobile-nav-link">Contact</a>
+    </div>
+
+    <!-- ═══ Navigation ═══ -->
+    <header id="navbar">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <img src="https://cloud.holymarmot.com/seafhttp/f/12e54d15fe9a48468fb1/?op=view"
+                alt="Holy Marmot Logo" class="h-9 w-auto">
             <nav class="hidden md:block">
-                <ul class="flex space-x-8">
-                    <li><a href="#games"
-                            class="nav-link text-white hover:text-gray-300 transition-colors duration-300">Games</a>
-                    </li>
-                    <li><a href="#team"
-                            class="nav-link text-white hover:text-gray-300 transition-colors duration-300">Team</a></li>
-                    <li><a href="#contact"
-                            class="nav-link text-white hover:text-gray-300 transition-colors duration-300">Contact</a>
-                    </li>
+                <ul class="flex space-x-10">
+                    <li><a href="#games" class="nav-link" data-section="games">Games</a></li>
+                    <li><a href="#services" class="nav-link" data-section="services">What We Do</a></li>
+                    <li><a href="#team" class="nav-link" data-section="team">Team</a></li>
+                    <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
                 </ul>
             </nav>
-            <div class="md:hidden w-8 h-8 flex items-center justify-center">
-                <button id="mobile-menu-button" class="text-white">
-                    <i class="ri-menu-line ri-2x"></i>
-                </button>
-            </div>
-        </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden bg-black bg-opacity-95 py-4 px-6 md:hidden">
-            <ul class="flex flex-col space-y-4">
-                <li><a href="#games"
-                        class="block text-white hover:text-gray-300 transition-colors duration-300">Games</a></li>
-                <li><a href="#team" class="block text-white hover:text-gray-300 transition-colors duration-300">Team</a>
-                </li>
-                <li><a href="#contact"
-                        class="block text-white hover:text-gray-300 transition-colors duration-300">Contact</a></li>
-            </ul>
+            <button id="mobile-menu-button" class="md:hidden text-white w-8 h-8 flex items-center justify-center"
+                aria-label="Toggle menu">
+                <i class="ri-menu-line ri-xl"></i>
+            </button>
         </div>
     </header>
-    <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center justify-center overflow-hidden"
-        style="background-image: url('https://readdy.ai/api/search-image?query=dark%20atmospheric%20video%20game%20scene%20with%20subtle%20lighting%20effects%2C%20cyberpunk%20aesthetic%2C%20high%20quality%203D%20rendering%2C%20dramatic%20shadows%2C%20futuristic%20environment%2C%20digital%20art%20masterpiece%2C%20professional%20game%20screenshot&width=1920&height=1080&seq=hero1&orientation=landscape'); background-size: cover; background-position: center;">
-        <div class="absolute inset-0 bg-black bg-opacity-60"></div>
-        <div class="container mx-auto px-6 relative z-10">
-            <div class="max-w-3xl">
-                <h1 class="text-5xl md:text-7xl font-bold mb-6 text-white leading-tight">Creating Innovative Gaming
-                    Experiences</h1>
-                <p class="text-xl md:text-2xl text-gray-300 mb-10">Explore digital worlds filled with unique stories and
-                    unforgettable characters.</p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="#games"
-                        class="bg-primary text-black font-semibold px-8 py-3 !rounded-button whitespace-nowrap hover:bg-opacity-90 transition-all duration-300">Discover
-                        Our Games</a>
-                    <a href="https://store.steampowered.com/curator/45294675" target="_blank"
-                        class="bg-transparent border-2 border-white text-white font-semibold px-8 py-3 !rounded-button whitespace-nowrap hover:bg-white hover:bg-opacity-10 transition-all duration-300 flex items-center">
-                        <span>View on Steam</span>
-                        <img src="https://static.readdy.ai/image/e202cf6b20e553777f4ddbbdbd6daac8/bcf21d76c155491ef874da59554dbd66.png"
-                            alt="Steam Logo" class="w-6 h-6 ml-2">
-                    </a>
-                </div>
+
+    <!-- ═══ Hero ═══ -->
+    <section id="hero">
+
+        <!-- Background slideshow images -->
+        <img class="hero-slide active" src="./source/SS.png"  alt="">
+        <img class="hero-slide"        src="./source/SS2.png" alt="">
+        <img class="hero-slide"        src="./source/SS3.png" alt="">
+
+        <!-- Dark base overlay -->
+        <div class="hero-overlay-dark"></div>
+        <!-- Left-side gradient to protect text legibility -->
+        <div class="hero-overlay-grad"></div>
+        <!-- Bottom fade into next section -->
+        <div class="hero-overlay-bottom"></div>
+
+        <!-- Three.js particle canvas -->
+        <canvas id="hero-canvas"></canvas>
+
+        <!-- Content -->
+        <div id="hero-text-panel" class="container mx-auto px-6 md:px-12 lg:px-20">
+            <div class="hero-eyebrow reveal">
+                <span class="hero-eyebrow-dot"></span>
+                Indie Game Studio — Istanbul
+            </div>
+
+            <h1 id="hero-heading" class="hero-headline">
+                Creating<br><em>Innovative</em><br>Gaming<br>Experiences
+            </h1>
+
+            <p class="text-base mb-10 reveal"
+               style="color:var(--muted); max-width:420px; line-height:1.8; transition-delay:0.6s;">
+                Explore digital worlds filled with unique stories and unforgettable characters.
+            </p>
+
+            <div class="flex flex-wrap gap-3 reveal" style="transition-delay:0.75s;">
+                <a href="#games" class="btn-primary">
+                    Discover Our Games
+                    <i class="ri-arrow-right-line"></i>
+                </a>
+                <a href="https://store.steampowered.com/curator/45294675" target="_blank" class="btn-outline">
+                    <img src="https://static.readdy.ai/image/e202cf6b20e553777f4ddbbdbd6daac8/bcf21d76c155491ef874da59554dbd66.png"
+                        alt="" class="w-4 h-4">
+                    View on Steam
+                </a>
             </div>
         </div>
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 scroll-indicator">
-            <div class="w-8 h-12 flex items-center justify-center">
-                <i class="ri-arrow-down-line ri-2x text-white"></i>
-            </div>
+
+        <!-- Scroll indicator -->
+        <div class="scroll-indicator">
+            <span style="font-size:0.6rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.35);">Scroll</span>
+            <div class="scroll-line"></div>
         </div>
     </section>
-    <!-- Games Section -->
-    <section id="games" class="py-20 bg-gradient-to-b from-black to-gray-900">
+
+    <!-- ═══ Marquee ═══ -->
+    <div class="marquee-strip" aria-hidden="true">
+        <div class="marquee-inner">
+            <span class="marquee-item">Indie Game Dev <span class="marquee-sep"></span></span>
+            <span class="marquee-item">Action Horror <span class="marquee-sep"></span></span>
+            <span class="marquee-item">Tower Defense <span class="marquee-sep"></span></span>
+            <span class="marquee-item">Anatolian Mythology <span class="marquee-sep"></span></span>
+            <span class="marquee-item">Holy Marmot Studio <span class="marquee-sep"></span></span>
+            <span class="marquee-item">Istanbul, Turkey <span class="marquee-sep"></span></span>
+            <span class="marquee-item">Bearstone Campsite <span class="marquee-sep"></span></span>
+            <span class="marquee-item">Anathex <span class="marquee-sep"></span></span>
+            <span class="marquee-item">Indie Game Dev <span class="marquee-sep"></span></span>
+            <span class="marquee-item">Action Horror <span class="marquee-sep"></span></span>
+            <span class="marquee-item">Tower Defense <span class="marquee-sep"></span></span>
+            <span class="marquee-item">Anatolian Mythology <span class="marquee-sep"></span></span>
+            <span class="marquee-item">Holy Marmot Studio <span class="marquee-sep"></span></span>
+            <span class="marquee-item">Istanbul, Turkey <span class="marquee-sep"></span></span>
+            <span class="marquee-item">Bearstone Campsite <span class="marquee-sep"></span></span>
+            <span class="marquee-item">Anathex <span class="marquee-sep"></span></span>
+            <span class="marquee-item">Indie Game Dev <span class="marquee-sep"></span></span>
+            <span class="marquee-item">Action Horror <span class="marquee-sep"></span></span>
+            <span class="marquee-item">Tower Defense <span class="marquee-sep"></span></span>
+            <span class="marquee-item">Anatolian Mythology <span class="marquee-sep"></span></span>
+            <span class="marquee-item">Holy Marmot Studio <span class="marquee-sep"></span></span>
+            <span class="marquee-item">Istanbul, Turkey <span class="marquee-sep"></span></span>
+            <span class="marquee-item">Bearstone Campsite <span class="marquee-sep"></span></span>
+            <span class="marquee-item">Anathex <span class="marquee-sep"></span></span>
+        </div>
+    </div>
+
+    <!-- ═══ Games ═══ -->
+    <section id="games">
         <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4">Our Games</h2>
-                <p class="text-gray-400 max-w-2xl mx-auto">We deliver unforgettable gaming experiences filled with
-                    unique stories and innovative mechanics.</p>
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
+                <div>
+                    <span class="section-label reveal">What we make</span>
+                    <h2 class="text-5xl md:text-6xl font-black reveal" style="letter-spacing:-0.035em; line-height:1; transition-delay:0.1s;">
+                        Our<br>Games
+                    </h2>
+                </div>
+                <p class="text-sm reveal" style="color:var(--muted); max-width:300px; line-height:1.75; transition-delay:0.2s; padding-bottom:0.25rem;">
+                    Unforgettable gaming experiences filled with unique stories and innovative mechanics.
+                </p>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Game 1 -->
-                <div
-                    class="game-card bg-gray-800 rounded overflow-hidden transition-all duration-300 shadow-lg hover:shadow-2xl">
-                    <div class="relative overflow-hidden">
-                        <img src="./source/bearstone_campsite.png" alt="Bearstone Campsite"
-                            class="w-full h-64 object-cover transition-transform duration-500">
-                        <div
-                            class="game-overlay absolute inset-0 bg-black bg-opacity-60 opacity-0 transition-opacity duration-300 flex items-center justify-center">
-                            <a href="https://store.steampowered.com/app/3323740/Bearstone_Campsite/" target="_blank"
-                                class="bg-primary text-black font-semibold px-6 py-2 !rounded-button whitespace-nowrap flex items-center">
-                                <span>View on Steam</span>
-                                <img src="https://static.readdy.ai/image/e202cf6b20e553777f4ddbbdbd6daac8/af029efe88fa13807f4e16a45a8d8d68.png"
-                                    alt="Steam Logo" class="w-5 h-5 ml-2">
-                            </a>
+                <div class="tilt-wrap reveal">
+                    <div class="game-card" id="bc-card">
+                        <div class="game-img-wrap">
+                            <!-- Poster (always visible until video activates) -->
+                            <img src="./source/bearstone_campsite.png" alt="Bearstone Campsite" id="bc-poster">
+                            <!-- Trailer — muted, no controls, preload metadata only -->
+                            <video id="bc-video" class="card-trailer" muted playsinline preload="metadata"
+                                src="./source/videos/Bearstone_Campsite_Demo_trailer.mp4"></video>
+                            <!-- CTA overlay — shown by JS after trailer ends -->
+                            <div class="game-overlay" id="bc-overlay">
+                                <a href="https://store.steampowered.com/app/3799220/Bearstone_Campsite_Demo/" target="_blank"
+                                    class="steam-btn">
+                                    <i class="ri-steam-line"></i>
+                                    View on Steam
+                                </a>
+                            </div>
+                            <!-- Progress bar -->
+                            <div class="card-progress" id="bc-progress">
+                                <div class="card-progress-fill" id="bc-fill"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-2xl font-bold mb-2">Bearstone Campsite</h3>
-                        <p class="text-gray-400 mb-4">Bearstone Campsite, a tourism project launched by the state,
-                            closed its doors shortly after a mysterious incident occurred. Now, this abandoned facility
-                            is transforming into a world filled with unknown dangers and forgotten secrets, far beyond
-                            its former glory.</p>
-                        <div class="flex items-center text-sm text-gray-500">
-                            <span class="flex items-center mr-4"><i class="ri-gamepad-line mr-1"></i>
-                                Action-Horror</span>
-                            <span class="flex items-center"><i class="ri-calendar-line mr-1"></i> 2025</span>
+                        <div class="game-card-body">
+                            <div class="game-title">Bearstone Campsite</div>
+                            <p class="game-desc">A tourism project launched by the state, closed its doors after a
+                                mysterious incident. Now this abandoned facility transforms into a world filled with
+                                unknown dangers and forgotten secrets.</p>
+                            <div class="flex gap-2">
+                                <span class="badge"><i class="ri-gamepad-line"></i> Action-Horror</span>
+                                <span class="badge"><i class="ri-calendar-line"></i> 2025</span>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- Game 2 -->
-                <div
-                    class="game-card bg-gray-800 rounded overflow-hidden transition-all duration-300 shadow-lg hover:shadow-2xl">
-                    <div class="relative overflow-hidden">
-                        <img src="./source/upcoming.png" alt="Anathex"
-                            class="w-full h-64 object-cover transition-transform duration-500">
-                    </div>
-                    <div class="p-6">
-                        <h3 class="text-2xl font-bold mb-2">Anathex</h3>
-                        <p class="text-gray-400 mb-4">This project is a four-player co-op tower defense game that is
-                            inspired by Anatolian mythology. Players represent different types of gods and use their
-                            unique abilities to protect their people.</p>
-                        <div class="flex items-center text-sm text-gray-500">
-                            <span class="flex items-center mr-4"><i class="ri-gamepad-line mr-1"></i> Rogue-like</span>
-                            <span class="flex items-center"><i class="ri-calendar-line mr-1"></i> 2025</span>
+                <div class="tilt-wrap reveal" style="transition-delay:0.12s;">
+                    <div class="game-card">
+                        <div class="game-img-wrap">
+                            <img src="./source/upcoming.png" alt="Anathex">
+                            <span class="coming-soon-badge">Coming Soon</span>
+                        </div>
+                        <div class="game-card-body">
+                            <div class="game-title">Anathex</div>
+                            <p class="game-desc">A four-player co-op tower defense game inspired by Anatolian
+                                mythology. Players represent different types of gods and use their unique abilities
+                                to protect their people.</p>
+                            <div class="flex gap-2">
+                                <span class="badge"><i class="ri-gamepad-line"></i> Rogue-like</span>
+                                <span class="badge"><i class="ri-calendar-line"></i> 2025</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="text-center mt-12">
+
+            <div class="mt-12 text-center reveal">
                 <a href="https://store.steampowered.com/curator/45294675" target="_blank"
-                    class="inline-flex items-center text-primary hover:text-white transition-colors duration-300">
-                    <span class="mr-2">Discover all our games on Steam</span>
+                    class="inline-flex items-center gap-2 text-xs font-semibold tracking-widest uppercase"
+                    style="color:var(--gold); transition: opacity 0.25s ease;"
+                    onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
+                    All games on Steam
                     <i class="ri-arrow-right-line"></i>
                 </a>
             </div>
         </div>
     </section>
-    <!-- Team Section -->
-    <section id="team" class="py-20 bg-black">
+
+    <!-- ═══ Services ═══ -->
+    <section id="services">
+
+        <!-- Header — full-width border, content in container -->
+        <div class="services-header-outer">
+            <div class="container mx-auto px-6">
+                <div class="services-header flex flex-col md:flex-row md:items-end justify-between gap-6">
+                    <div>
+                        <span class="section-label reveal">What we do</span>
+                        <h2 class="services-headline reveal" style="transition-delay:0.1s;">
+                            We Build.<br><em>We Partner.</em>
+                        </h2>
+                    </div>
+                    <p class="services-side-text reveal" style="transition-delay:0.2s; padding-bottom:0.25rem;">
+                        Holy Marmot is both a game studio and a creative partner. We ship original titles for players around the world — and we collaborate with studios, publishers, and brands who need experienced hands on their projects.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Split panels — full-width border, content in container -->
+        <div class="services-split-outer">
+            <div class="container mx-auto px-6">
+                <div class="services-split">
+                    <!-- B2B -->
+                    <div class="service-panel b2b-panel reveal">
+                        <div class="service-ghost-clip"><div class="service-ghost">B2B</div></div>
+                        <div class="service-number">01 — Business</div>
+                        <h3 class="service-title">Built for<br>Studios & Brands</h3>
+                        <p class="service-desc">
+                            We partner with studios, publishers, and companies looking for experienced game developers. Whether it's co-development, technical consulting, or end-to-end production — we bring craft, clarity, and commitment to every engagement.
+                        </p>
+                        <div class="service-pills">
+                            <span class="service-pill">Co-Development</span>
+                            <span class="service-pill">Consulting</span>
+                            <span class="service-pill">Custom Tooling</span>
+                            <span class="service-pill">Production Support</span>
+                        </div>
+                    </div>
+
+                    <!-- B2C -->
+                    <div class="service-panel b2c-panel reveal" style="transition-delay:0.12s;">
+                        <div class="service-ghost-clip"><div class="service-ghost">B2C</div></div>
+                        <div class="service-number">02 — Players</div>
+                        <h3 class="service-title">Crafted for<br>Every Player</h3>
+                        <p class="service-desc">
+                            We create original titles with bold narratives and immersive worlds. Every game is an invitation — to explore, to feel, to lose yourself somewhere entirely new. From horror to mythology, we build experiences that stay with you.
+                        </p>
+                        <div class="service-pills">
+                            <span class="service-pill">Original IPs</span>
+                            <span class="service-pill">Indie Titles</span>
+                            <span class="service-pill">Story-Driven</span>
+                            <span class="service-pill">Immersive Worlds</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA row — content in container -->
         <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold mb-4">Our Team</h2>
-                <p class="text-gray-400 max-w-2xl mx-auto">With our passionate and creative team, we design game
-                    experiences that push boundaries.</p>
+            <div class="services-cta-row reveal">
+                <span class="services-cta-text">Interested in working together?</span>
+                <a href="#contact" class="services-cta-link">
+                    Get in touch
+                    <i class="ri-arrow-right-line"></i>
+                </a>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Team Member 1 -->
-                <div class="team-card bg-gray-900 rounded p-6 transition-all duration-300">
-                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-800 flex items-center justify-center">
-                        <img src="./source/emirhan.png" class="ri-user-fill ri-2x text-gray-400" />
-                    </div>
-                    <h3 class="text-xl font-bold text-center mb-1">Emirhan KURŞUN</h3>
-                    <p class="text-primary text-center text-sm mb-4">Co-Founder & Team Lead</p>
+        </div>
+
+    </section>
+
+    <!-- ═══ Team ═══ -->
+    <section id="team">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-14">
+                <span class="section-label reveal">The people behind it</span>
+                <h2 class="text-5xl md:text-6xl font-black reveal" style="letter-spacing:-0.035em; line-height:1.05; margin-top:0.5rem; transition-delay:0.1s;">
+                    <span style="font-weight:300; font-style:italic;">Our</span> Team
+                </h2>
+                <p class="text-sm mt-4 reveal" style="color:var(--muted); max-width:400px; margin:1rem auto 0; line-height:1.75; transition-delay:0.2s;">
+                    Passionate and creative — we design game experiences that push boundaries.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="team-grid">
+                <div class="team-card" data-tilt>
+                    <img src="./source/emirhan.png" alt="Emirhan KURŞUN" class="team-avatar">
+                    <div class="team-name">Emirhan KURŞUN</div>
+                    <div class="team-role">Co-Founder & Team Lead</div>
                 </div>
-                <!-- Team Member 2 -->
-                <div class="team-card bg-gray-900 rounded p-6 transition-all duration-300">
-                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-800 flex items-center justify-center">
-                        <img src="./source/fatih.png" class="ri-user-fill ri-2x text-gray-400" />
-                    </div>
-                    <h3 class="text-xl font-bold text-center mb-1">Murat Fatih DEMİREL</h3>
-                    <p class="text-primary text-center text-sm mb-4">Co-Founder & Project Manager</p>
+                <div class="team-card" data-tilt>
+                    <img src="./source/fatih.png" alt="Murat Fatih DEMİREL" class="team-avatar">
+                    <div class="team-name">Murat Fatih DEMİREL</div>
+                    <div class="team-role">Co-Founder & Project Manager</div>
                 </div>
-                <!-- Team Member 3 -->
-                <div class="team-card bg-gray-900 rounded p-6 transition-all duration-300">
-                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-800 flex items-center justify-center">
-                        <img src="./source/enes.png" class="ri-user-fill ri-2x text-gray-400" />
-                    </div>
-                    <h3 class="text-xl font-bold text-center mb-1">Enes TOLU</h3>
-                    <p class="text-primary text-center text-sm mb-4">Co-Founder & Concept Artist</p>
+                <div class="team-card" data-tilt>
+                    <img src="./source/enes.png" alt="Enes TOLU" class="team-avatar">
+                    <div class="team-name">Enes TOLU</div>
+                    <div class="team-role">Co-Founder & Concept Artist</div>
                 </div>
-                <!-- Team Member 4 -->
-                <div class="team-card bg-gray-900 rounded p-6 transition-all duration-300">
-                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-800 flex items-center justify-center">
-                        <img src="./source/mert.png" class="ri-user-fill ri-2x text-gray-400" />
-                    </div>
-                    <h3 class="text-xl font-bold text-center mb-1">Mert SEVİNÇ</h3>
-                    <p class="text-primary text-center text-sm mb-4">Co-Founder & Character Artist</p>
+                <div class="team-card" data-tilt>
+                    <img src="./source/mert.png" alt="Mert SEVİNÇ" class="team-avatar">
+                    <div class="team-name">Mert SEVİNÇ</div>
+                    <div class="team-role">Co-Founder & Character Artist</div>
                 </div>
-                <!-- Team Member 5 -->
-                <div class="team-card bg-gray-900 rounded p-6 transition-all duration-300">
-                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-800 flex items-center justify-center">
-                        <img src="./source/hakan.png" class="ri-user-fill ri-2x text-gray-400" />
-                    </div>
-                    <h3 class="text-xl font-bold text-center mb-1">Hakan Süleyman BENLİ</h3>
-                    <p class="text-primary text-center text-sm mb-4">Voice Actor</p>
+                <div class="team-card" data-tilt>
+                    <img src="./source/hakan.png" alt="Hakan Süleyman BENLİ" class="team-avatar">
+                    <div class="team-name">Hakan Süleyman BENLİ</div>
+                    <div class="team-role">Voice Actor</div>
                 </div>
-                <!-- Team Member 6 -->
-                <div class="team-card bg-gray-900 rounded p-6 transition-all duration-300">
-                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-800 flex items-center justify-center">
-                        <img src="./source/funda.png" class="ri-user-fill ri-2x text-gray-400" />
-                    </div>
-                    <h3 class="text-xl font-bold text-center mb-1">Funda BAYHAN</h3>
-                    <p class="text-primary text-center text-sm mb-4">Level Designer</p>
+                <div class="team-card" data-tilt>
+                    <img src="./source/funda.png" alt="Funda BAYHAN" class="team-avatar">
+                    <div class="team-name">Funda BAYHAN</div>
+                    <div class="team-role">Level Designer</div>
                 </div>
-                <!-- Team Member 7 -->
-                <div class="team-card bg-gray-900 rounded p-6 transition-all duration-300">
-                    <div class="w-24 h-24 mx-auto mb-6 rounded-full bg-gray-800 flex items-center justify-center">
-                        <img src="./source/elyesa.png" class="ri-user-fill ri-2x text-gray-400" />
-                    </div>
-                    <h3 class="text-xl font-bold text-center mb-1">Emir Elyesa ERSÖZ</h3>
-                    <p class="text-primary text-center text-sm mb-4">Music Composer</p>
+                <div class="team-card" data-tilt>
+                    <img src="./source/elyesa.png" alt="Emir Elyesa ERSÖZ" class="team-avatar">
+                    <div class="team-name">Emir Elyesa ERSÖZ</div>
+                    <div class="team-role">Music Composer</div>
                 </div>
             </div>
-            <div class="mt-16 text-center">
-                <p class="text-gray-400 mb-6">Want to join our creative team?</p>
-                <a href="#contact"
-                    class="bg-transparent border-2 border-primary text-primary font-semibold px-8 py-3 !rounded-button whitespace-nowrap hover:bg-primary hover:text-black transition-all duration-300">Contact
-                    Us</a>
+
+            <div class="mt-16 text-center reveal">
+                <p style="color:var(--muted); font-size:0.85rem; margin-bottom:1.25rem;">Want to join our creative team?</p>
+                <a href="#contact" class="btn-outline" style="display:inline-flex;">Contact Us</a>
             </div>
         </div>
     </section>
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-gradient-to-b from-gray-900 to-black">
+
+    <!-- ═══ Contact ═══ -->
+    <section id="contact">
         <div class="container mx-auto px-6">
-            <div class="max-w-4xl mx-auto">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl font-bold mb-4">Contact Us</h2>
-                    <p class="text-gray-400">Get in touch with us for questions, collaboration offers, or just to say
-                        hello.</p>
+            <div class="max-w-5xl mx-auto">
+                <div class="mb-14">
+                    <span class="section-label reveal">Say hello</span>
+                    <h2 class="text-5xl md:text-6xl font-black reveal" style="letter-spacing:-0.035em; line-height:1; margin-top:0.5rem; transition-delay:0.1s;">
+                        Contact Us
+                    </h2>
                 </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
-                    <div>
+
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-12">
+                    <!-- Form — 3 cols -->
+                    <div class="md:col-span-3 reveal">
                         <form action="https://tools.holymarmot.com/n8n/webhook/5e053363-9f3d-4941-82b0-4cde05467c14"
-                            method="POST" class="space-y-6">
-
-                            <div>
-                                <label for="name" class="block text-sm font-medium text-gray-400 mb-1">Name</label>
-                                <input type="text" id="name" name="name"
-                                    class="w-full bg-gray-800 border-none rounded focus:ring-2 focus:ring-primary p-3 text-white"
-                                    placeholder="Enter your name" required>
+                            method="POST">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6">
+                                <div class="form-field">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" id="name" name="name" class="form-input"
+                                        placeholder="Your name" required>
+                                </div>
+                                <div class="form-field">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" id="email" name="email" class="form-input"
+                                        placeholder="your@email.com" required>
+                                </div>
                             </div>
-
-                            <div>
-                                <label for="email" class="block text-sm font-medium text-gray-400 mb-1">Email</label>
-                                <input type="email" id="email" name="email"
-                                    class="w-full bg-gray-800 border-none rounded focus:ring-2 focus:ring-primary p-3 text-white"
-                                    placeholder="Enter your email" required>
-                            </div>
-
                             <div style="display:none; opacity:0; position:absolute; left:-9999px;">
                                 <label for="fax_number">Fax Number</label>
                                 <input type="text" id="fax_number" name="fax_number" tabindex="-1" autocomplete="off">
                             </div>
-                            <div>
-                                <label for="subject"
-                                    class="block text-sm font-medium text-gray-400 mb-1">Subject</label>
-                                <input type="text" id="subject" name="subject"
-                                    class="w-full bg-gray-800 border-none rounded focus:ring-2 focus:ring-primary p-3 text-white"
-                                    placeholder="Enter subject" required>
+                            <div class="form-field">
+                                <label for="subject" class="form-label">Subject</label>
+                                <input type="text" id="subject" name="subject" class="form-input"
+                                    placeholder="What is it about?" required>
                             </div>
-
-                            <div>
-                                <label for="message"
-                                    class="block text-sm font-medium text-gray-400 mb-1">Message</label>
-                                <textarea id="message" name="message" rows="4" maxlength="500"
-                                    class="w-full bg-gray-800 border-none rounded focus:ring-2 focus:ring-primary p-3 text-white"
-                                    placeholder="Write your message (max 500 characters)" required></textarea>
-                                <div class="text-sm text-gray-400 mt-1">
-                                    <span id="charCount">0</span>/500 characters
+                            <div class="form-field">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea id="message" name="message" rows="5" maxlength="500"
+                                    class="form-input" placeholder="Write your message…" required></textarea>
+                                <div style="font-size:0.7rem; color:rgba(255,255,255,0.25); margin-top:0.4rem;">
+                                    <span id="charCount">0</span>/500
                                 </div>
                             </div>
-
-                            <div id="formMessage" class="hidden text-center p-3 mb-4 rounded"></div>
-
-                            <button type="submit" id="submitBtn"
-                                class="bg-primary text-black font-semibold px-8 py-3 !rounded-button whitespace-nowrap hover:bg-opacity-90 transition-all duration-300 w-full flex items-center justify-center disabled:opacity-70 disabled:cursor-not-allowed">
-                                <span>Send</span>
-                                <i id="loadingIcon" class="ri-loader-4-line animate-spin ml-2 hidden"></i>
+                            <div id="formMessage" class="hidden text-center p-3 mb-4 rounded text-sm"></div>
+                            <button type="submit" id="submitBtn" class="btn-submit">
+                                Send Message
+                                <i id="loadingIcon" class="ri-loader-4-line animate-spin hidden"></i>
                             </button>
                         </form>
                     </div>
-                    <div class="flex flex-col justify-between">
+
+                    <!-- Info — 2 cols -->
+                    <div class="md:col-span-2 flex flex-col justify-between reveal" style="transition-delay:0.15s;">
                         <div>
-                            <h3 class="text-xl font-bold mb-4">Contact Information</h3>
-                            <div class="space-y-4 mb-8">
-                                <div class="flex items-start">
-                                    <div class="w-8 h-8 flex items-center justify-center mr-3 text-primary">
-                                        <i class="ri-map-pin-line ri-lg"></i>
+                            <h3 class="text-base font-bold text-white mb-6" style="letter-spacing:-0.01em;">
+                                Get in touch</h3>
+                            <div class="space-y-5 mb-10">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg flex items-center justify-center"
+                                        style="background:var(--surface); border:1px solid var(--border);">
+                                        <i class="ri-map-pin-line text-sm" style="color:var(--gold);"></i>
                                     </div>
-                                    <p class="text-gray-400">Istanbul</p>
+                                    <span style="color:var(--muted); font-size:0.85rem;">Istanbul, Turkey</span>
                                 </div>
-                                <div class="flex items-start">
-                                    <div class="w-8 h-8 flex items-center justify-center mr-3 text-primary">
-                                        <i class="ri-mail-line ri-lg"></i>
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-lg flex items-center justify-center"
+                                        style="background:var(--surface); border:1px solid var(--border);">
+                                        <i class="ri-mail-line text-sm" style="color:var(--gold);"></i>
                                     </div>
-                                    <p class="text-gray-400">contact@holymarmot.com</p>
+                                    <span style="color:var(--muted); font-size:0.85rem;">contact@holymarmot.com</span>
                                 </div>
                             </div>
                         </div>
+
                         <div>
-                            <h3 class="text-xl font-bold mb-4">Follow Us</h3>
-                            <div class="flex space-x-4">
+                            <p class="text-xs font-semibold tracking-widest uppercase mb-4"
+                                style="color:rgba(255,255,255,0.25);">Follow Us</p>
+                            <div class="flex gap-2 flex-wrap">
                                 <a href="https://store.steampowered.com/curator/45294675" target="_blank"
-                                    class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary hover:text-black transition-all duration-300">
-                                    <i class="ri-steam-line"></i>
-                                </a>
+                                    class="social-icon-btn" aria-label="Steam"><i class="ri-steam-line"></i></a>
                                 <a href="https://github.com/holymarmot" target="_blank"
-                                    class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary hover:text-black transition-all duration-300">
-                                    <i class="ri-github-line"></i>
-                                </a>
+                                    class="social-icon-btn" aria-label="GitHub"><i class="ri-github-line"></i></a>
                                 <a href="https://www.reddit.com/r/BearstoneCampsite/" target="_blank"
-                                    class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary hover:text-black transition-all duration-300">
-                                    <i class="ri-reddit-line"></i>
-                                </a>
+                                    class="social-icon-btn" aria-label="Reddit"><i class="ri-reddit-line"></i></a>
                                 <a href="https://www.instagram.com/holymarmot/" target="_blank"
-                                    class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary hover:text-black transition-all duration-300">
-                                    <i class="ri-instagram-line"></i>
-                                </a>
+                                    class="social-icon-btn" aria-label="Instagram"><i class="ri-instagram-line"></i></a>
                                 <a href="https://discord.gg/Xpucjyvmq7" target="_blank"
-                                    class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-primary hover:text-black transition-all duration-300">
-                                    <i class="ri-discord-line"></i>
-                                </a>
+                                    class="social-icon-btn" aria-label="Discord"><i class="ri-discord-line"></i></a>
                             </div>
                         </div>
                     </div>
@@ -396,171 +1556,593 @@
             </div>
         </div>
     </section>
-    <!-- Footer -->
-    <footer class="bg-black py-12">
+
+    <!-- ═══ Footer ═══ -->
+    <footer>
         <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center">
-                <div class="mb-6 md:mb-0">
-                    <img src="https://cloud.holymarmot.com/seafhttp/f/12e54d15fe9a48468fb1/?op=view"
-                        alt="Holy Marmot Logo" class="h-10 w-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <img src="https://cloud.holymarmot.com/seafhttp/f/12e54d15fe9a48468fb1/?op=view"
+                    alt="Holy Marmot Logo" class="h-8 w-auto" style="opacity:0.65;">
+                <div class="flex gap-8">
+                    <a href="#games" class="text-xs font-semibold uppercase tracking-widest"
+                        style="color:rgba(255,255,255,0.35); transition:color 0.2s;"
+                        onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Games</a>
+                    <a href="#team" class="text-xs font-semibold uppercase tracking-widest"
+                        style="color:rgba(255,255,255,0.35); transition:color 0.2s;"
+                        onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Team</a>
+                    <a href="#contact" class="text-xs font-semibold uppercase tracking-widest"
+                        style="color:rgba(255,255,255,0.35); transition:color 0.2s;"
+                        onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Contact</a>
                 </div>
-                <div class="flex flex-wrap justify-center gap-8 mb-6 md:mb-0">
-                    <a href="#games" class="text-gray-400 hover:text-white transition-colors duration-300">Games</a>
-                    <a href="#team" class="text-gray-400 hover:text-white transition-colors duration-300">Team</a>
-                    <a href="#contact" class="text-gray-400 hover:text-white transition-colors duration-300">Contact</a>
-                </div>
-                <div class="flex space-x-4">
+                <div class="flex gap-4">
                     <a href="https://store.steampowered.com/curator/45294675" target="_blank"
-                        class="text-gray-400 hover:text-white transition-colors duration-300">
-                        <i class="ri-steam-line ri-lg"></i>
-                    </a>
+                        style="color:rgba(255,255,255,0.3); transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">
+                        <i class="ri-steam-line ri-lg"></i></a>
                     <a href="https://www.instagram.com/holymarmot/" target="_blank"
-                        class="text-gray-400 hover:text-white transition-colors duration-300">
-                        <i class="ri-instagram-line ri-lg"></i>
-                    </a>
+                        style="color:rgba(255,255,255,0.3); transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">
+                        <i class="ri-instagram-line ri-lg"></i></a>
                     <a href="https://discord.gg/Xpucjyvmq7" target="_blank"
-                        class="text-gray-400 hover:text-white transition-colors duration-300">
-                        <i class="ri-discord-line ri-lg"></i>
-                    </a>
+                        style="color:rgba(255,255,255,0.3); transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">
+                        <i class="ri-discord-line ri-lg"></i></a>
                     <a href="https://www.reddit.com/r/BearstoneCampsite/" target="_blank"
-                        class="text-gray-400 hover:text-white transition-colors duration-300">
-                        <i class="ri-reddit-line ri-lg"></i>
-                    </a>
+                        style="color:rgba(255,255,255,0.3); transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">
+                        <i class="ri-reddit-line ri-lg"></i></a>
                     <a href="https://github.com/holymarmot" target="_blank"
-                        class="text-gray-400 hover:text-white transition-colors duration-300">
-                        <i class="ri-github-line ri-lg"></i>
-                    </a>
+                        style="color:rgba(255,255,255,0.3); transition:color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.3)'">
+                        <i class="ri-github-line ri-lg"></i></a>
                 </div>
             </div>
-            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
-                <p>© 2025 Holy Marmot. All rights reserved.</p>
+            <div class="mt-6 pt-6 text-center" style="border-top:1px solid rgba(255,255,255,0.05);">
+                <p style="font-size:0.7rem; color:rgba(255,255,255,0.18);">© 2026 Holy Marmot. All rights reserved.</p>
             </div>
         </div>
     </footer>
-    <script id="mobile-menu-script">
-        document.addEventListener('DOMContentLoaded', function () {
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            mobileMenuButton.addEventListener('click', function () {
-                mobileMenu.classList.toggle('hidden');
-                // Change icon based on menu state
-                const icon = mobileMenuButton.querySelector('i');
-                if (mobileMenu.classList.contains('hidden')) {
-                    icon.classList.remove('ri-close-line');
-                    icon.classList.add('ri-menu-line');
-                } else {
-                    icon.classList.remove('ri-menu-line');
-                    icon.classList.add('ri-close-line');
-                }
-            });
-            // Close mobile menu when clicking on a link
-            const mobileLinks = mobileMenu.querySelectorAll('a');
-            mobileLinks.forEach(link => {
-                link.addEventListener('click', function () {
-                    mobileMenu.classList.add('hidden');
-                    const icon = mobileMenuButton.querySelector('i');
-                    icon.classList.remove('ri-close-line');
-                    icon.classList.add('ri-menu-line');
-                });
-            });
-        });
+
+
+    <!-- ╔══════════════════════════════════════════════════╗
+         ║                  SCRIPTS                        ║
+         ╚══════════════════════════════════════════════════╝ -->
+
+    <!-- Page load -->
+    <script>
+        window.addEventListener('load', function () { document.body.classList.add('loaded'); });
     </script>
-    <script id="form-validation-script">
-        document.addEventListener('DOMContentLoaded', function () {
-            const contactForm = document.querySelector('form');
-            const messageInput = document.getElementById('message');
-            const charCount = document.getElementById('charCount');
-            const formMessage = document.getElementById('formMessage');
 
-            // Yeni eklenen element seçimleri
-            const submitBtn = document.getElementById('submitBtn');
-            const loadingIcon = document.getElementById('loadingIcon');
+    <!-- ─── Three.js Hero ─── -->
+    <script>
+        (function () {
+            var canvas = document.getElementById('hero-canvas');
+            var W = window.innerWidth, H = window.innerHeight;
 
-            function showMessage(message, isError = false) {
-                formMessage.textContent = message;
-                formMessage.classList.remove('hidden', 'bg-green-500', 'bg-red-500', 'text-white');
-                formMessage.classList.add(isError ? 'bg-red-500' : 'bg-green-500', 'text-white');
-                setTimeout(() => {
-                    formMessage.classList.add('hidden');
-                }, 5000);
+            var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.setSize(W, H);
+            renderer.setClearColor(0x000000, 0);
+
+            var scene = new THREE.Scene();
+            var camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 500);
+            camera.position.z = 22;
+
+            // ── Central large wireframe icosahedron (right panel focus) ──
+            var bigGeo = new THREE.IcosahedronGeometry(5.5, 1);
+            var bigMat = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, opacity: 0.07, transparent: true });
+            var bigMesh = new THREE.Mesh(bigGeo, bigMat);
+            bigMesh.position.set(8, 0, -2);
+            scene.add(bigMesh);
+
+            // Inner solid
+            var innerGeo = new THREE.IcosahedronGeometry(3.8, 1);
+            var innerMat = new THREE.MeshBasicMaterial({ color: 0xc9a96e, wireframe: true, opacity: 0.05, transparent: true });
+            var innerMesh = new THREE.Mesh(innerGeo, innerMat);
+            innerMesh.position.set(8, 0, -2);
+            scene.add(innerMesh);
+
+            // ── Ring of smaller satellites orbiting big mesh ──
+            var satellites = [];
+            var satCount = 6;
+            var satGeo = new THREE.IcosahedronGeometry(0.35, 0);
+            for (var i = 0; i < satCount; i++) {
+                var angle = (i / satCount) * Math.PI * 2;
+                var satMat = new THREE.MeshBasicMaterial({
+                    color: 0xffffff,
+                    wireframe: true,
+                    opacity: 0.25,
+                    transparent: true
+                });
+                var sat = new THREE.Mesh(satGeo, satMat);
+                sat.userData.angle = angle;
+                sat.userData.radius = 7.5;
+                sat.userData.speed = 0.003 + Math.random() * 0.002;
+                sat.userData.yOff = (Math.random() - 0.5) * 3;
+                scene.add(sat);
+                satellites.push(sat);
             }
 
-            messageInput.addEventListener('input', function () {
-                const currentLength = this.value.length;
-                charCount.textContent = currentLength;
-                if (currentLength > 500) {
-                    this.value = this.value.substring(0, 500);
-                    charCount.textContent = 500;
+            // ── Background particle field ──
+            var particles = [];
+            var pGeo = new THREE.IcosahedronGeometry(0.15, 0);
+            for (var j = 0; j < 55; j++) {
+                var pMat = new THREE.MeshBasicMaterial({
+                    color: 0xffffff,
+                    wireframe: true,
+                    opacity: Math.random() * 0.12 + 0.04,
+                    transparent: true
+                });
+                var p = new THREE.Mesh(pGeo, pMat);
+                p.position.set(
+                    (Math.random() - 0.5) * 50,
+                    (Math.random() - 0.5) * 30,
+                    (Math.random() - 0.5) * 15 - 5
+                );
+                p.scale.setScalar(Math.random() * 1.8 + 0.5);
+                p.userData.rx = (Math.random() - 0.5) * 0.007;
+                p.userData.ry = (Math.random() - 0.5) * 0.007;
+                scene.add(p);
+                particles.push(p);
+            }
+
+            // ── Connecting lines (edges between particles) ──
+            var lineGeo = new THREE.BufferGeometry();
+            var linePositions = [];
+            var linePairs = [];
+            for (var a = 0; a < particles.length; a++) {
+                for (var b = a + 1; b < particles.length; b++) {
+                    var dist = particles[a].position.distanceTo(particles[b].position);
+                    if (dist < 9 && linePairs.length < 60) {
+                        linePairs.push([a, b]);
+                    }
                 }
+            }
+            for (var k = 0; k < linePairs.length * 2; k++) linePositions.push(0, 0, 0);
+            lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+            var lineMat = new THREE.LineBasicMaterial({ color: 0xffffff, opacity: 0.04, transparent: true });
+            var lineSegments = new THREE.LineSegments(lineGeo, lineMat);
+            scene.add(lineSegments);
+
+            var mouseX = 0, mouseY = 0, smX = 0, smY = 0;
+            document.addEventListener('mousemove', function (e) {
+                mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+                mouseY = -(e.clientY / window.innerHeight - 0.5) * 2;
+            }, { passive: true });
+
+            var clock = new THREE.Clock();
+
+            function animate() {
+                requestAnimationFrame(animate);
+                var t = clock.getElapsedTime();
+
+                smX += (mouseX - smX) * 0.025;
+                smY += (mouseY - smY) * 0.025;
+
+                camera.position.x = smX * 2 + Math.sin(t * 0.12) * 1.5;
+                camera.position.y = smY * 1.5 + Math.cos(t * 0.1) * 1;
+                camera.lookAt(scene.position);
+
+                // Rotate main meshes
+                bigMesh.rotation.x += 0.0025;
+                bigMesh.rotation.y += 0.004;
+                innerMesh.rotation.x -= 0.003;
+                innerMesh.rotation.y -= 0.005;
+
+                // Orbit satellites
+                for (var i = 0; i < satellites.length; i++) {
+                    satellites[i].userData.angle += satellites[i].userData.speed;
+                    var ang = satellites[i].userData.angle;
+                    var r = satellites[i].userData.radius;
+                    satellites[i].position.set(
+                        8 + Math.cos(ang) * r,
+                        satellites[i].userData.yOff + Math.sin(ang * 0.5) * 1.5,
+                        -2 + Math.sin(ang) * r * 0.5
+                    );
+                    satellites[i].rotation.x += 0.01;
+                    satellites[i].rotation.y += 0.008;
+                }
+
+                // Rotate background particles
+                for (var j = 0; j < particles.length; j++) {
+                    particles[j].rotation.x += particles[j].userData.rx;
+                    particles[j].rotation.y += particles[j].userData.ry;
+                }
+
+                // Update connecting lines
+                var pos = lineGeo.attributes.position.array;
+                for (var k = 0; k < linePairs.length; k++) {
+                    var pa = particles[linePairs[k][0]].position;
+                    var pb = particles[linePairs[k][1]].position;
+                    pos[k * 6 + 0] = pa.x; pos[k * 6 + 1] = pa.y; pos[k * 6 + 2] = pa.z;
+                    pos[k * 6 + 3] = pb.x; pos[k * 6 + 4] = pb.y; pos[k * 6 + 5] = pb.z;
+                }
+                lineGeo.attributes.position.needsUpdate = true;
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            window.addEventListener('resize', function () {
+                W = window.innerWidth; H = window.innerHeight;
+                renderer.setSize(W, H);
+                camera.aspect = W / H;
+                camera.updateProjectionMatrix();
+            }, { passive: true });
+        })();
+    </script>
+
+    <!-- ─── Hero Slideshow ─── -->
+    <script>
+        (function () {
+            var slides = document.querySelectorAll('.hero-slide');
+            var current = 0;
+            var INTERVAL = 7000;
+
+            function goTo(idx) {
+                slides[current].classList.remove('active');
+                current = idx;
+                slides[current].classList.add('active');
+            }
+
+            var timer = setInterval(function () {
+                goTo((current + 1) % slides.length);
+            }, INTERVAL);
+
+            var hero = document.getElementById('hero');
+            hero.addEventListener('mouseenter', function () { clearInterval(timer); });
+            hero.addEventListener('mouseleave', function () {
+                clearInterval(timer);
+                timer = setInterval(function () { goTo((current + 1) % slides.length); }, INTERVAL);
             });
+        })();
+    </script>
 
-            contactForm.addEventListener('submit', async function (e) {
-                e.preventDefault();
+    <!-- ─── GSAP hero headline ─── -->
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+        (function () {
+            var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            var heading = document.getElementById('hero-heading');
+            // Wrap each line's words
+            var html = heading.innerHTML;
+            var lines = html.split('<br>');
+            heading.innerHTML = lines.map(function (line) {
+                return '<span class="hero-line" style="display:block; overflow:hidden;">' +
+                    '<span class="hero-word" style="display:inline-block;' +
+                    (prefersReduced ? '' : 'opacity:0;transform:translateY(100%);') +
+                    'will-change:transform,opacity;">' + line + '</span></span>';
+            }).join('');
 
-                if (messageInput.value.length > 500) {
-                    showMessage('Message cannot exceed 500 characters', true);
-                    return;
+            if (!prefersReduced) {
+                gsap.to('.hero-word', {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.9,
+                    stagger: 0.1,
+                    ease: 'power4.out',
+                    delay: 0.2
+                });
+            }
+        })();
+    </script>
+
+    <!-- ─── Scroll reveal ─── -->
+    <script>
+        (function () {
+            var obs = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+                });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(function (el) { obs.observe(el); });
+
+            // Team stagger
+            var tObs = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (entry.isIntersecting) {
+                        var d = parseInt(entry.target.dataset.sd) || 0;
+                        setTimeout(function () { entry.target.classList.add('visible'); }, d);
+                        tObs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.08 });
+            document.querySelectorAll('.team-card').forEach(function (c, i) {
+                c.dataset.sd = i * 70;
+                tObs.observe(c);
+            });
+        })();
+    </script>
+
+    <!-- ─── 3D Tilt — team cards only ─── -->
+    <script>
+        (function () {
+            var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (prefersReduced) return;
+
+            // Only team cards get tilt; game cards use scroll pop-in instead
+            document.querySelectorAll('#team [data-tilt]').forEach(function (card) {
+                var tiltX = 0, tiltY = 0, lerpX = 0, lerpY = 0, raf = null;
+
+                function lerp(a, b, t) { return a + (b - a) * t; }
+
+                function tick() {
+                    lerpX = lerp(lerpX, tiltX, 0.1);
+                    lerpY = lerp(lerpY, tiltY, 0.1);
+                    card.style.transform = 'perspective(900px) rotateX(' + lerpX + 'deg) rotateY(' + lerpY + 'deg) translateZ(4px)';
+                    raf = requestAnimationFrame(tick);
                 }
 
-                // 1. İşlem Başlıyor: Butonu kilitle ve loading ikonunu göster
-                submitBtn.disabled = true;
-                loadingIcon.classList.remove('hidden');
+                card.addEventListener('mouseenter', function () { raf = requestAnimationFrame(tick); });
 
-                const formData = new FormData(this);
-                const data = {};
-                formData.forEach((value, key) => {
-                    data[key] = value;
+                card.addEventListener('mousemove', function (e) {
+                    var rect = card.getBoundingClientRect();
+                    var x = (e.clientX - rect.left) / rect.width - 0.5;
+                    var y = (e.clientY - rect.top) / rect.height - 0.5;
+                    tiltY = x * 10;
+                    tiltX = -y * 8;
                 });
 
-                try {
-                    const response = await fetch(this.action, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: new URLSearchParams(data).toString()
-                    });
-
-                    if (response.ok) {
-                        showMessage('Message sent successfully!');
-                        this.reset();
-                        charCount.textContent = '0';
-                    } else {
-                        if (response.status == 503) {
-                            showMessage('Servers are busy. You can mail us at contact@holymarmot.com', true);
-                        } else {
-                            showMessage('Failed on verification. Please try again with different message.', true);
-                        }
-                    }
-                } catch (error) {
-                    showMessage('An error occurred. Please try again later.', true);
-                } finally {
-                    // 2. İşlem Bitti (Başarılı veya Hatalı): Butonu aç ve ikonu gizle
-                    submitBtn.disabled = false;
-                    loadingIcon.classList.add('hidden');
-                }
+                card.addEventListener('mouseleave', function () {
+                    tiltX = 0; tiltY = 0;
+                    setTimeout(function () {
+                        cancelAnimationFrame(raf);
+                        card.style.transform = '';
+                        lerpX = 0; lerpY = 0;
+                    }, 500);
+                });
             });
-        });
+        })();
     </script>
-    <script id="smooth-scroll-script">
-        document.addEventListener('DOMContentLoaded', function () {
-            // Smooth scrolling for anchor links
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80, // Adjust for header height
-                            behavior: 'smooth'
+
+    <!-- ─── Navbar scroll + active section ─── -->
+    <script>
+        (function () {
+            var navbar = document.getElementById('navbar');
+            var links = document.querySelectorAll('.nav-link[data-section]');
+            var sections = document.querySelectorAll('section[id]');
+
+            window.addEventListener('scroll', function () {
+                navbar.classList.toggle('scrolled', window.scrollY > 60);
+            }, { passive: true });
+
+            var sObs = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    if (e.isIntersecting) {
+                        links.forEach(function (l) {
+                            l.classList.toggle('active', l.dataset.section === e.target.id);
                         });
                     }
                 });
+            }, { threshold: 0.35 });
+            sections.forEach(function (s) { sObs.observe(s); });
+        })();
+    </script>
+
+    <!-- ─── Custom cursor ─── -->
+    <script>
+        (function () {
+            var dot = document.getElementById('cursor-dot');
+            var ring = document.getElementById('cursor-ring');
+            var dx = 0, dy = 0, rx = 0, ry = 0;
+
+            document.addEventListener('mousemove', function (e) {
+                dx = e.clientX; dy = e.clientY;
+                dot.style.left = dx + 'px';
+                dot.style.top = dy + 'px';
+            }, { passive: true });
+
+            // ring lags behind
+            (function animRing() {
+                rx += (dx - rx) * 0.14;
+                ry += (dy - ry) * 0.14;
+                ring.style.left = rx + 'px';
+                ring.style.top = ry + 'px';
+                requestAnimationFrame(animRing);
+            })();
+
+            // hover state
+            var hoverEls = document.querySelectorAll('a, button, [data-tilt]');
+            hoverEls.forEach(function (el) {
+                el.addEventListener('mouseenter', function () { document.body.classList.add('cursor-hover'); });
+                el.addEventListener('mouseleave', function () { document.body.classList.remove('cursor-hover'); });
+            });
+        })();
+    </script>
+
+    <!-- ─── Mobile menu ─── -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var btn = document.getElementById('mobile-menu-button');
+            var overlay = document.getElementById('mobile-overlay');
+            var icon = btn.querySelector('i');
+            var open = false;
+
+            function toggle() {
+                open = !open;
+                overlay.classList.toggle('open', open);
+                overlay.setAttribute('aria-hidden', String(!open));
+                icon.className = open ? 'ri-close-line ri-xl' : 'ri-menu-line ri-xl';
+            }
+
+            btn.addEventListener('click', toggle);
+            overlay.querySelectorAll('a').forEach(function (a) {
+                a.addEventListener('click', function () { if (open) toggle(); });
             });
         });
     </script>
-</body>
 
+    <!-- ─── Form: char count + submit ─── -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var form = document.querySelector('form');
+            var msg = document.getElementById('message');
+            var count = document.getElementById('charCount');
+            var notice = document.getElementById('formMessage');
+            var btn = document.getElementById('submitBtn');
+            var spinner = document.getElementById('loadingIcon');
+
+            function flash(text, err) {
+                notice.textContent = text;
+                notice.classList.remove('hidden', 'bg-green-600', 'bg-red-600', 'text-white');
+                notice.classList.add(err ? 'bg-red-600' : 'bg-green-600', 'text-white');
+                setTimeout(function () { notice.classList.add('hidden'); }, 5000);
+            }
+
+            msg.addEventListener('input', function () {
+                var l = this.value.length;
+                count.textContent = l > 500 ? (this.value = this.value.slice(0, 500), 500) : l;
+            });
+
+            form.addEventListener('submit', async function (e) {
+                e.preventDefault();
+                if (msg.value.length > 500) { flash('Message cannot exceed 500 characters', true); return; }
+                btn.disabled = true;
+                spinner.classList.remove('hidden');
+                var data = {};
+                new FormData(this).forEach(function (v, k) { data[k] = v; });
+                try {
+                    var res = await fetch(this.action, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: new URLSearchParams(data).toString()
+                    });
+                    if (res.ok) { flash('Message sent successfully!', false); this.reset(); count.textContent = '0'; }
+                    else if (res.status === 503) flash('Servers are busy. You can mail us at contact@holymarmot.com', true);
+                    else flash('Failed on verification. Please try again with different message.', true);
+                } catch (_) { flash('An error occurred. Please try again later.', true); }
+                finally { btn.disabled = false; spinner.classList.add('hidden'); }
+            });
+        });
+    </script>
+
+    <!-- ─── Bearstone Campsite trailer ─── -->
+    <script>
+        (function () {
+            var card     = document.getElementById('bc-card');
+            var video    = document.getElementById('bc-video');
+            var overlay  = document.getElementById('bc-overlay');
+            var progress = document.getElementById('bc-progress');
+            var fill     = document.getElementById('bc-fill');
+
+            var STEAM_URL    = 'https://store.steampowered.com/app/3799220/Bearstone_Campsite_Demo/';
+            var CLIP_PLAY_MS = 2000;   // ms of actual playback per segment
+            var TOTAL_CLIPS  = 10;     // 10 × 2s = 20s total
+
+            var clips      = [];
+            var clipIndex  = 0;
+            var clipTimer  = null;
+            var hoverTimer = null;
+            var completed  = false;
+
+            /* ── Build clip start-times spread across the video ── */
+            function buildClips(dur) {
+                clips = [];
+                for (var i = 0; i < TOTAL_CLIPS; i++) {
+                    // Skip first 8% (usually title card) and last 4%
+                    var pct = 0.08 + (i / (TOTAL_CLIPS - 1)) * 0.88;
+                    clips.push(parseFloat((pct * dur).toFixed(2)));
+                }
+            }
+
+            video.addEventListener('loadedmetadata', function () {
+                buildClips(video.duration);
+            });
+
+            /* ── Update gold progress bar ── */
+            function setProgress(idx) {
+                fill.style.width = ((idx / TOTAL_CLIPS) * 100) + '%';
+            }
+
+            /* ── Play one segment, then schedule the next ── */
+            function playSegment() {
+                if (clipIndex >= TOTAL_CLIPS) { onComplete(); return; }
+                seekAndPlay();
+            }
+
+            function seekAndPlay() {
+                video.currentTime = clips[clipIndex];
+                video.play().catch(function () {});
+                setProgress(clipIndex + 1);
+
+                clipTimer = setTimeout(function () {
+                    video.pause();
+                    clipIndex++;
+                    playSegment();
+                }, CLIP_PLAY_MS);
+            }
+
+            /* ── Start the trailer ── */
+            function startTrailer() {
+                if (completed) return;
+                clipIndex = 0;
+                video.classList.add('active');
+                progress.classList.add('visible');
+                setProgress(0);
+                playSegment();
+            }
+
+            /* ── Reset everything (hover-out before completion) ── */
+            function reset() {
+                clearTimeout(clipTimer);
+                clearTimeout(hoverTimer);
+                video.pause();
+                video.classList.remove('active');
+                video.style.opacity = '';
+                progress.classList.remove('visible');
+                fill.style.width = '0%';
+                overlay.classList.remove('show');
+                clipIndex = 0;
+                completed = false;
+            }
+
+            /* ── All segments played → show Steam CTA ── */
+            function onComplete() {
+                completed = true;
+                setProgress(TOTAL_CLIPS);
+                // Small pause so the user sees 100% fill, then reveal CTA
+                setTimeout(function () {
+                    overlay.classList.add('show');
+                }, 280);
+            }
+
+            /* ── Mouse enter: 350ms intent delay before trailer starts ── */
+            card.addEventListener('mouseenter', function () {
+                if (completed) return;
+                hoverTimer = setTimeout(startTrailer, 350);
+            });
+
+            /* ── Mouse leave ── */
+            card.addEventListener('mouseleave', function () {
+                clearTimeout(hoverTimer);
+                if (!completed) {
+                    reset();
+                } else {
+                    // Keep CTA visible while cursor is on the card;
+                    // reset when they fully leave so re-hover plays fresh
+                    setTimeout(reset, 200);
+                }
+            });
+
+            /* ── Click during trailer → Steam (unless clicking the button itself) ── */
+            card.addEventListener('click', function (e) {
+                if (!e.target.closest('a')) {
+                    window.open(STEAM_URL, '_blank');
+                }
+            });
+        })();
+    </script>
+
+    <!-- ─── Smooth scroll ─── -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelectorAll('a[href^="#"]').forEach(function (a) {
+                a.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    var id = this.getAttribute('href');
+                    if (id === '#') return;
+                    var el = document.querySelector(id);
+                    if (el) window.scrollTo({ top: el.offsetTop - 70, behavior: 'smooth' });
+                });
+            });
+        });
+    </script>
+
+</body>
 </html>

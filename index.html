@@ -155,7 +155,7 @@
     <link rel="dns-prefetch" href="https://cloud.holymarmot.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" href="./source/SS.png" as="image" fetchpriority="high">
+    <link rel="preload" href="./source/hero/SS.png" as="image" fetchpriority="high">
     <link rel="icon" type="image/x-icon" href="./source/icon.png">
     <link rel="apple-touch-icon" href="./source/icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
@@ -177,19 +177,15 @@
             --muted: rgba(255,255,255,0.42);
         }
 
-        html { scroll-behavior: smooth; overflow-x: hidden; }
+        html { scroll-behavior: smooth; overflow-x: hidden; background-color: #080808; }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg);
             color: var(--text);
-            opacity: 0;
-            transition: opacity 0.5s ease;
             overflow-x: hidden;
             cursor: none;
         }
-
-        body.loaded { opacity: 1; }
 
         /* ─── Custom Cursor ─── */
         #cursor-dot {
@@ -950,6 +946,181 @@
             transform: translateY(-3px);
         }
 
+        /* ─── Discord Community ─── */
+        #discord {
+            background: var(--bg);
+            padding: 8rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* top-left gold wash */
+        #discord::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(201,169,110,0.09) 0%, transparent 52%);
+            pointer-events: none;
+        }
+
+        /* noise layer */
+        #discord::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.038;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 160px 160px;
+        }
+
+        .discord-invite-wrap {
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .discord-invite-card {
+            position: relative;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: border-color 0.35s ease, transform 0.35s ease;
+        }
+
+        /* subtle inner gold light at top-left */
+        .discord-invite-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 320px;
+            height: 220px;
+            background: radial-gradient(ellipse at 0% 0%, rgba(201,169,110,0.07) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .discord-invite-card:hover {
+            border-color: rgba(201,169,110,0.22);
+            transform: translateY(-3px);
+        }
+
+        .discord-card-inner {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            padding: 3rem 3.5rem;
+            flex-wrap: wrap;
+        }
+
+        .discord-server-info {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .discord-icon-wrap {
+            width: 68px;
+            height: 68px;
+            background: #000;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .discord-server-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.35rem;
+        }
+
+        .discord-server-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--muted);
+        }
+
+        .discord-dot.online {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #3ba55c;
+            flex-shrink: 0;
+        }
+
+        .discord-card-right {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .discord-features {
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+
+        .discord-feature {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.82rem;
+            color: var(--muted);
+        }
+
+        .discord-feature i {
+            color: var(--gold);
+            font-size: 0.9rem;
+        }
+
+        .discord-join-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: #5865F2;
+            color: #fff;
+            font-size: 0.875rem;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            padding: 0.85rem 1.9rem;
+            border-radius: 10px;
+            white-space: nowrap;
+            transition: background 0.25s ease, transform 0.25s ease;
+        }
+
+        .discord-join-btn:hover {
+            background: #4752C4;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 640px) {
+            .discord-card-inner {
+                padding: 2rem;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .discord-card-right {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.5rem;
+                width: 100%;
+            }
+            .discord-join-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
         /* ─── Footer ─── */
         footer {
             background: #050505;
@@ -1351,6 +1522,7 @@
         <a href="#games" class="mobile-nav-link">Games</a>
         <a href="#services" class="mobile-nav-link">What We Do</a>
         <a href="#team" class="mobile-nav-link">Team</a>
+        <a href="#discord" class="mobile-nav-link">Community</a>
         <a href="#contact" class="mobile-nav-link">Contact</a>
     </div>
 
@@ -1364,6 +1536,7 @@
                     <li><a href="#games" class="nav-link" data-section="games">Games</a></li>
                     <li><a href="#services" class="nav-link" data-section="services">What We Do</a></li>
                     <li><a href="#team" class="nav-link" data-section="team">Team</a></li>
+                    <li><a href="#discord" class="nav-link" data-section="discord">Community</a></li>
                     <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
                 </ul>
             </nav>
@@ -1378,9 +1551,9 @@
     <section id="hero" aria-label="Holy Marmot Studio — Indie Game Development">
 
         <!-- Background slideshow images -->
-        <img class="hero-slide active" src="./source/SS.png"  alt="Bearstone Campsite — action horror game by Holy Marmot Studio" fetchpriority="high">
-        <img class="hero-slide"        src="./source/SS2.png" alt="Holy Marmot Studio — indie game environment screenshot" loading="lazy">
-        <img class="hero-slide"        src="./source/SS3.png" alt="Holy Marmot Studio — Bearstone Campsite atmospheric scene" loading="lazy">
+        <img class="hero-slide active" src="./source/hero/SS.png"  alt="Bearstone Campsite — action horror game by Holy Marmot Studio" fetchpriority="high">
+        <img class="hero-slide"        src="./source/hero/SS2.png" alt="Holy Marmot Studio — indie game environment screenshot" loading="lazy">
+        <img class="hero-slide"        src="./source/hero/SS3.png" alt="Holy Marmot Studio — Bearstone Campsite atmospheric scene" loading="lazy">
 
         <!-- Dark base overlay -->
         <div class="hero-overlay-dark"></div>
@@ -1414,8 +1587,7 @@
                     <i class="ri-arrow-right-line"></i>
                 </a>
                 <a href="https://store.steampowered.com/curator/45294675" target="_blank" class="btn-outline">
-                    <img src="https://static.readdy.ai/image/e202cf6b20e553777f4ddbbdbd6daac8/bcf21d76c155491ef874da59554dbd66.png"
-                        alt="" class="w-4 h-4">
+                    <i class="ri-steam-line"></i>
                     View on Steam
                 </a>
             </div>
@@ -1479,7 +1651,7 @@
                     <div class="game-card" id="bc-card">
                         <div class="game-img-wrap">
                             <!-- Poster (always visible until video activates) -->
-                            <img src="./source/bearstone_campsite.png" alt="Bearstone Campsite — action horror indie game by Holy Marmot Studio, coming to Steam 2025" id="bc-poster" loading="lazy">
+                            <img src="./source/games/bearstone_campsite.png" alt="Bearstone Campsite — action horror indie game by Holy Marmot Studio, coming to Steam 2025" id="bc-poster" loading="lazy">
                             <!-- Trailer — muted, no controls, preload metadata only -->
                             <video id="bc-video" class="card-trailer" muted playsinline preload="metadata"
                                 src="./source/videos/Bearstone_Campsite_Demo_trailer.mp4"></video>
@@ -1513,7 +1685,7 @@
                 <div class="tilt-wrap reveal" style="transition-delay:0.12s;">
                     <div class="game-card">
                         <div class="game-img-wrap">
-                            <img src="./source/upcoming.png" alt="Anathex — four-player co-op tower defense game inspired by Anatolian mythology, Holy Marmot Studio" loading="lazy">
+                            <img src="./source/games/upcoming.png" alt="Anathex — four-player co-op tower defense game inspired by Anatolian mythology, Holy Marmot Studio" loading="lazy">
                             <span class="coming-soon-badge">Coming Soon</span>
                         </div>
                         <div class="game-card-body">
@@ -1629,37 +1801,37 @@
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="team-grid">
                 <div class="team-card" data-tilt onclick="window.open('https://www.linkedin.com/in/krsnemirhan/', '_blank');">
-                    <img src="./source/emirhan.png" alt="Emirhan KURŞUN" class="team-avatar" loading="lazy">
+                    <img src="./source/members/emirhan.png" alt="Emirhan KURŞUN" class="team-avatar" loading="lazy">
                     <div class="team-name">Emirhan KURŞUN</div>
                     <div class="team-role">Co-Founder & Team Lead</div>
                 </div>
                 <div class="team-card" data-tilt onclick="window.open('https://www.linkedin.com/in/murat-fatih-demirel/', '_blank');">
-                    <img src="./source/fatih.png" alt="Murat Fatih DEMİREL" class="team-avatar" loading="lazy">
+                    <img src="./source/members/fatih.png" alt="Murat Fatih DEMİREL" class="team-avatar" loading="lazy">
                     <div class="team-name">Murat Fatih DEMİREL</div>
                     <div class="team-role">Co-Founder & Project Manager</div>
                 </div>
                 <div class="team-card" data-tilt onclick="window.open('https://www.linkedin.com/in/enes-tolu-046552207/', '_blank');">
-                    <img src="./source/enes.png" alt="Enes TOLU" class="team-avatar" loading="lazy">
+                    <img src="./source/members/enes.png" alt="Enes TOLU" class="team-avatar" loading="lazy">
                     <div class="team-name">Enes TOLU</div>
                     <div class="team-role">Co-Founder & Concept Artist</div>
                 </div>
                 <div class="team-card" data-tilt onclick="window.open('https://www.linkedin.com/in/mert-sevin%C3%A7-46927029a/', '_blank');">
-                    <img src="./source/mert.png" alt="Mert SEVİNÇ" class="team-avatar" loading="lazy">
+                    <img src="./source/members/mert.png" alt="Mert SEVİNÇ" class="team-avatar" loading="lazy">
                     <div class="team-name">Mert SEVİNÇ</div>
                     <div class="team-role">Co-Founder & Character Artist</div>
                 </div>
                 <div class="team-card" data-tilt onclick="window.open('https://www.linkedin.com/in/hakan-benli-652b8534a/', '_blank');">
-                    <img src="./source/hakan.png" alt="Hakan Süleyman BENLİ" class="team-avatar" loading="lazy">
+                    <img src="./source/members/hakan.png" alt="Hakan Süleyman BENLİ" class="team-avatar" loading="lazy">
                     <div class="team-name">Hakan Süleyman BENLİ</div>
                     <div class="team-role">Voice Actor</div>
                 </div>
                 <div class="team-card" data-tilt onclick="window.open('https://www.linkedin.com/in/funda-bayhan-420090275/', '_blank');">
-                    <img src="./source/funda.png" alt="Funda BAYHAN" class="team-avatar" loading="lazy">
+                    <img src="./source/members/funda.png" alt="Funda BAYHAN" class="team-avatar" loading="lazy">
                     <div class="team-name">Funda BAYHAN</div>
                     <div class="team-role">Level Designer</div>
                 </div>
                 <div class="team-card" data-tilt onclick="window.open('https://www.linkedin.com/in/emir-elyesa-9b66b3271/', '_blank');">
-                    <img src="./source/elyesa.png" alt="Emir Elyesa ERSÖZ" class="team-avatar" loading="lazy">
+                    <img src="./source/members/elyesa.png" alt="Emir Elyesa ERSÖZ" class="team-avatar" loading="lazy">
                     <div class="team-name">Emir Elyesa ERSÖZ</div>
                     <div class="team-role">Music Composer</div>
                 </div>
@@ -1668,6 +1840,62 @@
             <div class="mt-16 text-center reveal">
                 <p style="color:var(--muted); font-size:0.85rem; margin-bottom:1.25rem;">Want to join our creative team?</p>
                 <a href="#contact" class="btn-outline" style="display:inline-flex;">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ Discord Community ═══ -->
+    <section id="discord" aria-label="Join the Holy Marmot Discord Community">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-14">
+                <span class="section-label reveal">Connect with us</span>
+                <h2 class="text-5xl md:text-6xl font-black reveal" style="letter-spacing:-0.035em; line-height:1.05; margin-top:0.5rem; transition-delay:0.1s;">
+                    Join the<br><span style="font-weight:300; font-style:italic;">Community</span>
+                </h2>
+                <p class="text-sm mt-4 reveal" style="color:var(--muted); max-width:420px; margin:1rem auto 0; line-height:1.75; transition-delay:0.2s;">
+                    Discuss our games, share feedback, get behind-the-scenes updates, and connect with fellow players on our Discord server.
+                </p>
+            </div>
+
+            <div class="discord-invite-wrap reveal" style="transition-delay:0.25s;">
+                <div class="discord-invite-card">
+                    <div class="discord-card-inner">
+                        <!-- Server identity -->
+                        <div class="discord-server-info">
+                            <div class="discord-icon-wrap">
+                                <img src="./source/square_black.png" alt="Holy Marmot" style="width:56px; height:56px; object-fit:contain;">
+                            </div>
+                            <div>
+                                <div class="discord-server-name">Holy Marmot Community</div>
+                                <div class="discord-server-meta">
+                                    <span class="discord-dot online"></span>
+                                    <span>Official Discord Server</span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Features + CTA -->
+                        <div class="discord-card-right">
+                            <div class="discord-features">
+                                <div class="discord-feature">
+                                    <i class="ri-gamepad-2-line"></i>
+                                    <span>Game updates &amp; dev logs</span>
+                                </div>
+                                <div class="discord-feature">
+                                    <i class="ri-chat-3-line"></i>
+                                    <span>Discuss &amp; give feedback</span>
+                                </div>
+                                <div class="discord-feature">
+                                    <i class="ri-group-line"></i>
+                                    <span>Meet fellow players</span>
+                                </div>
+                            </div>
+                            <a href="https://discord.gg/Xpucjyvmq7" target="_blank" rel="noopener noreferrer" class="discord-join-btn">
+                                <i class="ri-discord-fill"></i>
+                                Join Server
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -1776,13 +2004,19 @@
             <div class="flex flex-col md:flex-row justify-between items-center gap-6">
                 <img src="https://cloud.holymarmot.com/seafhttp/f/12e54d15fe9a48468fb1/?op=view"
                     alt="Holy Marmot Studio" class="h-8 w-auto" style="opacity:0.65;" width="128" height="32" loading="lazy">
-                <div class="flex gap-8">
+                <div class="flex flex-wrap justify-center gap-x-6 gap-y-3">
                     <a href="#games" class="text-xs font-semibold uppercase tracking-widest"
                         style="color:rgba(255,255,255,0.35); transition:color 0.2s;"
                         onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Games</a>
+                    <a href="#services" class="text-xs font-semibold uppercase tracking-widest"
+                        style="color:rgba(255,255,255,0.35); transition:color 0.2s;"
+                        onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">What We Do</a>
                     <a href="#team" class="text-xs font-semibold uppercase tracking-widest"
                         style="color:rgba(255,255,255,0.35); transition:color 0.2s;"
                         onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Team</a>
+                    <a href="#discord" class="text-xs font-semibold uppercase tracking-widest"
+                        style="color:rgba(255,255,255,0.35); transition:color 0.2s;"
+                        onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Community</a>
                     <a href="#contact" class="text-xs font-semibold uppercase tracking-widest"
                         style="color:rgba(255,255,255,0.35); transition:color 0.2s;"
                         onmouseover="this.style.color='#fff'" onmouseout="this.style.color='rgba(255,255,255,0.35)'">Contact</a>
@@ -1824,35 +2058,77 @@
     <!-- Page loader controller -->
     <script>
         (function () {
-            var loader = document.getElementById('page-loader');
-            var fill   = document.getElementById('loader-bar-fill');
-            var prog   = 0;
-            var done   = false;
+            var loader    = document.getElementById('page-loader');
+            var fill      = document.getElementById('loader-bar-fill');
+            var done      = false;
+            var startTime = Date.now();
+            var MIN_SHOW  = 600; // ms
 
-            // Animate fake progress up to ~88%
-            var iv = setInterval(function () {
-                if (prog >= 88) { clearInterval(iv); return; }
-                prog += Math.random() * 14 + 4;
-                if (prog > 88) prog = 88;
-                fill.style.width = prog + '%';
-            }, 180);
+            // Critical resources to preload and track
+            var imageSrcs = [
+                './source/hero/SS.png',
+                './source/hero/SS2.png',
+                './source/hero/SS3.png',
+                './source/games/bearstone_campsite.png',
+                './source/games/upcoming.png',
+                './source/members/emirhan.png',
+                './source/members/fatih.png',
+                './source/members/enes.png',
+                './source/members/mert.png',
+                './source/members/hakan.png',
+                './source/members/funda.png',
+                './source/members/elyesa.png',
+            ];
+
+            var total  = imageSrcs.length; // video metadata will be added below
+            var loaded = 0;
+
+            function setProgress(p) {
+                fill.style.width = Math.min(Math.round(p), 99) + '%';
+            }
+
+            function onItem() {
+                loaded++;
+                setProgress((loaded / total) * 100);
+                if (loaded >= total) finish();
+            }
 
             function finish() {
                 if (done) return;
                 done = true;
-                clearInterval(iv);
-                fill.style.transition = 'width 0.3s ease';
-                fill.style.width = '100%';
+                var remaining = Math.max(0, MIN_SHOW - (Date.now() - startTime));
                 setTimeout(function () {
-                    loader.classList.add('done');
-                    document.body.classList.add('loaded');
-                    setTimeout(function () { loader.style.display = 'none'; }, 520);
-                }, 280);
+                    fill.style.transition = 'width 0.4s ease';
+                    fill.style.width = '100%';
+                    setTimeout(function () {
+                        loader.classList.add('done');
+                        setTimeout(function () { loader.style.display = 'none'; }, 520);
+                    }, 400);
+                }, remaining);
             }
 
-            window.addEventListener('load', finish);
-            // Safety: always finish within 4s even on slow connections
-            setTimeout(finish, 4000);
+            // Preload images — also warms the browser cache for lazy ones
+            imageSrcs.forEach(function (src) {
+                var img = new Image();
+                img.onload  = onItem;
+                img.onerror = onItem;
+                img.src = src;
+            });
+
+            // Track video metadata (lightweight — preload="metadata" is already set)
+            var video = document.getElementById('bc-video');
+            if (video) {
+                total++;
+                if (video.readyState >= 1) {
+                    onItem();
+                } else {
+                    video.addEventListener('loadedmetadata', onItem, { once: true });
+                    video.addEventListener('error',           onItem, { once: true });
+                }
+            }
+
+            // Safety: never hang longer than 6s
+            setTimeout(finish, 6000);
         })();
     </script>
 

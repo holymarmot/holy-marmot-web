@@ -1,21 +1,166 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" itemscope itemtype="https://schema.org/WebPage">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Holy Marmot | Home</title>
+
+    <!-- ═══ Primary SEO ═══ -->
+    <title>Holy Marmot Studio | Indie Game Development — Istanbul, Turkey</title>
+    <meta name="description" content="Holy Marmot is an indie game studio from Istanbul, Turkey. We create innovative gaming experiences — Bearstone Campsite (Action-Horror, Steam 2025) and Anathex (co-op tower defense). B2B game development, co-development, and consulting.">
+    <meta name="keywords" content="holy marmot, holy marmot studio, indie game studio, indie game developer, game development turkey, istanbul game studio, bearstone campsite, anathex, action horror game, tower defense game, co-op game, marmot game, indie game, game studio istanbul, türk indie oyun, oyun geliştirme, indie developer, steam game, game development studio">
+    <meta name="author" content="Holy Marmot Studio">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="theme-color" content="#080808">
+    <meta name="copyright" content="Holy Marmot Studio 2026">
+    <link rel="canonical" href="https://holymarmot.com/">
+
+    <!-- ═══ Open Graph (Facebook, LinkedIn, Discord…) ═══ -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://holymarmot.com/">
+    <meta property="og:site_name" content="Holy Marmot Studio">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:title" content="Holy Marmot Studio | Indie Game Development — Istanbul, Turkey">
+    <meta property="og:description" content="We create innovative gaming experiences. Bearstone Campsite — Action-Horror game now on Steam. Based in Istanbul, Turkey. B2B co-development & original indie titles.">
+    <meta property="og:image" content="https://holymarmot.com/source/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Holy Marmot Studio — Indie Game Development, Istanbul">
+
+    <!-- ═══ Twitter / X Card ═══ -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Holy Marmot Studio | Indie Game Development — Istanbul">
+    <meta name="twitter:description" content="Creating innovative gaming experiences from Istanbul. Bearstone Campsite on Steam now. Anathex coming soon.">
+    <meta name="twitter:image" content="https://holymarmot.com/source/og-image.png">
+    <meta name="twitter:image:alt" content="Holy Marmot Studio — Bearstone Campsite">
+
+    <!-- ═══ JSON-LD Structured Data ═══ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://holymarmot.com/#organization",
+          "name": "Holy Marmot Studio",
+          "alternateName": ["Holy Marmot", "HolyMarmot"],
+          "url": "https://holymarmot.com/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://cloud.holymarmot.com/seafhttp/f/12e54d15fe9a48468fb1/?op=view",
+            "caption": "Holy Marmot Studio Logo"
+          },
+          "description": "Holy Marmot is an indie game development studio based in Istanbul, Turkey. We create original gaming experiences and offer B2B co-development, consulting, and production support.",
+          "foundingLocation": {
+            "@type": "Place",
+            "name": "Istanbul, Turkey"
+          },
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Istanbul",
+            "addressCountry": "TR"
+          },
+          "email": "contact@holymarmot.com",
+          "sameAs": [
+            "https://store.steampowered.com/curator/45294675",
+            "https://github.com/holymarmot",
+            "https://www.instagram.com/holymarmot/",
+            "https://www.reddit.com/r/BearstoneCampsite/",
+            "https://discord.gg/Xpucjyvmq7"
+          ],
+          "knowsAbout": [
+            "Indie Game Development",
+            "Action Horror Games",
+            "Tower Defense Games",
+            "Game Co-development",
+            "Unity Game Development",
+            "Unreal Engine",
+            "Anatolian Mythology"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://holymarmot.com/#website",
+          "url": "https://holymarmot.com/",
+          "name": "Holy Marmot Studio",
+          "description": "Indie Game Studio from Istanbul, Turkey — creating innovative gaming experiences.",
+          "publisher": {
+            "@id": "https://holymarmot.com/#organization"
+          },
+          "inLanguage": "en-US"
+        },
+        {
+          "@type": "WebPage",
+          "@id": "https://holymarmot.com/#webpage",
+          "url": "https://holymarmot.com/",
+          "name": "Holy Marmot Studio | Indie Game Development — Istanbul, Turkey",
+          "description": "Holy Marmot is an indie game studio from Istanbul, Turkey. Bearstone Campsite, Anathex, and B2B game development services.",
+          "isPartOf": { "@id": "https://holymarmot.com/#website" },
+          "about": { "@id": "https://holymarmot.com/#organization" },
+          "breadcrumb": {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://holymarmot.com/"
+              }
+            ]
+          }
+        },
+        {
+          "@type": "VideoGame",
+          "@id": "https://holymarmot.com/#bearstone-campsite",
+          "name": "Bearstone Campsite",
+          "description": "An action-horror game set in an abandoned tourism facility filled with unknown dangers and forgotten secrets. A tourism project launched by the state, closed its doors after a mysterious incident.",
+          "genre": ["Action", "Horror", "Survival Horror"],
+          "gamePlatform": ["PC", "Steam"],
+          "applicationCategory": "Game",
+          "operatingSystem": "Windows",
+          "author": { "@id": "https://holymarmot.com/#organization" },
+          "publisher": { "@id": "https://holymarmot.com/#organization" },
+          "url": "https://store.steampowered.com/app/3799220/Bearstone_Campsite_Demo/",
+          "image": "https://holymarmot.com/source/bearstone_campsite.png",
+          "datePublished": "2025",
+          "offers": {
+            "@type": "Offer",
+            "availability": "https://schema.org/InStock",
+            "url": "https://store.steampowered.com/app/3799220/Bearstone_Campsite_Demo/",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "VideoGame",
+          "@id": "https://holymarmot.com/#anathex",
+          "name": "Anathex",
+          "description": "A four-player co-op tower defense game inspired by Anatolian mythology. Players represent different types of gods and use their unique abilities to protect their people.",
+          "genre": ["Tower Defense", "Co-op", "Strategy", "Roguelike"],
+          "gamePlatform": ["PC"],
+          "applicationCategory": "Game",
+          "author": { "@id": "https://holymarmot.com/#organization" },
+          "publisher": { "@id": "https://holymarmot.com/#organization" },
+          "image": "https://holymarmot.com/source/upcoming.png",
+          "datePublished": "2025"
+        }
+      ]
+    }
+    </script>
+
     <script src="https://cdn.tailwindcss.com/3.4.16"></script>
     <script>tailwind.config = { theme: { extend: { colors: { primary: '#ffffff', secondary: '#9ca3af' }, borderRadius: { 'none': '0px', 'sm': '4px', DEFAULT: '8px', 'md': '12px', 'lg': '16px', 'xl': '20px', '2xl': '24px', '3xl': '32px', 'full': '9999px', 'button': '8px' } } } }</script>
+    <!-- Resource hints -->
+    <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
+    <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://cloud.holymarmot.com">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" href="./source/SS.png" as="image" fetchpriority="high">
     <link rel="icon" type="image/x-icon" href="./source/icon.png">
+    <link rel="apple-touch-icon" href="./source/icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <style>
         :where([class^="ri-"])::before { content: "\f3c2"; }
@@ -32,7 +177,7 @@
             --muted: rgba(255,255,255,0.42);
         }
 
-        html { scroll-behavior: smooth; }
+        html { scroll-behavior: smooth; overflow-x: hidden; }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -1102,6 +1247,58 @@
             .service-ghost { font-size: clamp(5rem, 22vw, 7rem); opacity: 0.6; }
         }
 
+        /* ─── Touch device: hide custom cursor ─── */
+        body.touch-device { cursor: auto; }
+        body.touch-device #cursor-dot,
+        body.touch-device #cursor-ring { display: none; }
+        body.touch-device .btn-primary,
+        body.touch-device .btn-outline,
+        body.touch-device #bc-card { cursor: auto; }
+
+        /* ─── Page Loader ─── */
+        #page-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 100000;
+            background: #080808;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2.5rem;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+            pointer-events: all;
+        }
+
+        #page-loader.done {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-logo-img {
+            height: 2.75rem;
+            width: auto;
+            opacity: 0.85;
+        }
+
+        .loader-bar-outer {
+            width: min(240px, 55vw);
+            height: 1px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 9999px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .loader-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(to right, rgba(201,169,110,0.4), #c9a96e);
+            border-radius: 9999px;
+            transition: width 0.25s ease;
+        }
+
         /* ─── Reduced Motion ─── */
         @media (prefers-reduced-motion: reduce) {
             .reveal, .team-card, .hero-word,
@@ -1129,6 +1326,22 @@
 </head>
 
 <body>
+    <!-- Touch device detection (runs immediately) -->
+    <script>
+        if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+            document.body.classList.add('touch-device');
+        }
+    </script>
+
+    <!-- Page loader -->
+    <div id="page-loader" aria-hidden="true">
+        <img src="https://cloud.holymarmot.com/seafhttp/f/12e54d15fe9a48468fb1/?op=view"
+             alt="Holy Marmot" class="loader-logo-img">
+        <div class="loader-bar-outer">
+            <div id="loader-bar-fill" class="loader-bar-fill"></div>
+        </div>
+    </div>
+
     <!-- Custom cursor -->
     <div id="cursor-dot"></div>
     <div id="cursor-ring"></div>
@@ -1145,7 +1358,7 @@
     <header id="navbar">
         <div class="container mx-auto px-6 flex justify-between items-center">
             <img src="https://cloud.holymarmot.com/seafhttp/f/12e54d15fe9a48468fb1/?op=view"
-                alt="Holy Marmot Logo" class="h-9 w-auto">
+                alt="Holy Marmot Studio — Indie Game Development Istanbul" class="h-9 w-auto" width="144" height="36">
             <nav class="hidden md:block">
                 <ul class="flex space-x-10">
                     <li><a href="#games" class="nav-link" data-section="games">Games</a></li>
@@ -1162,12 +1375,12 @@
     </header>
 
     <!-- ═══ Hero ═══ -->
-    <section id="hero">
+    <section id="hero" aria-label="Holy Marmot Studio — Indie Game Development">
 
         <!-- Background slideshow images -->
-        <img class="hero-slide active" src="./source/SS.png"  alt="">
-        <img class="hero-slide"        src="./source/SS2.png" alt="">
-        <img class="hero-slide"        src="./source/SS3.png" alt="">
+        <img class="hero-slide active" src="./source/SS.png"  alt="Bearstone Campsite — action horror game by Holy Marmot Studio" fetchpriority="high">
+        <img class="hero-slide"        src="./source/SS2.png" alt="Holy Marmot Studio — indie game environment screenshot" loading="lazy">
+        <img class="hero-slide"        src="./source/SS3.png" alt="Holy Marmot Studio — Bearstone Campsite atmospheric scene" loading="lazy">
 
         <!-- Dark base overlay -->
         <div class="hero-overlay-dark"></div>
@@ -1246,7 +1459,7 @@
     </div>
 
     <!-- ═══ Games ═══ -->
-    <section id="games">
+    <section id="games" aria-label="Our Games — Bearstone Campsite and Anathex">
         <div class="container mx-auto px-6">
             <div class="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
                 <div>
@@ -1266,7 +1479,7 @@
                     <div class="game-card" id="bc-card">
                         <div class="game-img-wrap">
                             <!-- Poster (always visible until video activates) -->
-                            <img src="./source/bearstone_campsite.png" alt="Bearstone Campsite" id="bc-poster">
+                            <img src="./source/bearstone_campsite.png" alt="Bearstone Campsite — action horror indie game by Holy Marmot Studio, coming to Steam 2025" id="bc-poster" loading="lazy">
                             <!-- Trailer — muted, no controls, preload metadata only -->
                             <video id="bc-video" class="card-trailer" muted playsinline preload="metadata"
                                 src="./source/videos/Bearstone_Campsite_Demo_trailer.mp4"></video>
@@ -1300,7 +1513,7 @@
                 <div class="tilt-wrap reveal" style="transition-delay:0.12s;">
                     <div class="game-card">
                         <div class="game-img-wrap">
-                            <img src="./source/upcoming.png" alt="Anathex">
+                            <img src="./source/upcoming.png" alt="Anathex — four-player co-op tower defense game inspired by Anatolian mythology, Holy Marmot Studio" loading="lazy">
                             <span class="coming-soon-badge">Coming Soon</span>
                         </div>
                         <div class="game-card-body">
@@ -1330,7 +1543,7 @@
     </section>
 
     <!-- ═══ Services ═══ -->
-    <section id="services">
+    <section id="services" aria-label="What We Do — B2B Game Development and B2C Original Titles">
 
         <!-- Header — full-width border, content in container -->
         <div class="services-header-outer">
@@ -1402,7 +1615,7 @@
     </section>
 
     <!-- ═══ Team ═══ -->
-    <section id="team">
+    <section id="team" aria-label="Our Team — Holy Marmot Studio Members">
         <div class="container mx-auto px-6">
             <div class="text-center mb-14">
                 <span class="section-label reveal">The people behind it</span>
@@ -1416,37 +1629,37 @@
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4" id="team-grid">
                 <div class="team-card" data-tilt>
-                    <img src="./source/emirhan.png" alt="Emirhan KURŞUN" class="team-avatar">
+                    <img src="./source/emirhan.png" alt="Emirhan KURŞUN" class="team-avatar" loading="lazy">
                     <div class="team-name">Emirhan KURŞUN</div>
                     <div class="team-role">Co-Founder & Team Lead</div>
                 </div>
                 <div class="team-card" data-tilt>
-                    <img src="./source/fatih.png" alt="Murat Fatih DEMİREL" class="team-avatar">
+                    <img src="./source/fatih.png" alt="Murat Fatih DEMİREL" class="team-avatar" loading="lazy">
                     <div class="team-name">Murat Fatih DEMİREL</div>
                     <div class="team-role">Co-Founder & Project Manager</div>
                 </div>
                 <div class="team-card" data-tilt>
-                    <img src="./source/enes.png" alt="Enes TOLU" class="team-avatar">
+                    <img src="./source/enes.png" alt="Enes TOLU" class="team-avatar" loading="lazy">
                     <div class="team-name">Enes TOLU</div>
                     <div class="team-role">Co-Founder & Concept Artist</div>
                 </div>
                 <div class="team-card" data-tilt>
-                    <img src="./source/mert.png" alt="Mert SEVİNÇ" class="team-avatar">
+                    <img src="./source/mert.png" alt="Mert SEVİNÇ" class="team-avatar" loading="lazy">
                     <div class="team-name">Mert SEVİNÇ</div>
                     <div class="team-role">Co-Founder & Character Artist</div>
                 </div>
                 <div class="team-card" data-tilt>
-                    <img src="./source/hakan.png" alt="Hakan Süleyman BENLİ" class="team-avatar">
+                    <img src="./source/hakan.png" alt="Hakan Süleyman BENLİ" class="team-avatar" loading="lazy">
                     <div class="team-name">Hakan Süleyman BENLİ</div>
                     <div class="team-role">Voice Actor</div>
                 </div>
                 <div class="team-card" data-tilt>
-                    <img src="./source/funda.png" alt="Funda BAYHAN" class="team-avatar">
+                    <img src="./source/funda.png" alt="Funda BAYHAN" class="team-avatar" loading="lazy">
                     <div class="team-name">Funda BAYHAN</div>
                     <div class="team-role">Level Designer</div>
                 </div>
                 <div class="team-card" data-tilt>
-                    <img src="./source/elyesa.png" alt="Emir Elyesa ERSÖZ" class="team-avatar">
+                    <img src="./source/elyesa.png" alt="Emir Elyesa ERSÖZ" class="team-avatar" loading="lazy">
                     <div class="team-name">Emir Elyesa ERSÖZ</div>
                     <div class="team-role">Music Composer</div>
                 </div>
@@ -1460,7 +1673,7 @@
     </section>
 
     <!-- ═══ Contact ═══ -->
-    <section id="contact">
+    <section id="contact" aria-label="Contact Holy Marmot Studio">
         <div class="container mx-auto px-6">
             <div class="max-w-5xl mx-auto">
                 <div class="mb-14">
@@ -1562,7 +1775,7 @@
         <div class="container mx-auto px-6">
             <div class="flex flex-col md:flex-row justify-between items-center gap-6">
                 <img src="https://cloud.holymarmot.com/seafhttp/f/12e54d15fe9a48468fb1/?op=view"
-                    alt="Holy Marmot Logo" class="h-8 w-auto" style="opacity:0.65;">
+                    alt="Holy Marmot Studio" class="h-8 w-auto" style="opacity:0.65;" width="128" height="32" loading="lazy">
                 <div class="flex gap-8">
                     <a href="#games" class="text-xs font-semibold uppercase tracking-widest"
                         style="color:rgba(255,255,255,0.35); transition:color 0.2s;"
@@ -1603,19 +1816,55 @@
          ║                  SCRIPTS                        ║
          ╚══════════════════════════════════════════════════╝ -->
 
-    <!-- Page load -->
+    <!-- Heavy libraries loaded here (non-render-blocking) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Page loader controller -->
     <script>
-        window.addEventListener('load', function () { document.body.classList.add('loaded'); });
+        (function () {
+            var loader = document.getElementById('page-loader');
+            var fill   = document.getElementById('loader-bar-fill');
+            var prog   = 0;
+            var done   = false;
+
+            // Animate fake progress up to ~88%
+            var iv = setInterval(function () {
+                if (prog >= 88) { clearInterval(iv); return; }
+                prog += Math.random() * 14 + 4;
+                if (prog > 88) prog = 88;
+                fill.style.width = prog + '%';
+            }, 180);
+
+            function finish() {
+                if (done) return;
+                done = true;
+                clearInterval(iv);
+                fill.style.transition = 'width 0.3s ease';
+                fill.style.width = '100%';
+                setTimeout(function () {
+                    loader.classList.add('done');
+                    document.body.classList.add('loaded');
+                    setTimeout(function () { loader.style.display = 'none'; }, 520);
+                }, 280);
+            }
+
+            window.addEventListener('load', finish);
+            // Safety: always finish within 4s even on slow connections
+            setTimeout(finish, 4000);
+        })();
     </script>
 
     <!-- ─── Three.js Hero ─── -->
     <script>
         (function () {
+            var isMobile = window.innerWidth < 768 || ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
             var canvas = document.getElementById('hero-canvas');
             var W = window.innerWidth, H = window.innerHeight;
 
-            var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: !isMobile, alpha: true });
+            renderer.setPixelRatio(isMobile ? 1 : Math.min(window.devicePixelRatio, 2));
             renderer.setSize(W, H);
             renderer.setClearColor(0x000000, 0);
 
@@ -1623,7 +1872,7 @@
             var camera = new THREE.PerspectiveCamera(60, W / H, 0.1, 500);
             camera.position.z = 22;
 
-            // ── Central large wireframe icosahedron (right panel focus) ──
+            // ── Central large wireframe icosahedron ──
             var bigGeo = new THREE.IcosahedronGeometry(5.5, 1);
             var bigMat = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, opacity: 0.07, transparent: true });
             var bigMesh = new THREE.Mesh(bigGeo, bigMat);
@@ -1637,31 +1886,29 @@
             innerMesh.position.set(8, 0, -2);
             scene.add(innerMesh);
 
-            // ── Ring of smaller satellites orbiting big mesh ──
+            // ── Satellites (desktop only) ──
             var satellites = [];
-            var satCount = 6;
-            var satGeo = new THREE.IcosahedronGeometry(0.35, 0);
-            for (var i = 0; i < satCount; i++) {
-                var angle = (i / satCount) * Math.PI * 2;
-                var satMat = new THREE.MeshBasicMaterial({
-                    color: 0xffffff,
-                    wireframe: true,
-                    opacity: 0.25,
-                    transparent: true
-                });
-                var sat = new THREE.Mesh(satGeo, satMat);
-                sat.userData.angle = angle;
-                sat.userData.radius = 7.5;
-                sat.userData.speed = 0.003 + Math.random() * 0.002;
-                sat.userData.yOff = (Math.random() - 0.5) * 3;
-                scene.add(sat);
-                satellites.push(sat);
+            if (!isMobile) {
+                var satCount = 6;
+                var satGeo = new THREE.IcosahedronGeometry(0.35, 0);
+                for (var i = 0; i < satCount; i++) {
+                    var angle = (i / satCount) * Math.PI * 2;
+                    var satMat = new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, opacity: 0.25, transparent: true });
+                    var sat = new THREE.Mesh(satGeo, satMat);
+                    sat.userData.angle = angle;
+                    sat.userData.radius = 7.5;
+                    sat.userData.speed = 0.003 + Math.random() * 0.002;
+                    sat.userData.yOff = (Math.random() - 0.5) * 3;
+                    scene.add(sat);
+                    satellites.push(sat);
+                }
             }
 
-            // ── Background particle field ──
+            // ── Background particle field (fewer on mobile) ──
+            var PARTICLE_COUNT = isMobile ? 18 : 55;
             var particles = [];
             var pGeo = new THREE.IcosahedronGeometry(0.15, 0);
-            for (var j = 0; j < 55; j++) {
+            for (var j = 0; j < PARTICLE_COUNT; j++) {
                 var pMat = new THREE.MeshBasicMaterial({
                     color: 0xffffff,
                     wireframe: true,
@@ -1681,29 +1928,31 @@
                 particles.push(p);
             }
 
-            // ── Connecting lines (edges between particles) ──
-            var lineGeo = new THREE.BufferGeometry();
-            var linePositions = [];
-            var linePairs = [];
-            for (var a = 0; a < particles.length; a++) {
-                for (var b = a + 1; b < particles.length; b++) {
-                    var dist = particles[a].position.distanceTo(particles[b].position);
-                    if (dist < 9 && linePairs.length < 60) {
-                        linePairs.push([a, b]);
+            // ── Connecting lines (desktop only) ──
+            var lineGeo, linePairs = [], lineSegments;
+            if (!isMobile) {
+                lineGeo = new THREE.BufferGeometry();
+                var linePositions = [];
+                for (var a = 0; a < particles.length; a++) {
+                    for (var b = a + 1; b < particles.length; b++) {
+                        var dist = particles[a].position.distanceTo(particles[b].position);
+                        if (dist < 9 && linePairs.length < 60) linePairs.push([a, b]);
                     }
                 }
+                for (var k = 0; k < linePairs.length * 2; k++) linePositions.push(0, 0, 0);
+                lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
+                var lineMat = new THREE.LineBasicMaterial({ color: 0xffffff, opacity: 0.04, transparent: true });
+                lineSegments = new THREE.LineSegments(lineGeo, lineMat);
+                scene.add(lineSegments);
             }
-            for (var k = 0; k < linePairs.length * 2; k++) linePositions.push(0, 0, 0);
-            lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
-            var lineMat = new THREE.LineBasicMaterial({ color: 0xffffff, opacity: 0.04, transparent: true });
-            var lineSegments = new THREE.LineSegments(lineGeo, lineMat);
-            scene.add(lineSegments);
 
             var mouseX = 0, mouseY = 0, smX = 0, smY = 0;
-            document.addEventListener('mousemove', function (e) {
-                mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-                mouseY = -(e.clientY / window.innerHeight - 0.5) * 2;
-            }, { passive: true });
+            if (!isMobile) {
+                document.addEventListener('mousemove', function (e) {
+                    mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+                    mouseY = -(e.clientY / window.innerHeight - 0.5) * 2;
+                }, { passive: true });
+            }
 
             var clock = new THREE.Clock();
 
@@ -1711,20 +1960,22 @@
                 requestAnimationFrame(animate);
                 var t = clock.getElapsedTime();
 
-                smX += (mouseX - smX) * 0.025;
-                smY += (mouseY - smY) * 0.025;
-
-                camera.position.x = smX * 2 + Math.sin(t * 0.12) * 1.5;
-                camera.position.y = smY * 1.5 + Math.cos(t * 0.1) * 1;
+                if (!isMobile) {
+                    smX += (mouseX - smX) * 0.025;
+                    smY += (mouseY - smY) * 0.025;
+                    camera.position.x = smX * 2 + Math.sin(t * 0.12) * 1.5;
+                    camera.position.y = smY * 1.5 + Math.cos(t * 0.1) * 1;
+                } else {
+                    camera.position.x = Math.sin(t * 0.12) * 1.5;
+                    camera.position.y = Math.cos(t * 0.1) * 1;
+                }
                 camera.lookAt(scene.position);
 
-                // Rotate main meshes
                 bigMesh.rotation.x += 0.0025;
                 bigMesh.rotation.y += 0.004;
                 innerMesh.rotation.x -= 0.003;
                 innerMesh.rotation.y -= 0.005;
 
-                // Orbit satellites
                 for (var i = 0; i < satellites.length; i++) {
                     satellites[i].userData.angle += satellites[i].userData.speed;
                     var ang = satellites[i].userData.angle;
@@ -1738,21 +1989,21 @@
                     satellites[i].rotation.y += 0.008;
                 }
 
-                // Rotate background particles
                 for (var j = 0; j < particles.length; j++) {
                     particles[j].rotation.x += particles[j].userData.rx;
                     particles[j].rotation.y += particles[j].userData.ry;
                 }
 
-                // Update connecting lines
-                var pos = lineGeo.attributes.position.array;
-                for (var k = 0; k < linePairs.length; k++) {
-                    var pa = particles[linePairs[k][0]].position;
-                    var pb = particles[linePairs[k][1]].position;
-                    pos[k * 6 + 0] = pa.x; pos[k * 6 + 1] = pa.y; pos[k * 6 + 2] = pa.z;
-                    pos[k * 6 + 3] = pb.x; pos[k * 6 + 4] = pb.y; pos[k * 6 + 5] = pb.z;
+                if (!isMobile && lineGeo && linePairs.length) {
+                    var pos = lineGeo.attributes.position.array;
+                    for (var k = 0; k < linePairs.length; k++) {
+                        var pa = particles[linePairs[k][0]].position;
+                        var pb = particles[linePairs[k][1]].position;
+                        pos[k*6+0]=pa.x; pos[k*6+1]=pa.y; pos[k*6+2]=pa.z;
+                        pos[k*6+3]=pb.x; pos[k*6+4]=pb.y; pos[k*6+5]=pb.z;
+                    }
+                    lineGeo.attributes.position.needsUpdate = true;
                 }
-                lineGeo.attributes.position.needsUpdate = true;
 
                 renderer.render(scene, camera);
             }
@@ -1922,10 +2173,24 @@
             var ring = document.getElementById('cursor-ring');
             var dx = 0, dy = 0, rx = 0, ry = 0;
 
-            document.addEventListener('mousemove', function (e) {
-                dx = e.clientX; dy = e.clientY;
+            function moveCursor(x, y) {
+                dx = x; dy = y;
                 dot.style.left = dx + 'px';
                 dot.style.top = dy + 'px';
+            }
+
+            document.addEventListener('mousemove', function (e) {
+                moveCursor(e.clientX, e.clientY);
+            }, { passive: true });
+
+            document.addEventListener('touchstart', function (e) {
+                var t = e.touches[0];
+                moveCursor(t.clientX, t.clientY);
+            }, { passive: true });
+
+            document.addEventListener('touchmove', function (e) {
+                var t = e.touches[0];
+                moveCursor(t.clientX, t.clientY);
             }, { passive: true });
 
             // ring lags behind
@@ -2022,8 +2287,8 @@
             var fill     = document.getElementById('bc-fill');
 
             var STEAM_URL    = 'https://store.steampowered.com/app/3799220/Bearstone_Campsite_Demo/';
-            var CLIP_PLAY_MS = 2000;   // ms of actual playback per segment
-            var TOTAL_CLIPS  = 10;     // 10 × 2s = 20s total
+            var CLIP_PLAY_MS = 2000;
+            var TOTAL_CLIPS  = 10;
 
             var clips      = [];
             var clipIndex  = 0;
@@ -2031,11 +2296,12 @@
             var hoverTimer = null;
             var completed  = false;
 
+            var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+
             /* ── Build clip start-times spread across the video ── */
             function buildClips(dur) {
                 clips = [];
                 for (var i = 0; i < TOTAL_CLIPS; i++) {
-                    // Skip first 8% (usually title card) and last 4%
                     var pct = 0.08 + (i / (TOTAL_CLIPS - 1)) * 0.88;
                     clips.push(parseFloat((pct * dur).toFixed(2)));
                 }
@@ -2046,21 +2312,16 @@
             });
 
             /* ── Update gold progress bar ── */
-            function setProgress(idx) {
-                fill.style.width = ((idx / TOTAL_CLIPS) * 100) + '%';
+            function setProgress(pct) {
+                fill.style.width = pct + '%';
             }
 
-            /* ── Play one segment, then schedule the next ── */
+            /* ── Desktop: segment-based playback ── */
             function playSegment() {
                 if (clipIndex >= TOTAL_CLIPS) { onComplete(); return; }
-                seekAndPlay();
-            }
-
-            function seekAndPlay() {
                 video.currentTime = clips[clipIndex];
                 video.play().catch(function () {});
-                setProgress(clipIndex + 1);
-
+                setProgress(((clipIndex + 1) / TOTAL_CLIPS) * 100);
                 clipTimer = setTimeout(function () {
                     video.pause();
                     clipIndex++;
@@ -2068,8 +2329,7 @@
                 }, CLIP_PLAY_MS);
             }
 
-            /* ── Start the trailer ── */
-            function startTrailer() {
+            function startTrailerDesktop() {
                 if (completed) return;
                 clipIndex = 0;
                 video.classList.add('active');
@@ -2078,7 +2338,26 @@
                 playSegment();
             }
 
-            /* ── Reset everything (hover-out before completion) ── */
+            /* ── Mobile: linear playback ── */
+            function startTrailerMobile() {
+                if (completed) return;
+                video.currentTime = 0;
+                video.classList.add('active');
+                progress.classList.add('visible');
+                setProgress(0);
+                video.play().catch(function () {});
+            }
+
+            video.addEventListener('timeupdate', function () {
+                if (!isTouch || !video.duration) return;
+                setProgress((video.currentTime / video.duration) * 100);
+            });
+
+            video.addEventListener('ended', function () {
+                if (isTouch) onComplete();
+            });
+
+            /* ── Reset everything ── */
             function reset() {
                 clearTimeout(clipTimer);
                 clearTimeout(hoverTimer);
@@ -2086,46 +2365,82 @@
                 video.classList.remove('active');
                 video.style.opacity = '';
                 progress.classList.remove('visible');
-                fill.style.width = '0%';
+                setProgress(0);
                 overlay.classList.remove('show');
                 clipIndex = 0;
                 completed = false;
             }
 
-            /* ── All segments played → show Steam CTA ── */
+            /* ── All segments/video played → show Steam CTA ── */
             function onComplete() {
                 completed = true;
-                setProgress(TOTAL_CLIPS);
-                // Small pause so the user sees 100% fill, then reveal CTA
+                setProgress(100);
                 setTimeout(function () {
                     overlay.classList.add('show');
                 }, 280);
             }
 
-            /* ── Mouse enter: 350ms intent delay before trailer starts ── */
-            card.addEventListener('mouseenter', function () {
-                if (completed) return;
-                hoverTimer = setTimeout(startTrailer, 350);
-            });
+            /* ════ Desktop (mouse) events ════ */
+            if (!isTouch) {
+                card.addEventListener('mouseenter', function () {
+                    if (completed) return;
+                    hoverTimer = setTimeout(startTrailerDesktop, 350);
+                });
 
-            /* ── Mouse leave ── */
-            card.addEventListener('mouseleave', function () {
-                clearTimeout(hoverTimer);
-                if (!completed) {
+                card.addEventListener('mouseleave', function () {
+                    clearTimeout(hoverTimer);
+                    if (!completed) { reset(); } else { setTimeout(reset, 200); }
+                });
+
+                card.addEventListener('click', function (e) {
+                    if (!e.target.closest('a')) window.open(STEAM_URL, '_blank');
+                });
+            }
+
+            /* ════ Mobile (touch) events ════ */
+            if (isTouch) {
+                var trailerActive = false;
+                var touchStartX = 0, touchStartY = 0;
+
+                card.addEventListener('touchstart', function (e) {
+                    touchStartX = e.touches[0].clientX;
+                    touchStartY = e.touches[0].clientY;
+                }, { passive: true });
+
+                card.addEventListener('touchend', function (e) {
+                    // Scroll hareketi mi? → yoksay
+                    var dx = Math.abs(e.changedTouches[0].clientX - touchStartX);
+                    var dy = Math.abs(e.changedTouches[0].clientY - touchStartY);
+                    if (dx > 10 || dy > 10) return;
+
+                    if (e.target.closest('a')) return;
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    if (!trailerActive) {
+                        trailerActive = true;
+                        startTrailerMobile();
+                    } else {
+                        window.open(STEAM_URL, '_blank');
+                    }
+                });
+
+                // Kart dışına tap edilince sıfırla
+                document.addEventListener('touchend', function (e) {
+                    if (!trailerActive) return;
+                    if (card.contains(e.target)) return;
+                    var dx = Math.abs(e.changedTouches[0].clientX - touchStartX);
+                    var dy = Math.abs(e.changedTouches[0].clientY - touchStartY);
+                    if (dx > 10 || dy > 10) return; // scroll ise sıfırlama
                     reset();
-                } else {
-                    // Keep CTA visible while cursor is on the card;
-                    // reset when they fully leave so re-hover plays fresh
-                    setTimeout(reset, 200);
-                }
-            });
+                    trailerActive = false;
+                }, { passive: true });
 
-            /* ── Click during trailer → Steam (unless clicking the button itself) ── */
-            card.addEventListener('click', function (e) {
-                if (!e.target.closest('a')) {
-                    window.open(STEAM_URL, '_blank');
-                }
-            });
+                // Kart ekrandan çıkınca sıfırla
+                new IntersectionObserver(function (entries) {
+                    if (!entries[0].isIntersecting) { reset(); trailerActive = false; }
+                }, { threshold: 0.1 }).observe(card);
+            }
         })();
     </script>
 

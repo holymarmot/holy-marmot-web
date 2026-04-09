@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find \"C:\\\\Users\\\\Emirhan\\\\Documents\\\\holy-marmot-web\" -type f -exec ls -lh {} \\\\;)",
+      "Bash(sort -k2)"
+    ]
+  }
+}

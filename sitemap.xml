@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <url>
+    <loc>https://holymarmot.com/</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+
+    <!-- Hero screenshots -->
+    <image:image>
+      <image:loc>https://holymarmot.com/source/SS.png</image:loc>
+      <image:title>Holy Marmot Studio — Bearstone Campsite Gameplay</image:title>
+      <image:caption>Bearstone Campsite action-horror game by Holy Marmot Studio</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://holymarmot.com/source/SS2.png</image:loc>
+      <image:title>Holy Marmot Studio — Bearstone Campsite Environment</image:title>
+      <image:caption>Atmospheric horror environment from Bearstone Campsite</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://holymarmot.com/source/SS3.png</image:loc>
+      <image:title>Holy Marmot Studio — Bearstone Campsite Scene</image:title>
+      <image:caption>Bearstone Campsite scene by Holy Marmot indie game studio</image:caption>
+    </image:image>
+
+    <!-- Game covers -->
+    <image:image>
+      <image:loc>https://holymarmot.com/source/bearstone_campsite.png</image:loc>
+      <image:title>Bearstone Campsite — Action Horror Game by Holy Marmot</image:title>
+      <image:caption>Bearstone Campsite key art — indie action-horror game by Holy Marmot Studio, Istanbul</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://holymarmot.com/source/upcoming.png</image:loc>
+      <image:title>Anathex — Co-op Tower Defense Game by Holy Marmot</image:title>
+      <image:caption>Anathex — four-player co-op tower defense game inspired by Anatolian mythology</image:caption>
+    </image:image>
+  </url>
+
+</urlset>

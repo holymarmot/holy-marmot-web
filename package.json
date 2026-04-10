@@ -1,0 +1,26 @@
+{
+  "name": "holy-marmot-web",
+  "version": "1.0.0",
+  "description": "Holy Marmot Studio static site",
+  "private": true,
+  "scripts": {
+    "build": "npm run build:tailwind",
+    "build:tailwind": "tailwindcss -i ./source/tailwind.input.css -o ./source/tailwind.css --minify",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/holymarmot/holy-marmot-web.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/holymarmot/holy-marmot-web/issues"
+  },
+  "homepage": "https://github.com/holymarmot/holy-marmot-web#readme",
+  "devDependencies": {
+    "tailwindcss": "^3.4.16"
+  }
+}

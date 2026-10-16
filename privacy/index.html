@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Privacy Policy | Holy Marmot Studio</title>
+    <meta name="description" content="Privacy policy for Holy Marmot games, including Rocket Operator 3D for iOS and Android: what data is collected, why, and what you can do about it.">
+    <meta name="author" content="Holy Marmot Studio">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#080808">
+    <link rel="canonical" href="https://holymarmot.com/privacy/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://holymarmot.com/privacy/">
+    <meta property="og:site_name" content="Holy Marmot Studio">
+    <meta property="og:title" content="Privacy Policy | Holy Marmot Studio">
+    <meta property="og:description" content="What data Holy Marmot games collect, why, and what you can do about it.">
+    <meta property="og:image" content="https://holymarmot.com/source/og-image.png">
+
+    <link rel="icon" type="image/x-icon" href="/source/icon.png">
+    <link rel="apple-touch-icon" href="/source/icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+
+    <style>
+        :where([class^="ri-"])::before { content: "\f3c2"; }
+        *, *::before, *::after { box-sizing: border-box; }
+
+        /* Same tokens as the home page */
+        :root {
+            --bg: #080808;
+            --surface: rgba(255,255,255,0.04);
+            --border: rgba(255,255,255,0.08);
+            --border-hover: rgba(255,255,255,0.2);
+            --gold: #c9a96e;
+            --gold-dim: rgba(201,169,110,0.18);
+            --text: #f0f0ee;
+            --muted: rgba(255,255,255,0.42);
+            --body: rgba(240,240,238,0.74);
+        }
+
+        html { scroll-behavior: smooth; overflow-x: hidden; background-color: #080808; }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            text-rendering: optimizeLegibility;
+        }
+
+        ::selection { background: var(--gold-dim); color: #fff; }
+
+        img { display: block; max-width: 100%; height: auto; }
+        ul, ol { margin: 0; padding: 0; }
+        h1, h2, h3, h4, p { margin: 0; }
+
+        /* grain */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9997;
+            opacity: 0.028;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-size: 160px 160px;
+        }
+
+        /* ─── Layout container (matches Tailwind's .container + px-6) ─── */
+        .container {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+        @media (min-width: 640px)  { .container { max-width: 640px; } }
+        @media (min-width: 768px)  { .container { max-width: 768px; } }
+        @media (min-width: 1024px) { .container { max-width: 1024px; } }
+        @media (min-width: 1280px) { .container { max-width: 1280px; } }
+        @media (min-width: 1536px) { .container { max-width: 1536px; } }
+
+        /* ─── Navigation ─── */
+        #navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 500;
+            padding: 1.4rem 0;
+            transition: padding 0.35s ease, background 0.35s ease, border-color 0.35s ease;
+            background: transparent;
+            border-bottom: 1px solid transparent;
+        }
+
+        #navbar.scrolled {
+            padding: 0.85rem 0;
+            background: rgba(6, 6, 6, 0.82);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom-color: var(--border);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo { height: 2.25rem; width: auto; }
+
+        .nav-desktop { display: none; }
+        .nav-desktop ul { display: flex; gap: 2.5rem; list-style: none; }
+
+        .nav-link {
+            font-size: 0.825rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--muted);
+            text-decoration: none;
+            transition: color 0.25s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -4px;
+            left: 0;
+            background: var(--gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover { color: #ffffff; }
+        .nav-link:hover::after { width: 100%; }
+
+        .nav-toggle {
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            background: none;
+            border: 0;
+            padding: 0;
+            cursor: pointer;
+        }
+
+        @media (min-width: 768px) {
+            .nav-desktop { display: block; }
+            .nav-toggle { display: none; }
+        }
+
+        /* ─── Mobile overlay ─── */
+        #mobile-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 450;
+            background: rgba(5,5,5,0.97);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            transform: translateX(100%);
+            visibility: hidden;
+            transition: transform 0.5s cubic-bezier(0.76,0,0.24,1), visibility 0s linear 0.5s;
+            pointer-events: none;
+        }
+
+        #mobile-overlay.open {
+            transform: translateX(0);
+            visibility: visible;
+            transition: transform 0.5s cubic-bezier(0.76,0,0.24,1);
+            pointer-events: all;
+        }
+
+        .mobile-nav-link {
+            font-size: 3rem;
+            font-weight: 800;
+            color: rgba(255,255,255,0.8);
+            letter-spacing: -0.03em;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .mobile-nav-link:hover { color: var(--gold); }
+
+        /* ─── Section label (same as home page) ─── */
+        .section-label {
+            display: inline-block;
+            font-size: 0.68rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1rem;
+            position: relative;
+            padding-left: 1.25rem;
+        }
+
+        .section-label::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 14px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        /* ─── Policy page ─── */
+        .policy {
+            position: relative;
+            padding: 8.5rem 0 6rem;
+        }
+
+        .policy::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 520px;
+            max-width: 100%;
+            height: 520px;
+            background: radial-gradient(circle at top left, rgba(201,169,110,0.05) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .policy-body {
+            position: relative;
+            max-width: 42rem;
+            margin: 0 auto;
+        }
+
+        .policy-body [id] { scroll-margin-top: 6rem; }
+
+        .policy-title {
+            font-size: clamp(2.75rem, 9vw, 3.75rem);
+            font-weight: 900;
+            letter-spacing: -0.035em;
+            line-height: 1;
+            color: #fff;
+            margin-top: 0.5rem;
+        }
+
+        .policy-updated {
+            margin-top: 1.25rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.04em;
+            color: var(--muted);
+        }
+
+        .policy-body p,
+        .policy-body li {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: var(--body);
+        }
+
+        @media (min-width: 768px) {
+            .policy-body p,
+            .policy-body li { font-size: 1.0625rem; }
+        }
+
+        .policy-body p + p,
+        .policy-body p + ul,
+        .policy-body ul + p { margin-top: 1rem; }
+
+        .policy-lead { margin-top: 2rem; }
+        .policy-body .policy-lead { color: rgba(240,240,238,0.86); }
+
+        .policy-body strong { color: #fff; font-weight: 600; }
+
+        .policy-body a {
+            color: var(--gold);
+            text-decoration: underline;
+            text-decoration-color: rgba(201,169,110,0.4);
+            text-underline-offset: 3px;
+            text-decoration-thickness: 1px;
+            transition: text-decoration-color 0.2s ease, color 0.2s ease;
+            overflow-wrap: anywhere;
+        }
+
+        .policy-body a:hover { color: #e0c48f; text-decoration-color: currentColor; }
+
+        .policy-body ul {
+            list-style: none;
+            margin-top: 0.75rem;
+        }
+
+        .policy-body ul li {
+            position: relative;
+            padding-left: 1.4rem;
+        }
+
+        .policy-body ul li + li { margin-top: 0.5rem; }
+
+        .policy-body ul li::before {
+            content: '';
+            position: absolute;
+            left: 0.2rem;
+            top: 0.85em;
+            width: 7px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        /* Table of contents */
+        .toc {
+            margin-top: 2.5rem;
+            padding: 1.25rem 1.5rem 1.4rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .toc-label {
+            display: block;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.3);
+            margin-bottom: 0.75rem;
+        }
+
+        .policy-body .toc ol { list-style: none; }
+        .policy-body .toc li { font-size: 0.9rem; line-height: 1.5; padding: 0.2rem 0; }
+        .policy-body .toc li::before { display: none; }
+        .policy-body .toc ol ol { margin: 0.3rem 0 0.2rem; padding-left: 1rem; border-left: 1px solid var(--border); }
+        .policy-body .toc ol ol li { font-size: 0.85rem; }
+
+        .policy-body .toc a {
+            color: rgba(255,255,255,0.62);
+            text-decoration: none;
+        }
+
+        .policy-body .toc a:hover { color: #fff; }
+
+        /* Sections */
+        .policy-section {
+            margin-top: 3.5rem;
+            padding-top: 3rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .policy-section h2 {
+            font-size: clamp(1.5rem, 4.5vw, 1.875rem);
+            font-weight: 800;
+            letter-spacing: -0.025em;
+            line-height: 1.2;
+            color: #fff;
+            margin-bottom: 1.25rem;
+        }
+
+        .policy-section h3 {
+            font-size: 1.125rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.35;
+            color: #fff;
+            margin: 2.75rem 0 0.9rem;
+        }
+
+        /* Game block */
+        .game-head .section-label { margin-bottom: 0.6rem; }
+        .game-head h2 { margin-bottom: 0.9rem; }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 0.62rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--gold);
+            border: 1px solid rgba(201,169,110,0.3);
+            border-radius: 9999px;
+            padding: 0.25rem 0.65rem;
+            line-height: 1.3;
+            white-space: nowrap;
+        }
+
+        /* Service entries */
+        .services { margin-top: 1.5rem; }
+
+        .service {
+            padding: 1.6rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .service:last-child { border-bottom: 1px solid var(--border); }
+
+        .service-head {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.5rem 0.75rem;
+            margin-bottom: 0.6rem;
+        }
+
+        .service h4 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            line-height: 1.35;
+            color: #fff;
+        }
+
+        .policy-body .field-label {
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.65rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            line-height: 1.4;
+            color: rgba(255,255,255,0.3);
+        }
+
+        .policy-body .field-label + ul { margin-top: 0.5rem; }
+
+        .policy-body .policy-links {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .contact-card {
+            margin-top: 1.25rem;
+            padding: 1.25rem 1.5rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .policy-body .contact-card p { color: rgba(240,240,238,0.86); }
+
+        /* ─── Footer (same look as home page) ─── */
+        footer {
+            background: #050505;
+            border-top: 1px solid var(--border);
+            padding: 2.5rem 0;
+        }
+
+        .footer-row {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) { .footer-row { flex-direction: row; } }
+
+        .footer-logo { height: 2rem; width: auto; opacity: 0.65; }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.75rem 1.5rem;
+        }
+
+        .footer-link {
+            font-size: 0.75rem;
+            line-height: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.35);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover { color: #fff; }
+
+        .footer-social { display: flex; gap: 1rem; }
+
+        .footer-social a {
+            color: rgba(255,255,255,0.3);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-social a:hover { color: #fff; }
+
+        .footer-bottom {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.7rem;
+            color: rgba(255,255,255,0.18);
+        }
+
+        .footer-bottom a {
+            color: rgba(255,255,255,0.35);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-bottom a:hover,
+        .footer-bottom a[aria-current="page"] { color: #fff; }
+
+        /* ─── Reduced motion ─── */
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            #navbar, #mobile-overlay, #mobile-overlay.open { transition: none; }
+        }
+
+        /* ─── Print ─── */
+        @media print {
+            html, body { background: #fff; color: #000; }
+            body::after, #navbar, #mobile-overlay, footer, .toc, .policy::before { display: none; }
+            .policy { padding: 0; }
+            .policy-title, .policy-section h2, .policy-section h3, .service h4,
+            .policy-body p, .policy-body li, .policy-body strong, .policy-body a { color: #000; }
+            .policy-section, .service { border-color: #ccc; }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Mobile overlay -->
+    <div id="mobile-overlay" aria-hidden="true">
+        <a href="/#games" class="mobile-nav-link">Games</a>
+        <a href="/#services" class="mobile-nav-link">What We Do</a>
+        <a href="/#team" class="mobile-nav-link">Team</a>
+        <a href="/#discord" class="mobile-nav-link">Community</a>
+        <a href="/#contact" class="mobile-nav-link">Contact</a>
+    </div>
+
+    <!-- ═══ Navigation ═══ -->
+    <header id="navbar">
+        <div class="container nav-inner">
+            <a href="/" aria-label="Holy Marmot Studio — Home">
+                <img src="https://cloud.holymarmot.com/seafhttp/f/12e54d15fe9a48468fb1/?op=view"
+                    alt="Holy Marmot Studio" class="nav-logo" width="144" height="36">
+            </a>
+            <nav class="nav-desktop" aria-label="Main">
+                <ul>
+                    <li><a href="/#games" class="nav-link">Games</a></li>
+                    <li><a href="/#services" class="nav-link">What We Do</a></li>
+                    <li><a href="/#team" class="nav-link">Team</a></li>
+                    <li><a href="/#discord" class="nav-link">Community</a></li>
+                    <li><a href="/#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+            <button id="mobile-menu-button" class="nav-toggle" aria-label="Toggle menu"
+                aria-controls="mobile-overlay" aria-expanded="false">
+                <i class="ri-menu-line ri-xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ═══ Privacy Policy ═══ -->
+    <main class="policy">
+        <div class="container">
+            <article class="policy-body">
+
+                <header>
+                    <span class="section-label">Legal</span>
+                    <h1 class="policy-title">Privacy Policy</h1>
+                    <p class="policy-updated">Last updated: <time datetime="2026-10-16">16.10.2026</time></p>
+                    <p class="policy-lead">
+                        This policy explains what data our games collect, why, and what you can do about it.
+                        It currently covers <strong>Rocket Operator 3D</strong> for iOS and Android.
+                        Each game has its own section below.
+                    </p>
+                </header>
+
+                <nav class="toc" aria-label="On this page">
+                    <span class="toc-label">On this page</span>
+                    <ol>
+                        <li><a href="#who-we-are">Who we are</a></li>
+                        <!-- One entry per game. Add new games here and as a new section below. -->
+                        <li>
+                            <a href="#rocket-operator-3d">Rocket Operator 3D (iOS and Android)</a>
+                            <ol>
+                                <li><a href="#ro3d-not-collected">What the game doesn't collect</a></li>
+                                <li><a href="#ro3d-services">Services and data</a></li>
+                                <li><a href="#ro3d-choices">Your choices</a></li>
+                                <li><a href="#ro3d-retention">How long we keep data</a></li>
+                                <li><a href="#ro3d-requests">Asking about or deleting your data</a></li>
+                                <li><a href="#ro3d-children">Children</a></li>
+                            </ol>
+                        </li>
+                        <li><a href="#your-rights">Your rights under GDPR and KVKK</a></li>
+                        <li><a href="#international-transfers">International transfers</a></li>
+                        <li><a href="#changes">Changes to this policy</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ol>
+                </nav>
+
+                <!-- ─── Who we are ─── -->
+                <section id="who-we-are" class="policy-section">
+                    <h2>Who we are</h2>
+                    <p>
+                        Holy Marmot is a game studio based in Istanbul, Turkey. We are responsible for the
+                        personal data described in this policy (the "data controller").
+                    </p>
+                    <p>
+                        For any question about this policy or your data, including privacy requests, email us at
+                        <a href="mailto:contact@holymarmot.com">contact@holymarmot.com</a>.
+                    </p>
+                </section>
+
+                <!-- ═══════════════════════════════════════════════════════════════
+                     GAME SECTIONS
+                     To add another game: copy this <section class="game"> block,
+                     change its id, title, platforms and the "ro3d-" id prefix,
+                     then add it to the "On this page" list and the intro above.
+                     ═══════════════════════════════════════════════════════════════ -->
+
+                <!-- ─── Rocket Operator 3D ─── -->
+                <section id="rocket-operator-3d" class="policy-section game" aria-labelledby="ro3d-title">
+                    <div class="game-head">
+                        <span class="section-label">Game</span>
+                        <h2 id="ro3d-title">Rocket Operator 3D</h2>
+                        <div class="tags">
+                            <span class="tag">iOS</span>
+                            <span class="tag">Android</span>
+                        </div>
+                    </div>
+
+                    <p>
+                        This section covers Rocket Operator 3D on iOS and Android. When something applies to only
+                        one platform, we say so.
+                    </p>
+
+                    <h3 id="ro3d-not-collected">What the game doesn't collect</h3>
+                    <p>
+                        The game doesn't ask you to create an account. We don't collect your name, email address,
+                        phone number or precise location.
+                    </p>
+
+                    <h3 id="ro3d-services">Services and data</h3>
+                    <p>The game uses the services below. For each one, we list what data it receives and why.</p>
+
+                    <div class="services">
+
+                        <div class="service" id="ro3d-gameanalytics">
+                            <div class="service-head">
+                                <h4>GameAnalytics</h4>
+                                <span class="tag">Analytics</span>
+                            </div>
+                            <p>We use GameAnalytics for analytics, to understand how the game is played.</p>
+                            <span class="field-label">Data it receives</span>
+                            <ul>
+                                <li>In-game events: level starts and finishes, play time, in-game currency transactions and ad events</li>
+                                <li>Device and operating system information</li>
+                                <li>Session information</li>
+                                <li>A GameAnalytics user ID</li>
+                                <li>On iOS: the identifier for vendors (IDFV) and, only if you allow tracking, the advertising identifier (IDFA)</li>
+                                <li>On Android: the advertising ID</li>
+                            </ul>
+                            <p class="policy-links">
+                                Privacy policy:
+                                <a href="https://www.gameanalytics.com/trust/privacy-notice" target="_blank" rel="noopener">GameAnalytics Privacy Notice</a>
+                            </p>
+                        </div>
+
+                        <div class="service" id="ro3d-ads">
+                            <div class="service-head">
+                                <h4>Unity LevelPlay (ironSource) and Unity Ads</h4>
+                                <span class="tag">Advertising</span>
+                            </div>
+                            <p>The game shows ads through Unity LevelPlay (ironSource) and Unity Ads. They use the data below to show ads and to measure them.</p>
+                            <span class="field-label">Data they receive</span>
+                            <ul>
+                                <li>Advertising ID: the IDFA on iOS (only if you allow tracking) or the Google advertising ID (GAID) on Android</li>
+                                <li>IP address</li>
+                                <li>Device information</li>
+                                <li>Ad impression and click data</li>
+                            </ul>
+                            <p>These providers process this data under their own privacy policies.</p>
+                            <p class="policy-links">
+                                Privacy policy:
+                                <a href="https://unity.com/legal/game-player-and-app-user-privacy-policy" target="_blank" rel="noopener">Unity Game Player and App User Privacy Policy</a>
+                                (covers Unity Ads and Unity LevelPlay, including ironSource)
+                            </p>
+                        </div>
+
+                        <div class="service" id="ro3d-own-server">
+                            <div class="service-head">
+                                <h4>Our analytics server (api.holymarmot.com)</h4>
+                                <span class="tag">Analytics</span>
+                            </div>
+                            <p>
+                                The game sends a copy of the events it sends to GameAnalytics to our own server,
+                                api.holymarmot.com, together with:
+                            </p>
+                            <ul>
+                                <li>a randomly generated installation ID</li>
+                                <li>a session ID</li>
+                                <li>the app version</li>
+                                <li>the platform (iOS or Android)</li>
+                            </ul>
+                            <p>
+                                We don't link this data to a person or an account. It is sent over an encrypted
+                                connection (HTTPS).
+                            </p>
+                        </div>
+
+                        <div class="service" id="ro3d-purchases">
+                            <div class="service-head">
+                                <h4>In-app purchases (App Store and Google Play)</h4>
+                                <span class="tag">Payments</span>
+                            </div>
+                            <p>
+                                Payments are handled entirely by Apple or Google. We never see your payment details.
+                            </p>
+                            <p>
+                                The game keeps only a summary of each transaction on your device, so that the same
+                                purchase isn't given to you twice.
+                            </p>
+                            <p class="policy-links">
+                                Privacy policies:
+                                <a href="https://www.apple.com/legal/privacy/data/en/app-store/" target="_blank" rel="noopener">App Store &amp; Privacy (Apple)</a>,
+                                <a href="https://payments.google.com/legaldocument?family=0.privacynotice&amp;hl=en" target="_blank" rel="noopener">Google Payments Privacy Notice</a>
+                            </p>
+                        </div>
+
+                        <div class="service" id="ro3d-leaderboards">
+                            <div class="service-head">
+                                <h4>Game Center and Google Play Games</h4>
+                                <span class="tag">Leaderboards</span>
+                            </div>
+                            <p>
+                                The game uses your Game Center (iOS) or Google Play Games (Android) player ID and
+                                display name for leaderboards: trophies, coins and FreeFall score. Other players can
+                                see your display name and your scores.
+                            </p>
+                            <p class="policy-links">
+                                Privacy policies:
+                                <a href="https://www.apple.com/legal/privacy/data/en/game-center/" target="_blank" rel="noopener">Game Center &amp; Privacy (Apple)</a>,
+                                <a href="https://policies.google.com/privacy?hl=en" target="_blank" rel="noopener">Google Privacy Policy</a>
+                            </p>
+                        </div>
+
+                        <div class="service" id="ro3d-cloud-saves">
+                            <div class="service-head">
+                                <h4>iCloud and Google Play Saved Games</h4>
+                                <span class="tag">Cloud saves</span>
+                            </div>
+                            <p>
+                                Your game progress is backed up and synced across your devices with iCloud (iOS) or
+                                Google Play Saved Games (Android). This data is stored in your own Apple or Google
+                                account.
+                            </p>
+                            <p class="policy-links">
+                                Privacy policies:
+                                <a href="https://www.apple.com/legal/privacy/en-ww/" target="_blank" rel="noopener">Apple Privacy Policy</a>,
+                                <a href="https://policies.google.com/privacy?hl=en" target="_blank" rel="noopener">Google Privacy Policy</a>
+                            </p>
+                        </div>
+
+                        <div class="service" id="ro3d-notifications">
+                            <div class="service-head">
+                                <h4>Notifications</h4>
+                                <span class="tag">On device</span>
+                            </div>
+                            <p>
+                                The game uses local notifications to let you know when your energy has refilled or
+                                your daily reward is ready. They are scheduled on your device. We don't use remote
+                                push notifications.
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <h3 id="ro3d-choices">Your choices</h3>
+                    <p>All of these are done through your device rather than inside the game.</p>
+                    <ul>
+                        <li>
+                            <strong>Tracking (iOS).</strong> The game can only access your IDFA if you allow tracking
+                            through Apple's App Tracking Transparency. You can change this at any time in
+                            Settings › Privacy &amp; Security › Tracking.
+                        </li>
+                        <li>
+                            <strong>Advertising ID (Android).</strong> You can reset or delete your advertising ID in
+                            your device settings, usually under Settings › Privacy › Ads. The exact path depends on
+                            your device and Android version.
+                        </li>
+                        <li>
+                            <strong>Notifications.</strong> You can turn the game's notifications on or off in your
+                            device's system settings.
+                        </li>
+                        <li>
+                            <strong>Deleting the game.</strong> Deleting the game removes the data stored on your
+                            device, including the installation ID. It doesn't remove data that has already been sent
+                            to our server or to the services above, or progress saved in your iCloud or Google Play
+                            account.
+                        </li>
+                    </ul>
+
+                    <h3 id="ro3d-retention">How long we keep data</h3>
+                    <p>
+                        <!-- TODO: retention period for api.holymarmot.com data -->
+                        We keep the data on our analytics server (api.holymarmot.com) for [SAKLAMA SÜRESİ].
+                    </p>
+                    <p>
+                        Data stored on your device stays there until you delete the game. Unity, Apple and Google
+                        keep the data they handle according to their own policies.
+                    </p>
+
+                    <h3 id="ro3d-requests">Asking about or deleting your data</h3>
+                    <p>
+                        You can email <a href="mailto:contact@holymarmot.com">contact@holymarmot.com</a> to ask what
+                        data we hold about you or to ask us to delete it.
+                    </p>
+                    <p>
+                        To be upfront about what we can do: the game has no accounts, and the installation ID is
+                        random and isn't shown to you anywhere in the game. The data on our server and in
+                        GameAnalytics is linked to identifiers like the installation ID and device IDs, not to your
+                        name or email address. This means we
+                        usually can't tell which records are yours from an email alone. If we can't find your data,
+                        we'll tell you so in our reply.
+                    </p>
+                    <p>Whatever we can or can't find, you can always:</p>
+                    <ul>
+                        <li>delete the data on your device by deleting the game;</li>
+                        <li>reset or delete your advertising ID (see <a href="#ro3d-choices">Your choices</a>);</li>
+                        <li>contact Unity, Apple or Google directly about the data they handle, using the policy links above.</li>
+                    </ul>
+
+                    <h3 id="ro3d-children">Children</h3>
+                    <p>
+                        Rocket Operator 3D is not directed at children under 13, and we don't knowingly collect
+                        personal data from children under 13. If you have concerns about this, contact us at
+                        <a href="mailto:contact@holymarmot.com">contact@holymarmot.com</a>.
+                    </p>
+                </section>
+                <!-- ═══ END OF GAME SECTIONS ═══ -->
+
+                <!-- ─── Rights ─── -->
+                <section id="your-rights" class="policy-section">
+                    <h2>Your rights under GDPR and KVKK</h2>
+                    <p>
+                        Depending on where you live, data protection laws such as the EU General Data Protection
+                        Regulation (GDPR) and Turkey's Law on the Protection of Personal Data No. 6698 (KVKK) give
+                        you rights over your personal data. These include the right to:
+                    </p>
+                    <ul>
+                        <li>access the personal data we hold about you;</li>
+                        <li>have it deleted;</li>
+                        <li>object to how we process it.</li>
+                    </ul>
+                    <p>
+                        To use any of these rights, email us at
+                        <a href="mailto:contact@holymarmot.com">contact@holymarmot.com</a>. Each game's section
+                        explains what we can and can't find. For Rocket Operator 3D, see
+                        <a href="#ro3d-requests">Asking about or deleting your data</a>.
+                    </p>
+                </section>
+
+                <!-- ─── International transfers ─── -->
+                <section id="international-transfers" class="policy-section">
+                    <h2>International transfers</h2>
+                    <p>
+                        The third-party services named in this policy may process your data in countries other than
+                        the one you live in, including countries outside Turkey and the European Economic Area.
+                    </p>
+                </section>
+
+                <!-- ─── Changes ─── -->
+                <section id="changes" class="policy-section">
+                    <h2>Changes to this policy</h2>
+                    <p>
+                        If we change this policy, we'll publish the updated version on this page and change the
+                        "Last updated" date at the top.
+                    </p>
+                </section>
+
+                <!-- ─── Contact ─── -->
+                <section id="contact" class="policy-section">
+                    <h2>Contact</h2>
+                    <p>For any question about this policy or your data, including privacy requests:</p>
+                    <div class="contact-card">
+                        <p>
+                            <strong>Holy Marmot</strong><br>
+                            Istanbul, Turkey<br>
+                            <a href="mailto:contact@holymarmot.com">contact@holymarmot.com</a>
+                        </p>
+                    </div>
+                </section>
+
+            </article>
+        </div>
+    </main>
+
+    <!-- ═══ Footer ═══ -->
+    <footer>
+        <div class="container">
+            <div class="footer-row">
+                <a href="/" aria-label="Holy Marmot Studio — Home">
+                    <img src="https://cloud.holymarmot.com/seafhttp/f/12e54d15fe9a48468fb1/?op=view"
+                        alt="Holy Marmot Studio" class="footer-logo" width="128" height="32" loading="lazy">
+                </a>
+                <div class="footer-links">
+                    <a href="/#games" class="footer-link">Games</a>
+                    <a href="/#services" class="footer-link">What We Do</a>
+                    <a href="/#team" class="footer-link">Team</a>
+                    <a href="/#discord" class="footer-link">Community</a>
+                    <a href="/#contact" class="footer-link">Contact</a>
+                </div>
+                <div class="footer-social">
+                    <a href="https://store.steampowered.com/curator/45294675" target="_blank" rel="noopener" aria-label="Steam">
+                        <i class="ri-steam-line ri-lg"></i></a>
+                    <a href="https://www.instagram.com/holymarmot/" target="_blank" rel="noopener" aria-label="Instagram">
+                        <i class="ri-instagram-line ri-lg"></i></a>
+                    <a href="https://discord.gg/Xpucjyvmq7" target="_blank" rel="noopener" aria-label="Discord">
+                        <i class="ri-discord-line ri-lg"></i></a>
+                    <a href="https://www.reddit.com/r/BearstoneCampsite/" target="_blank" rel="noopener" aria-label="Reddit">
+                        <i class="ri-reddit-line ri-lg"></i></a>
+                    <a href="https://github.com/holymarmot" target="_blank" rel="noopener" aria-label="GitHub">
+                        <i class="ri-github-line ri-lg"></i></a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Holy Marmot. All rights reserved. · <a href="/privacy/" aria-current="page">Privacy Policy</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        (function () {
+            // Navbar background on scroll
+            var navbar = document.getElementById('navbar');
+            function onScroll() { navbar.classList.toggle('scrolled', window.scrollY > 60); }
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
+
+            // Mobile menu
+            var btn = document.getElementById('mobile-menu-button');
+            var overlay = document.getElementById('mobile-overlay');
+            var icon = btn.querySelector('i');
+            var open = false;
+
+            function toggle() {
+                open = !open;
+                overlay.classList.toggle('open', open);
+                overlay.setAttribute('aria-hidden', String(!open));
+                btn.setAttribute('aria-expanded', String(open));
+                icon.className = open ? 'ri-close-line ri-xl' : 'ri-menu-line ri-xl';
+            }
+
+            btn.addEventListener('click', toggle);
+            overlay.querySelectorAll('a').forEach(function (a) {
+                a.addEventListener('click', function () { if (open) toggle(); });
+            });
+        })();
+    </script>
+</body>
+</html>

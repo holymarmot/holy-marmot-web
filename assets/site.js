@@ -5,6 +5,7 @@
     var STRINGS = {
         en: {
             menu: 'Menu', close: 'Close',
+            toLight: 'Switch to light theme', toDark: 'Switch to dark theme',
             pause: 'Pause background video', play: 'Play background video',
             send: 'Send message', sending: 'Sending…', sent: 'Message sent.',
             busy: 'The server is busy right now. Try again in a few minutes, or email {email}.',
@@ -13,6 +14,7 @@
         },
         tr: {
             menu: 'Menü', close: 'Kapat',
+            toLight: 'Açık temaya geç', toDark: 'Koyu temaya geç',
             pause: 'Arka plan videosunu duraklat', play: 'Arka plan videosunu oynat',
             send: 'Mesaj gönder', sending: 'Gönderiliyor…', sent: 'Mesaj gönderildi.',
             busy: 'Sunucu şu an yoğun. Birkaç dakika sonra tekrar deneyin ya da {email} adresine yazın.',
@@ -32,6 +34,37 @@
         window.addEventListener('scroll', onScroll, { passive: true });
         onScroll();
     }
+
+    /* ─── Theme: follows the device until the visitor picks one ─── */
+    var root = document.documentElement;
+    var themeBtn = document.querySelector('.theme-toggle');
+    if (themeBtn) {
+        var prefersLight = window.matchMedia('(prefers-color-scheme: light)');
+        var ICON_SUN = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg>';
+        var ICON_MOON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>';
+        var currentTheme = function () { return root.getAttribute('data-theme') || (prefersLight.matches ? 'light' : 'dark'); };
+        var paintBtn = function () {
+            var dark = currentTheme() === 'dark';
+            themeBtn.innerHTML = dark ? ICON_SUN : ICON_MOON;
+            themeBtn.setAttribute('aria-label', dark ? t.toLight : t.toDark);
+        };
+        themeBtn.addEventListener('click', function () {
+            var next = currentTheme() === 'dark' ? 'light' : 'dark';
+            root.setAttribute('data-theme', next);
+            try { localStorage.setItem('hm-theme', next); } catch (e) {}
+            paintBtn();
+        });
+        if (prefersLight.addEventListener) prefersLight.addEventListener('change', paintBtn);
+        themeBtn.hidden = false;
+        paintBtn();
+    }
+
+    /* ─── Language link: remember the choice so the device language no longer decides ─── */
+    document.querySelectorAll('.lang-link').forEach(function (a) {
+        a.addEventListener('click', function () {
+            try { localStorage.setItem('hm-lang', a.getAttribute('hreflang')); } catch (e) {}
+        });
+    });
 
     /* ─── Mobile menu ─── */
     var nav = document.querySelector('.site-nav');

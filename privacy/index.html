@@ -365,8 +365,11 @@
 
                     <h3 id="ro3d-retention">How long we keep data</h3>
                     <p>
-                        <!-- TODO: retention period for api.holymarmot.com data -->
-                        We keep the data on our analytics server (api.holymarmot.com) for [SAKLAMA SÜRESİ].
+                        <!-- Requires a scheduled job on api.holymarmot.com that deletes event data older than 24 months. -->
+                        We keep event data on our analytics server (api.holymarmot.com) for 24 months after it's
+                        collected, then delete it. We may keep totals, such as daily player counts, that can't be
+                        linked to an installation ID. If we stop supporting the game, we delete the remaining data
+                        within 90 days.
                     </p>
                     <p>
                         Data stored on your device stays there until you delete the game. Unity, Apple and Google

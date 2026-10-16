@@ -7,7 +7,7 @@
 
     <!-- ═══ Primary SEO ═══ -->
     <title>Holy Marmot Studio | Independent game studio in Istanbul</title>
-    <meta name="description" content="Holy Marmot is an independent game studio in Istanbul. Bearstone Campsite demo is on Steam; Helgard and Rocket Operator 3D are coming to mobile.">
+    <meta name="description" content="Holy Marmot is an independent game studio in Istanbul. Bearstone Campsite demo is on Steam; Helgard and Rocket Operator 3D are coming to iOS and Android.">
     <meta name="keywords" content="Holy Marmot, Holy Marmot Studio, indie game studio, Istanbul, Bearstone Campsite, Helgard, Rocket Operator 3D">
     <meta name="author" content="Holy Marmot Studio">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -21,7 +21,7 @@
     <meta property="og:site_name" content="Holy Marmot Studio">
     <meta property="og:locale" content="en_US">
     <meta property="og:title" content="Holy Marmot Studio | Independent game studio in Istanbul">
-    <meta property="og:description" content="Independent game studio in Istanbul. Play the Bearstone Campsite demo on Steam. Helgard and Rocket Operator 3D are coming to mobile.">
+    <meta property="og:description" content="Independent game studio in Istanbul. Play the Bearstone Campsite demo on Steam. Helgard and Rocket Operator 3D are coming to iOS and Android.">
     <meta property="og:image" content="https://holymarmot.com/source/og-image.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -30,7 +30,7 @@
     <!-- ═══ Twitter / X Card ═══ -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Holy Marmot Studio | Independent game studio in Istanbul">
-    <meta name="twitter:description" content="Independent game studio in Istanbul. Bearstone Campsite demo on Steam now; Helgard and Rocket Operator 3D coming to mobile.">
+    <meta name="twitter:description" content="Independent game studio in Istanbul. Bearstone Campsite demo on Steam now; Helgard and Rocket Operator 3D coming to iOS and Android.">
     <meta name="twitter:image" content="https://holymarmot.com/source/og-image.png">
     <meta name="twitter:image:alt" content="Holy Marmot logo: a marmot with a halo">
 
@@ -91,7 +91,7 @@
           "@id": "https://holymarmot.com/#webpage",
           "url": "https://holymarmot.com/",
           "name": "Holy Marmot Studio | Independent game studio in Istanbul",
-          "description": "Holy Marmot is an independent game studio in Istanbul. Bearstone Campsite demo is on Steam; Helgard and Rocket Operator 3D are coming to mobile.",
+          "description": "Holy Marmot is an independent game studio in Istanbul. Bearstone Campsite demo is on Steam; Helgard and Rocket Operator 3D are coming to iOS and Android.",
           "isPartOf": { "@id": "https://holymarmot.com/#website" },
           "about": { "@id": "https://holymarmot.com/#organization" },
           "breadcrumb": {
@@ -119,10 +119,10 @@
           "@type": "VideoGame",
           "@id": "https://holymarmot.com/#helgard",
           "name": "Helgard",
-          "description": "A top-down roguelike for mobile. Coming soon.",
           "genre": ["Roguelike"],
-          "gamePlatform": ["Mobile"],
+          "gamePlatform": ["iOS", "Android"],
           "applicationCategory": "Game",
+          "operatingSystem": "iOS, Android",
           "author": { "@id": "https://holymarmot.com/#organization" },
           "publisher": { "@id": "https://holymarmot.com/#organization" }
         },
@@ -130,7 +130,6 @@
           "@type": "VideoGame",
           "@id": "https://holymarmot.com/#rocket-operator-3d",
           "name": "Rocket Operator 3D",
-          "description": "A hybrid-casual game for iOS and Android. Coming soon.",
           "genre": ["Hybrid-casual"],
           "gamePlatform": ["iOS", "Android"],
           "applicationCategory": "Game",
@@ -143,13 +142,13 @@
     </script>
 
     <script>document.documentElement.classList.add('js');</script>
-    <link rel="icon" type="image/png" href="/source/icon-192.png">
-    <link rel="apple-touch-icon" href="/source/icon-192.png">
-    <link rel="preload" href="/source/hero/hero-poster.webp" as="image" fetchpriority="high">
+    <link rel="icon" type="image/png" href="source/icon-192.png">
+    <link rel="apple-touch-icon" href="source/icon-192.png">
+    <link rel="preload" href="source/hero/hero-poster.webp" as="image" fetchpriority="high">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@500&family=Funnel+Sans:wght@400;500&display=swap">
-    <link rel="stylesheet" href="/assets/site.css">
+    <link rel="stylesheet" href="assets/site.css">
 </head>
 
 <body>
@@ -157,8 +156,8 @@
 
     <header class="site-header">
         <div class="wrap header-row">
-            <a class="brand" href="/">
-                <img src="/source/logo-560.png" alt="Holy Marmot" width="560" height="148">
+            <a class="brand" href="./">
+                <img src="source/logo-560.png" alt="Holy Marmot" width="560" height="148">
             </a>
             <nav class="site-nav" aria-label="Main">
                 <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
@@ -190,10 +189,10 @@
             <div class="wrap">
                 <figure class="hero-media">
                     <!-- 3.4 s muted loop cut from the Bearstone Campsite demo trailer (27.4–30.8 s). -->
-                    <video id="hero-loop" muted loop playsinline preload="none" poster="/source/hero/hero-poster.webp" aria-hidden="true">
-                        <source src="/source/hero/hero-loop-1280.webm" type="video/webm" media="(min-width: 721px)">
-                        <source src="/source/hero/hero-loop-720.webm" type="video/webm">
-                        <source src="/source/hero/hero-loop-1280.mp4" type="video/mp4">
+                    <video id="hero-loop" muted loop playsinline preload="none" poster="source/hero/hero-poster.webp" aria-hidden="true">
+                        <source src="source/hero/hero-loop-1280.webm" type="video/webm" media="(min-width: 721px)">
+                        <source src="source/hero/hero-loop-720.webm" type="video/webm">
+                        <source src="source/hero/hero-loop-1280.mp4" type="video/mp4">
                     </video>
                     <figcaption class="media-tag">Bearstone Campsite, in-game footage</figcaption>
                     <button class="loop-toggle" type="button" aria-label="Play background video" hidden></button>
@@ -207,9 +206,9 @@
                 <h2 id="games-title" class="section-title">Games</h2>
 
                 <article class="game-entry game-lead" aria-labelledby="bc-title">
-                    <div class="game-media" data-preview="/source/videos/bearstone-preview">
-                        <img src="/source/games/bearstone_campsite-1280.webp"
-                             srcset="/source/games/bearstone_campsite-720.webp 720w, /source/games/bearstone_campsite-1280.webp 1280w"
+                    <div class="game-media" data-preview="source/videos/bearstone-preview">
+                        <img src="source/games/bearstone_campsite-1280.webp"
+                             srcset="source/games/bearstone_campsite-720.webp 720w, source/games/bearstone_campsite-1280.webp 1280w"
                              sizes="(min-width: 901px) 56vw, 100vw"
                              alt="Bearstone Campsite key art: the game's logo in a dark forest, a tall metal figure on the right"
                              width="1280" height="734" loading="lazy" decoding="async">
@@ -226,7 +225,7 @@
                         </dl>
                         <div class="actions">
                             <a class="btn btn-solid" href="https://store.steampowered.com/app/3799220/Bearstone_Campsite_Demo/" target="_blank" rel="noopener">Play the demo on Steam</a>
-                            <a class="btn" href="/source/videos/Bearstone_Campsite_Demo_trailer.mp4" data-trailer>Watch the trailer</a>
+                            <a class="btn" href="source/videos/Bearstone_Campsite_Demo_trailer.mp4" data-trailer>Watch the trailer</a>
                         </div>
                     </div>
                 </article>
@@ -235,14 +234,14 @@
                     <article class="game-entry" aria-labelledby="helgard-title">
                         <div class="game-media">
                             <!-- Placeholder: replace with Helgard's banner (16:9, at least 1280 px wide) when it's ready. -->
-                            <img src="/source/games/upcoming-750.webp" alt="Placeholder image reading “Upcoming project”" width="750" height="510" loading="lazy" decoding="async">
+                            <img src="source/games/upcoming-750.webp" alt="Placeholder image reading “Upcoming project”" width="750" height="510" loading="lazy" decoding="async">
                         </div>
                         <div class="game-info">
                             <h3 id="helgard-title">Helgard</h3>
-                            <p>A top-down roguelike for mobile.</p>
+                            <!-- Optional one-line description: <p>…</p> -->
                             <dl class="facts">
                                 <div><dt>Genre</dt><dd>Top-down roguelike</dd></div>
-                                <div><dt>Platform</dt><dd>Mobile</dd></div>
+                                <div><dt>Platform</dt><dd>iOS, Android</dd></div>
                                 <div><dt>Status</dt><dd>Coming soon</dd></div>
                             </dl>
                         </div>
@@ -251,11 +250,11 @@
                     <article class="game-entry" aria-labelledby="ro3d-title">
                         <div class="game-media">
                             <!-- Placeholder: replace with Rocket Operator 3D's banner (16:9, at least 1280 px wide) when it's ready. -->
-                            <img src="/source/games/upcoming-750.webp" alt="Placeholder image reading “Upcoming project”" width="750" height="510" loading="lazy" decoding="async">
+                            <img src="source/games/upcoming-750.webp" alt="Placeholder image reading “Upcoming project”" width="750" height="510" loading="lazy" decoding="async">
                         </div>
                         <div class="game-info">
                             <h3 id="ro3d-title">Rocket Operator 3D</h3>
-                            <p>A hybrid-casual game for iOS and Android.</p>
+                            <!-- Optional one-line description: <p>…</p> -->
                             <dl class="facts">
                                 <div><dt>Genre</dt><dd>Hybrid-casual</dd></div>
                                 <div><dt>Platform</dt><dd>iOS, Android</dd></div>
@@ -297,27 +296,27 @@
                 <h2 id="team-title" class="section-title">Team</h2>
                 <ul class="team">
                     <li><a class="person" href="https://www.linkedin.com/in/krsnemirhan/" target="_blank" rel="noopener">
-                        <img src="/source/members/emirhan.webp" alt="" width="192" height="192" loading="lazy" decoding="async">
+                        <img src="source/members/emirhan.webp" alt="" width="192" height="192" loading="lazy" decoding="async">
                         <span><span class="name">Emirhan Kurşun</span><span class="role">Co-founder and team lead</span><span class="visually-hidden"> (LinkedIn, opens in a new tab)</span></span>
                     </a></li>
                     <li><a class="person" href="https://www.linkedin.com/in/enes-tolu-046552207/" target="_blank" rel="noopener">
-                        <img src="/source/members/enes.webp" alt="" width="192" height="192" loading="lazy" decoding="async">
+                        <img src="source/members/enes.webp" alt="" width="192" height="192" loading="lazy" decoding="async">
                         <span><span class="name">Enes Tolu</span><span class="role">Co-founder and concept artist</span><span class="visually-hidden"> (LinkedIn, opens in a new tab)</span></span>
                     </a></li>
                     <li><a class="person" href="https://www.linkedin.com/in/mert-sevin%C3%A7-46927029a/" target="_blank" rel="noopener">
-                        <img src="/source/members/mert.webp" alt="" width="192" height="192" loading="lazy" decoding="async">
+                        <img src="source/members/mert.webp" alt="" width="192" height="192" loading="lazy" decoding="async">
                         <span><span class="name">Mert Sevinç</span><span class="role">Co-founder and character artist</span><span class="visually-hidden"> (LinkedIn, opens in a new tab)</span></span>
                     </a></li>
                     <li><a class="person" href="https://www.linkedin.com/in/hakan-benli-652b8534a/" target="_blank" rel="noopener">
-                        <img src="/source/members/hakan.webp" alt="" width="192" height="192" loading="lazy" decoding="async">
+                        <img src="source/members/hakan.webp" alt="" width="192" height="192" loading="lazy" decoding="async">
                         <span><span class="name">Hakan Süleyman Benli</span><span class="role">Voice actor</span><span class="visually-hidden"> (LinkedIn, opens in a new tab)</span></span>
                     </a></li>
                     <li><a class="person" href="https://www.linkedin.com/in/funda-bayhan-420090275/" target="_blank" rel="noopener">
-                        <img src="/source/members/funda.webp" alt="" width="192" height="192" loading="lazy" decoding="async">
+                        <img src="source/members/funda.webp" alt="" width="192" height="192" loading="lazy" decoding="async">
                         <span><span class="name">Funda Bayhan</span><span class="role">Level designer</span><span class="visually-hidden"> (LinkedIn, opens in a new tab)</span></span>
                     </a></li>
                     <li><a class="person" href="https://www.linkedin.com/in/emir-elyesa-9b66b3271/" target="_blank" rel="noopener">
-                        <img src="/source/members/elyesa.webp" alt="" width="192" height="192" loading="lazy" decoding="async">
+                        <img src="source/members/elyesa.webp" alt="" width="192" height="192" loading="lazy" decoding="async">
                         <span><span class="name">Emir Elyesa Ersöz</span><span class="role">Music composer</span><span class="visually-hidden"> (LinkedIn, opens in a new tab)</span></span>
                     </a></li>
                 </ul>
@@ -394,9 +393,9 @@
 
     <footer class="site-footer">
         <div class="wrap footer-row">
-            <a href="/"><img src="/source/logo-560.png" alt="Holy Marmot" width="560" height="148" loading="lazy"></a>
+            <a href="./"><img src="source/logo-560.png" alt="Holy Marmot" width="560" height="148" loading="lazy"></a>
             <nav class="footer-links" aria-label="Footer">
-                <a href="/privacy/">Privacy policy</a>
+                <a href="privacy/">Privacy policy</a>
                 <a href="mailto:contact@holymarmot.com">contact@holymarmot.com</a>
             </nav>
             <p>© 2026 Holy Marmot. All rights reserved.</p>
@@ -408,9 +407,9 @@
             <h2 id="trailer-title">Bearstone Campsite demo trailer</h2>
             <button class="btn" type="button" data-close>Close</button>
         </div>
-        <video controls playsinline preload="none" data-poster="/source/games/bearstone_campsite-1280.webp"></video>
+        <video controls playsinline preload="none" data-poster="source/games/bearstone_campsite-1280.webp"></video>
     </dialog>
 
-    <script src="/assets/site.js" defer></script>
+    <script src="assets/site.js" defer></script>
 </body>
 </html>

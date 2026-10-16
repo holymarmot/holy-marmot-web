@@ -5,6 +5,9 @@
 
   <url>
     <loc>https://holymarmot.com/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://holymarmot.com/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://holymarmot.com/tr/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://holymarmot.com/"/>
     <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -22,6 +25,16 @@
       <image:title>Bearstone Campsite key art</image:title>
       <image:caption>Bearstone Campsite, an action-horror game by Holy Marmot Studio, Istanbul. Demo on Steam.</image:caption>
     </image:image>
+  </url>
+
+  <url>
+    <loc>https://holymarmot.com/tr/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://holymarmot.com/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://holymarmot.com/tr/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://holymarmot.com/"/>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
 
   <url>

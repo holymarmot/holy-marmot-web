@@ -111,6 +111,12 @@ a:hover { color: var(--fg); }
 .menu a { color: var(--muted); font-size: var(--t-16); text-decoration: none; padding-block: 6px; }
 .menu a:hover, .menu a[aria-current] { color: var(--fg); }
 .menu-toggle { display: none; }
+.site-nav { display: flex; align-items: center; gap: clamp(18px, 2.4vw, 36px); }
+.lang-link {
+    color: var(--muted); font-size: var(--t-16); text-decoration: none;
+    padding: 2px 0 2px clamp(18px, 2.4vw, 36px); border-left: 1px solid var(--line); line-height: 1.25;
+}
+.lang-link:hover { color: var(--fg); }
 
 @media (max-width: 760px) {
     .js .menu-toggle {
@@ -127,6 +133,9 @@ a:hover { color: var(--fg); }
     .js .site-nav[data-open] .menu { display: flex; }
     .js .menu a { display: block; padding: 12px 0; font: 500 var(--t-25)/1.2 var(--f-display); letter-spacing: -0.02em; color: var(--fg); }
     .menu { flex-wrap: wrap; }
+    .site-nav { gap: 20px; }
+    .menu-toggle { order: 2; }
+    .lang-link { display: inline-flex; align-items: center; min-height: 44px; padding: 0 4px; border-left: 0; color: var(--fg); }
 }
 
 /* ─── Sections ─── */

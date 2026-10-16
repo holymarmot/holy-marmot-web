@@ -1,6 +1,27 @@
 // Holy Marmot — small progressive enhancements. Every block checks that its
-// elements exist, so the same file works on the home page and /privacy/.
+// elements exist, so the same file works on the home pages (/ and /tr/) and /privacy/.
 (function () {
+    /* Interface strings, picked by <html lang>. {email} is replaced with the contact address. */
+    var STRINGS = {
+        en: {
+            menu: 'Menu', close: 'Close',
+            pause: 'Pause background video', play: 'Play background video',
+            send: 'Send message', sending: 'Sending…', sent: 'Message sent.',
+            busy: 'The server is busy right now. Try again in a few minutes, or email {email}.',
+            failed: 'The message couldn\'t be sent. Check the fields and try again, or email {email}.',
+            network: 'Couldn\'t reach the server. Check your connection, or email {email}.'
+        },
+        tr: {
+            menu: 'Menü', close: 'Kapat',
+            pause: 'Arka plan videosunu duraklat', play: 'Arka plan videosunu oynat',
+            send: 'Mesaj gönder', sending: 'Gönderiliyor…', sent: 'Mesaj gönderildi.',
+            busy: 'Sunucu şu an yoğun. Birkaç dakika sonra tekrar deneyin ya da {email} adresine yazın.',
+            failed: 'Mesaj gönderilemedi. Alanları kontrol edip tekrar deneyin ya da {email} adresine yazın.',
+            network: 'Sunucuya ulaşılamadı. Bağlantınızı kontrol edin ya da {email} adresine yazın.'
+        }
+    };
+    var t = STRINGS[(document.documentElement.lang || 'en').slice(0, 2)] || STRINGS.en;
+
     var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var saveData = !!(navigator.connection && navigator.connection.saveData);
 
@@ -19,7 +40,7 @@
         var setOpen = function (open) {
             nav.toggleAttribute('data-open', open);
             toggle.setAttribute('aria-expanded', String(open));
-            toggle.textContent = open ? 'Close' : 'Menu';
+            toggle.textContent = open ? t.close : t.menu;
         };
         toggle.addEventListener('click', function () { setOpen(!nav.hasAttribute('data-open')); });
         nav.querySelectorAll('.menu a').forEach(function (a) {
@@ -40,7 +61,7 @@
         var sync = function () {
             var playing = !loop.paused;
             loopBtn.innerHTML = playing ? ICON_PAUSE : ICON_PLAY;
-            loopBtn.setAttribute('aria-label', playing ? 'Pause background video' : 'Play background video');
+            loopBtn.setAttribute('aria-label', playing ? t.pause : t.play);
         };
         var play = function () { var p = loop.play(); if (p && p.catch) p.catch(sync); };
         loop.addEventListener('play', sync);
@@ -117,7 +138,7 @@
         var EMAIL = 'contact@holymarmot.com';
 
         var say = function (text, state) {
-            status.textContent = text;
+            status.textContent = text.replace('{email}', EMAIL);
             status.setAttribute('data-state', state);
         };
         msg.addEventListener('input', function () {
@@ -129,7 +150,7 @@
             var data = new URLSearchParams();
             new FormData(form).forEach(function (v, k) { data.append(k, v); });
             submit.disabled = true;
-            submit.textContent = 'Sending…';
+            submit.textContent = t.sending;
             say('', '');
             fetch(form.action, {
                 method: 'POST',
@@ -137,19 +158,19 @@
                 body: data.toString()
             }).then(function (res) {
                 if (res.ok) {
-                    say('Message sent.', 'ok');
+                    say(t.sent, 'ok');
                     form.reset();
                     count.textContent = '0/' + MAX;
                 } else if (res.status === 503) {
-                    say('The server is busy right now. Try again in a few minutes, or email ' + EMAIL + '.', 'error');
+                    say(t.busy, 'error');
                 } else {
-                    say('The message couldn\'t be sent. Check the fields and try again, or email ' + EMAIL + '.', 'error');
+                    say(t.failed, 'error');
                 }
             }).catch(function () {
-                say('Couldn\'t reach the server. Check your connection, or email ' + EMAIL + '.', 'error');
+                say(t.network, 'error');
             }).then(function () {
                 submit.disabled = false;
-                submit.textContent = 'Send message';
+                submit.textContent = t.send;
             });
         });
     }

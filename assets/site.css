@@ -34,8 +34,8 @@
 
     /* Layout */
     --max: 1440px;
-    --gutter: clamp(16px, 3vw, 44px);
-    --section: clamp(72px, 9vw, 136px);
+    --gutter: clamp(20px, 6vw, 44px);
+    --section: clamp(96px, 10vw, 136px);
     --gap: clamp(20px, 3vw, 44px);
     --r-media: clamp(12px, 1.2vw, 18px);
     --r-ctl: 10px;
@@ -292,6 +292,54 @@ a:hover { color: var(--fg); }
 .footer-links { display: flex; flex-wrap: wrap; gap: 8px 24px; }
 .footer-links a { color: var(--muted); text-decoration: none; }
 .footer-links a:hover, .footer-links a[aria-current] { color: var(--fg); }
+
+/* ─── Phone spacing ───
+   Kept in one place and after the rules above, so it wins over the
+   section-level breakpoints. Desktop spacing is unaffected. */
+@media (max-width: 760px) {
+    :root { --header-h: 64px; }
+
+    .js .menu { padding: 12px var(--gutter) 32px; }
+    .js .menu a { padding: 14px 0; }
+
+    .actions { gap: 12px; }
+    .actions .btn { flex: 1 1 auto; }
+
+    .hero { padding-top: 40px; }
+    .hero-grid { gap: 20px; padding-bottom: 36px; }
+    .hero h1 { line-height: 1.02; }
+    .hero-aside .actions { margin-top: 24px; }
+
+    .section-title { margin-bottom: 36px; }
+
+    .game-entry { gap: 24px; }
+    .game-info > p { margin-top: 12px; }
+    .facts { margin-top: 24px; }
+    .facts div { grid-template-columns: 7.5rem minmax(0, 1fr); padding: 13px 0; }
+    .game-entry .actions { margin-top: 28px; }
+    .game-pair { margin-top: 80px; gap: 80px; }
+
+    .split { gap: 56px; }
+    .split p { margin-top: 14px; }
+    .split .text-link { margin-top: 20px; }
+
+    .team { gap: 0 var(--gap); }
+    .person { gap: 18px; padding: 18px 0; }
+    .team-note { margin-top: 40px; }
+
+    .community { gap: 56px; }
+    .community .actions { margin-top: 32px; }
+    .channels a { padding: 18px 0; }
+
+    .contact-grid { gap: 56px; }
+    .field { gap: 10px; margin-bottom: 26px; }
+    .form-foot { gap: 16px; }
+    .form-foot .btn { width: 100%; }
+    .contact-info dl { gap: 24px; }
+
+    .site-footer { padding-block: 48px; }
+    .footer-row { flex-direction: column; align-items: flex-start; gap: 20px; }
+}
 
 /* ─── Reduced motion ─── */
 @media (prefers-reduced-motion: reduce) {

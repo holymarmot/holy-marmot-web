@@ -79,6 +79,17 @@
         .contact-card { margin-top: 20px; padding: 20px 24px; background: var(--raised); border-radius: 14px; }
         .policy-body .contact-card p { color: var(--fg); }
 
+        @media (max-width: 760px) {
+            .policy { padding-top: 48px; }
+            .policy-body .policy-lead { margin-top: 28px; }
+            .toc { margin-top: 44px; padding: 22px 22px 24px; }
+            .policy-body .toc li { padding: 6px 0; }
+            .policy-section { margin-top: 64px; padding-top: 56px; }
+            .policy-section h3 { margin-top: 44px; }
+            .service { padding: 28px 0; }
+            .policy-body ul li + li { margin-top: 0.75rem; }
+        }
+
         @media print {
             html, body { background: #fff; color: #000; }
             .site-header, .site-footer, .skip, .toc { display: none; }

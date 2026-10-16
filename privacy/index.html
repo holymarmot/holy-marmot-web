@@ -19,522 +19,69 @@
     <meta property="og:description" content="What data Holy Marmot games collect, why, and what you can do about it.">
     <meta property="og:image" content="https://holymarmot.com/source/og-image.png">
 
-    <link rel="icon" type="image/x-icon" href="/source/icon.png">
-    <link rel="apple-touch-icon" href="/source/icon.png">
+    <script>document.documentElement.classList.add('js');</script>
+    <link rel="icon" type="image/png" href="/source/icon-192.png">
+    <link rel="apple-touch-icon" href="/source/icon-192.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Funnel+Display:wght@500&family=Funnel+Sans:wght@400;500&display=swap">
+    <link rel="stylesheet" href="/assets/site.css">
 
     <style>
-        :where([class^="ri-"])::before { content: "\f3c2"; }
-        *, *::before, *::after { box-sizing: border-box; }
+        /* Policy page only. Shared tokens, header and footer live in /assets/site.css. */
+        :root { --body: #d9dbe0; }
 
-        /* Same tokens as the home page */
-        :root {
-            --bg: #080808;
-            --surface: rgba(255,255,255,0.04);
-            --border: rgba(255,255,255,0.08);
-            --border-hover: rgba(255,255,255,0.2);
-            --gold: #c9a96e;
-            --gold-dim: rgba(201,169,110,0.18);
-            --text: #f0f0ee;
-            --muted: rgba(255,255,255,0.42);
-            --body: rgba(240,240,238,0.74);
-        }
+        .policy { padding-block: clamp(40px, 6vw, 88px) var(--section); }
+        .policy .container { width: 100%; max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
+        .policy-body { max-width: 44rem; margin-inline: auto; }
+        .policy-body [id] { scroll-margin-top: calc(var(--header-h) + 24px); }
 
-        html { scroll-behavior: smooth; overflow-x: hidden; background-color: #080808; }
+        .section-label { display: block; color: var(--gold); font-size: var(--t-16); margin-bottom: 12px; }
+        .policy-title { font-size: clamp(var(--t-39), 1rem + 4vw, var(--t-61)); line-height: 1; letter-spacing: -0.03em; }
+        .policy-body .policy-updated { margin-top: 16px; color: var(--muted); font-size: var(--t-16); }
 
-        body {
-            margin: 0;
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-            text-rendering: optimizeLegibility;
-        }
+        .policy-body p, .policy-body li { color: var(--body); line-height: 1.7; }
+        .policy-body p + p, .policy-body p + ul, .policy-body ul + p { margin-top: 1rem; }
+        .policy-body .policy-lead { margin-top: 24px; font-size: var(--t-20); line-height: 1.55; color: var(--fg); }
+        .policy-body strong { color: var(--fg); font-weight: 500; }
+        .policy-body a { overflow-wrap: anywhere; }
 
-        ::selection { background: var(--gold-dim); color: #fff; }
-
-        img { display: block; max-width: 100%; height: auto; }
-        ul, ol { margin: 0; padding: 0; }
-        h1, h2, h3, h4, p { margin: 0; }
-
-        /* grain */
-        body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 9997;
-            opacity: 0.028;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-            background-size: 160px 160px;
-        }
-
-        /* ─── Layout container (matches Tailwind's .container + px-6) ─── */
-        .container {
-            width: 100%;
-            margin-left: auto;
-            margin-right: auto;
-            padding-left: 1.5rem;
-            padding-right: 1.5rem;
-        }
-        @media (min-width: 640px)  { .container { max-width: 640px; } }
-        @media (min-width: 768px)  { .container { max-width: 768px; } }
-        @media (min-width: 1024px) { .container { max-width: 1024px; } }
-        @media (min-width: 1280px) { .container { max-width: 1280px; } }
-        @media (min-width: 1536px) { .container { max-width: 1536px; } }
-
-        /* ─── Navigation ─── */
-        #navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 500;
-            padding: 1.4rem 0;
-            transition: padding 0.35s ease, background 0.35s ease, border-color 0.35s ease;
-            background: transparent;
-            border-bottom: 1px solid transparent;
-        }
-
-        #navbar.scrolled {
-            padding: 0.85rem 0;
-            background: rgba(6, 6, 6, 0.82);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom-color: var(--border);
-        }
-
-        .nav-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-logo { height: 2.25rem; width: auto; }
-
-        .nav-desktop { display: none; }
-        .nav-desktop ul { display: flex; gap: 2.5rem; list-style: none; }
-
-        .nav-link {
-            font-size: 0.825rem;
-            font-weight: 500;
-            letter-spacing: 0.06em;
-            text-transform: uppercase;
-            color: var(--muted);
-            text-decoration: none;
-            transition: color 0.25s ease;
-            position: relative;
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 1px;
-            bottom: -4px;
-            left: 0;
-            background: var(--gold);
-            transition: width 0.3s ease;
-        }
-
-        .nav-link:hover { color: #ffffff; }
-        .nav-link:hover::after { width: 100%; }
-
-        .nav-toggle {
-            width: 2rem;
-            height: 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            background: none;
-            border: 0;
-            padding: 0;
-            cursor: pointer;
-        }
-
-        @media (min-width: 768px) {
-            .nav-desktop { display: block; }
-            .nav-toggle { display: none; }
-        }
-
-        /* ─── Mobile overlay ─── */
-        #mobile-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 450;
-            background: rgba(5,5,5,0.97);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 2rem;
-            transform: translateX(100%);
-            visibility: hidden;
-            transition: transform 0.5s cubic-bezier(0.76,0,0.24,1), visibility 0s linear 0.5s;
-            pointer-events: none;
-        }
-
-        #mobile-overlay.open {
-            transform: translateX(0);
-            visibility: visible;
-            transition: transform 0.5s cubic-bezier(0.76,0,0.24,1);
-            pointer-events: all;
-        }
-
-        .mobile-nav-link {
-            font-size: 3rem;
-            font-weight: 800;
-            color: rgba(255,255,255,0.8);
-            letter-spacing: -0.03em;
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        .mobile-nav-link:hover { color: var(--gold); }
-
-        /* ─── Section label (same as home page) ─── */
-        .section-label {
-            display: inline-block;
-            font-size: 0.68rem;
-            font-weight: 600;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--gold);
-            margin-bottom: 1rem;
-            position: relative;
-            padding-left: 1.25rem;
-        }
-
-        .section-label::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 14px;
-            height: 1px;
-            background: var(--gold);
-        }
-
-        /* ─── Policy page ─── */
-        .policy {
-            position: relative;
-            padding: 8.5rem 0 6rem;
-        }
-
-        .policy::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 520px;
-            max-width: 100%;
-            height: 520px;
-            background: radial-gradient(circle at top left, rgba(201,169,110,0.05) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .policy-body {
-            position: relative;
-            max-width: 42rem;
-            margin: 0 auto;
-        }
-
-        .policy-body [id] { scroll-margin-top: 6rem; }
-
-        .policy-title {
-            font-size: clamp(2.75rem, 9vw, 3.75rem);
-            font-weight: 900;
-            letter-spacing: -0.035em;
-            line-height: 1;
-            color: #fff;
-            margin-top: 0.5rem;
-        }
-
-        .policy-updated {
-            margin-top: 1.25rem;
-            font-size: 0.8rem;
-            font-weight: 500;
-            letter-spacing: 0.04em;
-            color: var(--muted);
-        }
-
-        .policy-body p,
-        .policy-body li {
-            font-size: 1rem;
-            line-height: 1.75;
-            color: var(--body);
-        }
-
-        @media (min-width: 768px) {
-            .policy-body p,
-            .policy-body li { font-size: 1.0625rem; }
-        }
-
-        .policy-body p + p,
-        .policy-body p + ul,
-        .policy-body ul + p { margin-top: 1rem; }
-
-        .policy-lead { margin-top: 2rem; }
-        .policy-body .policy-lead { color: rgba(240,240,238,0.86); }
-
-        .policy-body strong { color: #fff; font-weight: 600; }
-
-        .policy-body a {
-            color: var(--gold);
-            text-decoration: underline;
-            text-decoration-color: rgba(201,169,110,0.4);
-            text-underline-offset: 3px;
-            text-decoration-thickness: 1px;
-            transition: text-decoration-color 0.2s ease, color 0.2s ease;
-            overflow-wrap: anywhere;
-        }
-
-        .policy-body a:hover { color: #e0c48f; text-decoration-color: currentColor; }
-
-        .policy-body ul {
-            list-style: none;
-            margin-top: 0.75rem;
-        }
-
-        .policy-body ul li {
-            position: relative;
-            padding-left: 1.4rem;
-        }
-
+        .policy-body ul { margin-top: 0.75rem; padding-left: 1.25em; }
         .policy-body ul li + li { margin-top: 0.5rem; }
+        .policy-body ul li::marker { color: var(--muted); }
 
-        .policy-body ul li::before {
-            content: '';
-            position: absolute;
-            left: 0.2rem;
-            top: 0.85em;
-            width: 7px;
-            height: 1px;
-            background: var(--gold);
-        }
+        .toc { margin-top: 40px; padding: 20px 24px 22px; background: var(--raised); border-radius: 14px; }
+        .toc-label { display: block; color: var(--muted); font-size: var(--t-14); margin-bottom: 10px; }
+        .policy-body .toc ol { list-style: none; padding: 0; }
+        .policy-body .toc li { font-size: var(--t-16); line-height: 1.5; padding: 3px 0; }
+        .policy-body .toc ol ol { margin: 4px 0 2px; padding-left: 16px; border-left: 1px solid #2c3038; }
+        .policy-body .toc ol ol li { font-size: 0.9375rem; }
+        .policy-body .toc a { color: var(--fg); text-decoration: none; }
+        .policy-body .toc a:hover { color: var(--gold); text-decoration: underline; }
 
-        /* Table of contents */
-        .toc {
-            margin-top: 2.5rem;
-            padding: 1.25rem 1.5rem 1.4rem;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-        }
+        .policy-section { margin-top: 56px; padding-top: 48px; border-top: 1px solid var(--line); }
+        .policy-section h2 { font-size: clamp(var(--t-25), 1rem + 1.6vw, var(--t-31)); line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 16px; }
+        .policy-section h3 { font-size: var(--t-20); line-height: 1.3; letter-spacing: -0.01em; margin: 40px 0 12px; }
 
-        .toc-label {
-            display: block;
-            font-size: 0.65rem;
-            font-weight: 600;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.3);
-            margin-bottom: 0.75rem;
-        }
+        .game-head .section-label { margin-bottom: 8px; }
+        .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
+        .tag { display: inline-block; font-size: var(--t-14); line-height: 1.4; color: var(--muted); border: 1px solid #3a3f48; border-radius: 6px; padding: 1px 8px; white-space: nowrap; }
 
-        .policy-body .toc ol { list-style: none; }
-        .policy-body .toc li { font-size: 0.9rem; line-height: 1.5; padding: 0.2rem 0; }
-        .policy-body .toc li::before { display: none; }
-        .policy-body .toc ol ol { margin: 0.3rem 0 0.2rem; padding-left: 1rem; border-left: 1px solid var(--border); }
-        .policy-body .toc ol ol li { font-size: 0.85rem; }
+        .services { margin-top: 20px; }
+        .service { padding: 24px 0; border-top: 1px solid var(--line); }
+        .service:last-child { border-bottom: 1px solid var(--line); }
+        .service-head { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-bottom: 8px; }
+        .service h4 { font-size: var(--t-17); line-height: 1.35; }
+        .policy-body .field-label { display: block; margin-top: 14px; color: var(--muted); font-size: var(--t-14); }
+        .policy-body .field-label + ul { margin-top: 6px; }
+        .policy-body .policy-links { margin-top: 14px; font-size: 0.9375rem; color: var(--muted); }
 
-        .policy-body .toc a {
-            color: rgba(255,255,255,0.62);
-            text-decoration: none;
-        }
+        .contact-card { margin-top: 20px; padding: 20px 24px; background: var(--raised); border-radius: 14px; }
+        .policy-body .contact-card p { color: var(--fg); }
 
-        .policy-body .toc a:hover { color: #fff; }
-
-        /* Sections */
-        .policy-section {
-            margin-top: 3.5rem;
-            padding-top: 3rem;
-            border-top: 1px solid var(--border);
-        }
-
-        .policy-section h2 {
-            font-size: clamp(1.5rem, 4.5vw, 1.875rem);
-            font-weight: 800;
-            letter-spacing: -0.025em;
-            line-height: 1.2;
-            color: #fff;
-            margin-bottom: 1.25rem;
-        }
-
-        .policy-section h3 {
-            font-size: 1.125rem;
-            font-weight: 700;
-            letter-spacing: -0.01em;
-            line-height: 1.35;
-            color: #fff;
-            margin: 2.75rem 0 0.9rem;
-        }
-
-        /* Game block */
-        .game-head .section-label { margin-bottom: 0.6rem; }
-        .game-head h2 { margin-bottom: 0.9rem; }
-
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .tag {
-            display: inline-block;
-            font-size: 0.62rem;
-            font-weight: 600;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--gold);
-            border: 1px solid rgba(201,169,110,0.3);
-            border-radius: 9999px;
-            padding: 0.25rem 0.65rem;
-            line-height: 1.3;
-            white-space: nowrap;
-        }
-
-        /* Service entries */
-        .services { margin-top: 1.5rem; }
-
-        .service {
-            padding: 1.6rem 0;
-            border-top: 1px solid var(--border);
-        }
-
-        .service:last-child { border-bottom: 1px solid var(--border); }
-
-        .service-head {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 0.5rem 0.75rem;
-            margin-bottom: 0.6rem;
-        }
-
-        .service h4 {
-            font-size: 1.05rem;
-            font-weight: 700;
-            letter-spacing: -0.01em;
-            line-height: 1.35;
-            color: #fff;
-        }
-
-        .policy-body .field-label {
-            display: block;
-            margin-top: 1rem;
-            font-size: 0.65rem;
-            font-weight: 600;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            line-height: 1.4;
-            color: rgba(255,255,255,0.3);
-        }
-
-        .policy-body .field-label + ul { margin-top: 0.5rem; }
-
-        .policy-body .policy-links {
-            margin-top: 1rem;
-            font-size: 0.9rem;
-            color: var(--muted);
-        }
-
-        .contact-card {
-            margin-top: 1.25rem;
-            padding: 1.25rem 1.5rem;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-        }
-
-        .policy-body .contact-card p { color: rgba(240,240,238,0.86); }
-
-        /* ─── Footer (same look as home page) ─── */
-        footer {
-            background: #050505;
-            border-top: 1px solid var(--border);
-            padding: 2.5rem 0;
-        }
-
-        .footer-row {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        @media (min-width: 768px) { .footer-row { flex-direction: row; } }
-
-        .footer-logo { height: 2rem; width: auto; opacity: 0.65; }
-
-        .footer-links {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.75rem 1.5rem;
-        }
-
-        .footer-link {
-            font-size: 0.75rem;
-            line-height: 1rem;
-            font-weight: 600;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.35);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .footer-link:hover { color: #fff; }
-
-        .footer-social { display: flex; gap: 1rem; }
-
-        .footer-social a {
-            color: rgba(255,255,255,0.3);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .footer-social a:hover { color: #fff; }
-
-        .footer-bottom {
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            text-align: center;
-            border-top: 1px solid rgba(255,255,255,0.05);
-            font-size: 0.7rem;
-            color: rgba(255,255,255,0.18);
-        }
-
-        .footer-bottom a {
-            color: rgba(255,255,255,0.35);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .footer-bottom a:hover,
-        .footer-bottom a[aria-current="page"] { color: #fff; }
-
-        /* ─── Reduced motion ─── */
-        @media (prefers-reduced-motion: reduce) {
-            html { scroll-behavior: auto; }
-            #navbar, #mobile-overlay, #mobile-overlay.open { transition: none; }
-        }
-
-        /* ─── Print ─── */
         @media print {
             html, body { background: #fff; color: #000; }
-            body::after, #navbar, #mobile-overlay, footer, .toc, .policy::before { display: none; }
+            .site-header, .site-footer, .skip, .toc { display: none; }
             .policy { padding: 0; }
             .policy-title, .policy-section h2, .policy-section h3, .service h4,
             .policy-body p, .policy-body li, .policy-body strong, .policy-body a { color: #000; }
@@ -544,40 +91,28 @@
 </head>
 
 <body>
-    <!-- Mobile overlay -->
-    <div id="mobile-overlay" aria-hidden="true">
-        <a href="/#games" class="mobile-nav-link">Games</a>
-        <a href="/#services" class="mobile-nav-link">What We Do</a>
-        <a href="/#team" class="mobile-nav-link">Team</a>
-        <a href="/#discord" class="mobile-nav-link">Community</a>
-        <a href="/#contact" class="mobile-nav-link">Contact</a>
-    </div>
+    <a class="skip" href="#main">Skip to content</a>
 
-    <!-- ═══ Navigation ═══ -->
-    <header id="navbar">
-        <div class="container nav-inner">
-            <a href="/" aria-label="Holy Marmot Studio — Home">
-                <img src="https://cloud.holymarmot.com/seafhttp/f/12e54d15fe9a48468fb1/?op=view"
-                    alt="Holy Marmot Studio" class="nav-logo" width="144" height="36">
+    <header class="site-header">
+        <div class="wrap header-row">
+            <a class="brand" href="/">
+                <img src="/source/logo-560.png" alt="Holy Marmot" width="560" height="148">
             </a>
-            <nav class="nav-desktop" aria-label="Main">
-                <ul>
-                    <li><a href="/#games" class="nav-link">Games</a></li>
-                    <li><a href="/#services" class="nav-link">What We Do</a></li>
-                    <li><a href="/#team" class="nav-link">Team</a></li>
-                    <li><a href="/#discord" class="nav-link">Community</a></li>
-                    <li><a href="/#contact" class="nav-link">Contact</a></li>
+            <nav class="site-nav" aria-label="Main">
+                <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
+                <ul class="menu" id="site-menu">
+                    <li><a href="/#games">Games</a></li>
+                    <li><a href="/#services">What we do</a></li>
+                    <li><a href="/#team">Team</a></li>
+                    <li><a href="/#discord">Community</a></li>
+                    <li><a href="/#contact">Contact</a></li>
                 </ul>
             </nav>
-            <button id="mobile-menu-button" class="nav-toggle" aria-label="Toggle menu"
-                aria-controls="mobile-overlay" aria-expanded="false">
-                <i class="ri-menu-line ri-xl"></i>
-            </button>
         </div>
     </header>
 
     <!-- ═══ Privacy Policy ═══ -->
-    <main class="policy">
+    <main class="policy" id="main">
         <div class="container">
             <article class="policy-body">
 
@@ -912,67 +447,17 @@
         </div>
     </main>
 
-    <!-- ═══ Footer ═══ -->
-    <footer>
-        <div class="container">
-            <div class="footer-row">
-                <a href="/" aria-label="Holy Marmot Studio — Home">
-                    <img src="https://cloud.holymarmot.com/seafhttp/f/12e54d15fe9a48468fb1/?op=view"
-                        alt="Holy Marmot Studio" class="footer-logo" width="128" height="32" loading="lazy">
-                </a>
-                <div class="footer-links">
-                    <a href="/#games" class="footer-link">Games</a>
-                    <a href="/#services" class="footer-link">What We Do</a>
-                    <a href="/#team" class="footer-link">Team</a>
-                    <a href="/#discord" class="footer-link">Community</a>
-                    <a href="/#contact" class="footer-link">Contact</a>
-                </div>
-                <div class="footer-social">
-                    <a href="https://store.steampowered.com/curator/45294675" target="_blank" rel="noopener" aria-label="Steam">
-                        <i class="ri-steam-line ri-lg"></i></a>
-                    <a href="https://www.instagram.com/holymarmot/" target="_blank" rel="noopener" aria-label="Instagram">
-                        <i class="ri-instagram-line ri-lg"></i></a>
-                    <a href="https://discord.gg/Xpucjyvmq7" target="_blank" rel="noopener" aria-label="Discord">
-                        <i class="ri-discord-line ri-lg"></i></a>
-                    <a href="https://www.reddit.com/r/BearstoneCampsite/" target="_blank" rel="noopener" aria-label="Reddit">
-                        <i class="ri-reddit-line ri-lg"></i></a>
-                    <a href="https://github.com/holymarmot" target="_blank" rel="noopener" aria-label="GitHub">
-                        <i class="ri-github-line ri-lg"></i></a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2026 Holy Marmot. All rights reserved. · <a href="/privacy/" aria-current="page">Privacy Policy</a></p>
-            </div>
+    <footer class="site-footer">
+        <div class="wrap footer-row">
+            <a href="/"><img src="/source/logo-560.png" alt="Holy Marmot" width="560" height="148" loading="lazy"></a>
+            <nav class="footer-links" aria-label="Footer">
+                <a href="/privacy/" aria-current="page">Privacy policy</a>
+                <a href="mailto:contact@holymarmot.com">contact@holymarmot.com</a>
+            </nav>
+            <p>© 2026 Holy Marmot. All rights reserved.</p>
         </div>
     </footer>
 
-    <script>
-        (function () {
-            // Navbar background on scroll
-            var navbar = document.getElementById('navbar');
-            function onScroll() { navbar.classList.toggle('scrolled', window.scrollY > 60); }
-            window.addEventListener('scroll', onScroll, { passive: true });
-            onScroll();
-
-            // Mobile menu
-            var btn = document.getElementById('mobile-menu-button');
-            var overlay = document.getElementById('mobile-overlay');
-            var icon = btn.querySelector('i');
-            var open = false;
-
-            function toggle() {
-                open = !open;
-                overlay.classList.toggle('open', open);
-                overlay.setAttribute('aria-hidden', String(!open));
-                btn.setAttribute('aria-expanded', String(open));
-                icon.className = open ? 'ri-close-line ri-xl' : 'ri-menu-line ri-xl';
-            }
-
-            btn.addEventListener('click', toggle);
-            overlay.querySelectorAll('a').forEach(function (a) {
-                a.addEventListener('click', function () { if (open) toggle(); });
-            });
-        })();
-    </script>
+    <script src="/assets/site.js" defer></script>
 </body>
 </html>

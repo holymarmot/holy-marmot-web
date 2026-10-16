@@ -5,37 +5,22 @@
 
   <url>
     <loc>https://holymarmot.com/</loc>
-    <lastmod>2026-04-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
 
-    <!-- Hero screenshots -->
+    <!-- Hero: still frame of the in-game loop -->
     <image:image>
-      <image:loc>https://holymarmot.com/source/SS.png</image:loc>
-      <image:title>Holy Marmot Studio — Bearstone Campsite Gameplay</image:title>
-      <image:caption>Bearstone Campsite action-horror game by Holy Marmot Studio</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://holymarmot.com/source/SS2.png</image:loc>
-      <image:title>Holy Marmot Studio — Bearstone Campsite Environment</image:title>
-      <image:caption>Atmospheric horror environment from Bearstone Campsite</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://holymarmot.com/source/SS3.png</image:loc>
-      <image:title>Holy Marmot Studio — Bearstone Campsite Scene</image:title>
-      <image:caption>Bearstone Campsite scene by Holy Marmot indie game studio</image:caption>
+      <image:loc>https://holymarmot.com/source/hero/hero-poster.webp</image:loc>
+      <image:title>Bearstone Campsite in-game footage</image:title>
+      <image:caption>A lamp-lit path at night in Bearstone Campsite, an action-horror game by Holy Marmot Studio</image:caption>
     </image:image>
 
     <!-- Game covers -->
     <image:image>
-      <image:loc>https://holymarmot.com/source/bearstone_campsite.png</image:loc>
-      <image:title>Bearstone Campsite — Action Horror Game by Holy Marmot</image:title>
-      <image:caption>Bearstone Campsite key art — indie action-horror game by Holy Marmot Studio, Istanbul</image:caption>
-    </image:image>
-    <image:image>
-      <image:loc>https://holymarmot.com/source/upcoming.png</image:loc>
-      <image:title>Anathex — Co-op Tower Defense Game by Holy Marmot</image:title>
-      <image:caption>Anathex — four-player co-op tower defense game inspired by Anatolian mythology</image:caption>
+      <image:loc>https://holymarmot.com/source/games/bearstone_campsite-1280.webp</image:loc>
+      <image:title>Bearstone Campsite key art</image:title>
+      <image:caption>Bearstone Campsite, an action-horror game by Holy Marmot Studio, Istanbul. Demo on Steam.</image:caption>
     </image:image>
   </url>
 
